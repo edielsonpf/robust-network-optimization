@@ -1,0 +1,27 @@
+reset;
+option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl';
+
+model BackupModel.mod;
+
+data BackupData.dat;
+
+option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl\BackupLog.log';
+
+let nlinks := n*(n-1);
+#let {(s,d) in LINKS} mean[s,d] := n*p;
+#let {(s,d) in LINKS} variance[s,d] := n*p*(1-p);
+
+let {(s,d) in LINKS} mean[s,d] := p;
+let {(s,d) in LINKS} variance[s,d] := p*(1-p);
+
+
+#option solver minos;
+#option solver gurobi;
+option solver cplex;
+option cplex_options 'mipgap=0.001 mipdisplay=3';
+
+solve;
+display CB;
+#display B;
+
+option log_file '';
