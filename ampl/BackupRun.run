@@ -22,6 +22,6 @@ option cplex_options 'mipgap=0.001 mipdisplay=3';
 
 solve;
 display CB;
-#display B;
+display B;
 
 option log_file '';
