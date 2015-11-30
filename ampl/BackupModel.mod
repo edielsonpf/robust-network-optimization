@@ -4,19 +4,17 @@
 param n >= 0;
 
 set NODES = 1..n;	# set of nodes
-#set PATHS = 1..2;
-
 set LINKS within (NODES cross NODES);		# set of links between nodes
+set PATHS;
 
-param link_paths {LINKS};
-
-param backup_paths {LINKS};
+set PSD{LINKS};
+set PIJ{LINKS};
 
 param capacity_P {LINKS} >= 0;         		# capacity of each link at primary network  
 
-param mean {LINKS} >= 0;         		# capacity of each link at primary network  
+param mean {PATHS} >= 0;         		# capacity of each link at primary network  
 
-param variance {LINKS} >= 0;         		# capacity of each link at primary network  
+param variance {PATHS} >= 0;         		# capacity of each link at primary network  
 
 param nlinks >= 0;
 
@@ -32,10 +30,10 @@ param invstd >=0;
 
 var CB{(i,j) in LINKS} integer;	#capacity per backup link
 
-#var B{NODES,NODES,NODES,NODES} binary; #binary variable to define if backup link is active or not
+var Y{PATHS} binary;
 
-var Y{LINKS,PATHS} binary;
-
+var U{(i,j) in LINKS} >=0;
+var R{(i,j) in LINKS} >=0;
 #########################################################
 #					MODEL DEFINITION					#
 # The objective is to minimize the backup capcity		#
@@ -45,13 +43,14 @@ minimize BackupCapacity: sum{(i,j) in LINKS} CB[i,j];
 
 #subject to
 
-subject to Capacity {(i,j) in LINKS}: CB[i,j] >= sum{k in PATHS}(mean[i,j]+variance[i,j])*Y[i,j,k];
+subject to UniquePath{(s,d) in LINKS}: sum{bp in PSD[s,d]}Y[bp] = 1;
 
-subject to UniquePath{(s,d) in LINKS}: sum{k in PATHS}Y[s,d,k] = 1;
+subject to Capacity {(i,j) in LINKS}: CB[i,j] >= sum{pth in PIJ[i,j]}mean[pth]*Y[pth] + U[i,j]*invstd;;
+#subject to Capacity {(i,j) in LINKS}: CB[i,j] >= sum{pth in PIJ[i,j]}mean[pth]*sum{bp in PSD[i,j]}Y[bp] + U[i,j]*invstd;;
 
-#subject to Flow2 {i in NODES, (s,d) in LINKS: i=s} : sum{(i,j) in LINKS}B[i,j,s,d] - sum{(j,i) in LINKS} B[j,i,s,d] = 1; 
-#subject to Flow3 {i in NODES, (s,d) in LINKS: i=d} : sum{(i,j) in LINKS}B[i,j,s,d] - sum{(j,i) in LINKS} B[j,i,s,d] = -1; 
-#subject to Flow1 {i in NODES, (s,d) in LINKS: i!=s and i!=d} : sum{(i,j) in LINKS}B[i,j,s,d] - sum{(j,i) in LINKS} B[j,i,s,d] = 0; 
+subject to Reformulation{(i,j) in LINKS}: R[i,j]^2 <= U[i,j]^2;
 
+subject to Reformulation2{(i,j) in LINKS}: sum{pth in PIJ[i,j]}variance[pth]*Y[pth] = R[i,j];
+#subject to Reformulation2{(i,j) in LINKS}: sum{pth in PIJ[i,j]}variance[pth]*sum{bp in PSD[i,j]}Y[bp] = R[i,j];
 
 

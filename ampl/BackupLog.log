@@ -1,62 +1,67 @@
-ampl: include BackupRun.run;
-
-Can't find  file "BackupRun.run"
-context:  include  >>> BackupRun.run <<< ;
-ampl: x`
-
-syntax error
-context:   >>> x` <<< 
-ampl? 
-ampl? 
-ampl? ;
-ampl: 
-ampl: 
-ampl: 
-ampl: 
-ampl: option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl';
-ampl: include BackupRun.run;
-
-C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl/BackupModel.mod, line 35 (offset 1004):
-	LINK is not defined
-context:  var  >>> Y{LINK, <<< PATHS} binary;
-
-C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl/BackupModel.mod, line 46 (offset 1360):
-	syntax error
-context:  subject to Capacity {(i,j) in LINKS}: CB[i,j] >= sum{p  >>> in  <<< PATHS} (mean[i,j]+variance[i,j])*Y[i,j,p];
-ampl: 
-ampl: 
-ampl: include BackupRun.run;
-
-C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl/BackupModel.mod, line 46 (offset 1361):
-	syntax error
-context:  subject to Capacity {(i,j) in LINKS}: CB[i,j] >= sum{p  >>> in  <<< PATHS} (mean[i,j]+variance[i,j])*Y[i,j,p];
-ampl: 
-ampl: 
-ampl: include BackupRun.run;
-
-C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl/BackupModel.mod, line 46 (offset 1361):
-	syntax error
-context:  subject to Capacity {(i,j) in LINKS}: CB[i,j] >= sum{p  >>> in  <<< PATHS}(mean[i,j]+variance[i,j])*Y[i,j,p];
-ampl: 
-ampl: include BackupRun.run;
-
-C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl/BackupModel.mod, line 48 (offset 1455):
-	syntax error
-context:  subject to UniquePath{(s,d) in LINKS}: sum{p  >>> in  <<< PATHS}Y[s,d,p] = 1;
-ampl: 
-ampl: 
-ampl: 
-ampl: 
-ampl: include BackupRun.run;
-
-C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl/BackupData.dat, line 36 (offset 473):
-	link_paths needs 3, not 2 subscripts
-context:  [1,2 >>> ] <<< 		[1,2]	[1,3,2]	
-ampl: 
-ampl: 
-ampl: include BackupRun.run;
-
-C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl/BackupData.dat, line 36 (offset 473):
-	link_paths needs 3, not 2 subscripts
-context:  [1,2 >>> ] <<< 		[1,2]	[1,3,2]	
-ampl: exit;
+CPLEX 12.6.2.0: mipgap=0.001
+mipdisplay=3
+Reduced MIQCP has 36 rows, 96 columns, and 360 nonzeros.
+Reduced MIQCP has 60 binaries, 12 generals, 0 SOSs, and 0 indicators.
+Reduced MIQCP has 12 quadratic constraints.
+Probing fixed 0 vars, tightened 12 bounds.
+Probing time = 0.00 sec. (0.14 ticks)
+Clique table members: 12.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 4 threads.
+Root relaxation solution time = 0.00 sec. (0.10 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+      0     0        0.0600     0                      0.0000       12         
+      0     0        0.1989    12                    Cone: 12       27         
+      0     0        0.1989    12                      0.1989       27         
+*     0+    0                           12.0000        0.1989            98.34%
+Found incumbent of value 12.000000 after 0.00 sec. (0.69 ticks)
+*     0+    0                           11.0000        0.1989            98.19%
+Found incumbent of value 11.000000 after 0.00 sec. (0.79 ticks)
+      0     0        0.3913    30       11.0000      Cuts: 24       47   96.44%
+*     0+    0                           10.0000        0.3913            96.09%
+Found incumbent of value 10.000000 after 0.00 sec. (1.40 ticks)
+      0     0        0.3913    37       10.0000      Cuts: 17       67   96.09%
+*     0+    0                            9.0000        0.3913            95.65%
+Found incumbent of value 9.000000 after 0.02 sec. (2.47 ticks)
+      0     0        0.5191    48        9.0000      Cuts: 19      111   94.23%
+*     0+    0                            8.0000        0.5191            93.51%
+Found incumbent of value 8.000000 after 0.02 sec. (4.58 ticks)
+      0     0        0.5589    61        8.0000      Cuts: 30      167   93.01%
+      0     0        1.5812    48        8.0000      Cuts: 34      223   80.23%
+      0     0        2.1188    55        8.0000      Cuts: 37      251   73.52%
+      0     0        2.3143    64        8.0000      Cuts: 36      280   71.07%
+      0     0        2.4074    65        8.0000      Cuts: 38      306   69.91%
+*     0+    0                            7.0000        2.4074            65.61%
+Found incumbent of value 7.000000 after 0.03 sec. (10.77 ticks)
+      0     0        2.5785    69        7.0000      Cuts: 40      327   63.16%
+      0     0        2.7577    69        7.0000      Cuts: 31      355   60.60%
+      0     0        2.8000    70        7.0000      Cuts: 28      364   60.00%
+      0     0        2.8425    64        7.0000  ZeroHalf: 11      384   59.39%
+*     0+    0                            6.0000        2.8425            52.63%
+Found incumbent of value 6.000000 after 0.03 sec. (15.30 ticks)
+      0     0        2.9676    62        6.0000      Cuts: 33      407   50.54%
+      0     0        3.3350    47        6.0000      Cuts: 42      473   44.42%
+      0     0        3.5017    58        6.0000      Cuts: 22      494   41.64%
+      0     0        4.0000    52        6.0000      Cuts: 25      508   33.33%
+*     0+    0                            5.0000        4.0000            20.00%
+Found incumbent of value 5.000000 after 0.05 sec. (19.85 ticks)
+      0     0        4.0000    49        5.0000      Cuts: 23      520   20.00%
+      0     2        4.0000    19        5.0000        4.0000      520   20.00%
+Elapsed time = 0.06 sec. (24.33 ticks, tree = 0.00 MB)
+*    11    10      integral     0        4.0000        4.0000      670    0.00%
+                                                  Impl Bds: 6                  
+Found incumbent of value 4.000000 after 0.08 sec. (26.58 ticks)
+
+Implied bound cuts applied:  17
+Mixed integer rounding cuts applied:  7
+Zero-half cuts applied:  10
+Gomory fractional cuts applied:  8
+Cone linearizations applied:  4
+
+Root node processing (before b&c):
+  Real time             =    0.06 sec. (24.28 ticks)
+Parallel b
