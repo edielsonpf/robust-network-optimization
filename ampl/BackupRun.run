@@ -1,11 +1,11 @@
 reset;
-option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl';
+option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization-master\ampl';
 
 model BackupModel.mod;
 
 data BackupData.dat;
 
-option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl\BackupLog.log';
+option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimization-master\ampl\BackupLog.log';
 
 let p := 0.025;
 
@@ -15,8 +15,8 @@ let n := 4;
 
 let nlinks := n*(n-1);
 
-let {pth in PATHS} mean[pth] := p;
-let {pth in PATHS} std[pth] := sqrt(p*(1-p));
+let {(s,d) in LINKS} mean[s,d] := p;
+let {(s,d) in LINKS} std[s,d] := sqrt(p*(1-p));
 
 
 #option solver minos;
@@ -26,6 +26,6 @@ option cplex_options 'mipgap=0.001 mipdisplay=3';
 
 solve;
 display CB;
-display Y;
+#display B;
 
 option log_file '';
