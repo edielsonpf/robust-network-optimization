@@ -1,18 +1,22 @@
 reset;
-option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl';
+option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization-master\ampl';
 
 model BackupModel.mod;
 
 data BackupData.dat;
 
-option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl\BackupLog.log';
+option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimization-master\ampl\BackupLog.log';
+
+let p := 0.025;
+
+let invstd := 2.326347874; #epsilon=0.01
+
+let n := 4;
 
 let nlinks := n*(n-1);
-#let {(s,d) in LINKS} mean[s,d] := n*p;
-#let {(s,d) in LINKS} variance[s,d] := n*p*(1-p);
 
 let {(s,d) in LINKS} mean[s,d] := p;
-let {(s,d) in LINKS} variance[s,d] := p*(1-p);
+let {(s,d) in LINKS} std[s,d] := sqrt(p*(1-p));
 
 
 #option solver minos;
