@@ -1,11 +1,11 @@
 reset;
-option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization-master\ampl';
+option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl';
 
 model BackupModel.mod;
 
 data BackupData.dat;
 
-option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimization-master\ampl\BackupLog.log';
+option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl\BackupLog.log';
 
 let p := 0.025;
 

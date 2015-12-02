@@ -1,9 +1,9 @@
 reset;
 option ampl_include 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl';
 
-model BackupModel.mod;
+model PathBackupModel.mod;
 
-data BackupData.dat;
+data PathBackupData.dat;
 
 option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimization\ampl\BackupLog.log';
 
