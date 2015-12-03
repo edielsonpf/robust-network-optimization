@@ -297,3 +297,474 @@ Thread count was 4 (of 4 available processors)
 
 Optimal solution found (tolerance 1.00e-04)
 Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/02/15 10:39:09
+
+Optimize a model with 204 rows, 312 columns and 744 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 156 rows and 156 columns
+Presolve time: 0.02s
+Presolved: 60 rows, 300 columns, 444 nonzeros
+Variable types: 156 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584117    0.00000   100%     -    0s
+     0     0    2.62921    0   60    4.65841    2.62921  43.6%     -    0s
+     0     0    3.35561    0   60    4.65841    3.35561  28.0%     -    0s
+     0     0    3.46862    0   63    4.65841    3.46862  25.5%     -    0s
+     0     0    3.59280    0   61    4.65841    3.59280  22.9%     -    0s
+     0     0    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+     0     2    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+H   34    19                       4.2957627    3.63908  15.3%  29.0    0s
+H   84    49                       4.1586281    3.69379  11.2%  25.6    0s
+*  140    80              14       4.1586281    3.73572  10.2%  28.4    0s
+*  496   220              17       4.1586281    3.81505  8.26%  26.0    0s
+*  894   290              22       4.1586242    3.83731  7.73%  31.2    2s
+* 2207   361              22       4.1586242    3.96427  4.67%  31.3    3s
+* 3565   176              18       4.1586242    4.04637  2.70%  29.9    4s
+* 3719    95              27       4.1586242    4.06162  2.33%  29.6    4s
+* 3837    14              19       4.1586242    4.09206  1.60%  29.4    4s
+* 3937     0              20       4.1586242    4.15858  0.00%  29.0    4s
+
+Cutting planes:
+  MIR: 18
+  Flow cover: 4
+
+Explored 3940 nodes (114738 simplex iterations) in 4.84 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/02/15 10:48:10
+
+Optimize a model with 204 rows, 312 columns and 744 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 156 rows and 156 columns
+Presolve time: 0.02s
+Presolved: 60 rows, 300 columns, 444 nonzeros
+Variable types: 156 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584117    0.00000   100%     -    0s
+     0     0    2.62921    0   60    4.65841    2.62921  43.6%     -    0s
+     0     0    3.35561    0   60    4.65841    3.35561  28.0%     -    0s
+     0     0    3.46862    0   63    4.65841    3.46862  25.5%     -    0s
+     0     0    3.59280    0   61    4.65841    3.59280  22.9%     -    0s
+     0     0    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+     0     2    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+H   34    19                       4.2957627    3.63908  15.3%  29.0    0s
+H   84    49                       4.1586281    3.69379  11.2%  25.6    0s
+*  140    80              14       4.1586281    3.73572  10.2%  28.4    0s
+*  496   220              17       4.1586281    3.81505  8.26%  26.0    0s
+*  894   290              22       4.1586242    3.83731  7.73%  31.2    2s
+* 2207   361              22       4.1586242    3.96427  4.67%  31.3    3s
+  3283   231     cutoff   21         4.15862    4.03085  3.07%  30.2    5s
+* 3565   176              18       4.1586242    4.04637  2.70%  29.9    5s
+* 3719    95              27       4.1586242    4.06162  2.33%  29.6    5s
+* 3837    14              19       4.1586242    4.09206  1.60%  29.4    5s
+* 3937     0              20       4.1586242    4.15858  0.00%  29.0    5s
+
+Cutting planes:
+  MIR: 18
+  Flow cover: 4
+
+Explored 3940 nodes (114738 simplex iterations) in 5.49 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/02/15 10:49:26
+
+Optimize a model with 204 rows, 312 columns and 744 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 156 rows and 156 columns
+Presolve time: 0.02s
+Presolved: 60 rows, 300 columns, 444 nonzeros
+Variable types: 156 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584117    0.00000   100%     -    0s
+     0     0    2.62921    0   60    4.65841    2.62921  43.6%     -    0s
+     0     0    3.35561    0   60    4.65841    3.35561  28.0%     -    0s
+     0     0    3.46862    0   63    4.65841    3.46862  25.5%     -    0s
+     0     0    3.59280    0   61    4.65841    3.59280  22.9%     -    0s
+     0     0    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+     0     2    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+H   34    19                       4.2957627    3.63908  15.3%  29.0    0s
+H   84    49                       4.1586281    3.69379  11.2%  25.6    0s
+*  140    80              14       4.1586281    3.73572  10.2%  28.4    0s
+*  496   220              17       4.1586281    3.81505  8.26%  26.0    1s
+*  894   290              22       4.1586242    3.83731  7.73%  31.2    2s
+* 2207   361              22       4.1586242    3.96427  4.67%  31.3    3s
+* 3565   176              18       4.1586242    4.04637  2.70%  29.9    4s
+* 3719    95              27       4.1586242    4.06162  2.33%  29.6    4s
+* 3837    14              19       4.1586242    4.09206  1.60%  29.4    4s
+* 3937     0              20       4.1586242    4.15858  0.00%  29.0    4s
+
+Cutting planes:
+  MIR: 18
+  Flow cover: 4
+
+Explored 3940 nodes (114738 simplex iterations) in 4.73 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/02/15 10:49:48
+
+Optimize a model with 204 rows, 312 columns and 744 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 156 rows and 156 columns
+Presolve time: 0.02s
+Presolved: 60 rows, 300 columns, 444 nonzeros
+Variable types: 156 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584117    0.00000   100%     -    0s
+     0     0    2.62921    0   60    4.65841    2.62921  43.6%     -    0s
+     0     0    3.35561    0   60    4.65841    3.35561  28.0%     -    0s
+     0     0    3.46862    0   63    4.65841    3.46862  25.5%     -    0s
+     0     0    3.59280    0   61    4.65841    3.59280  22.9%     -    0s
+     0     0    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+     0     2    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+H   34    19                       4.2957627    3.63908  15.3%  29.0    0s
+H   84    49                       4.1586281    3.69379  11.2%  25.6    0s
+*  140    80              14       4.1586281    3.73572  10.2%  28.4    0s
+*  496   220              17       4.1586281    3.81505  8.26%  26.0    0s
+*  894   290              22       4.1586242    3.83731  7.73%  31.2    2s
+* 2207   361              22       4.1586242    3.96427  4.67%  31.3    3s
+* 3565   176              18       4.1586242    4.04637  2.70%  29.9    4s
+* 3719    95              27       4.1586242    4.06162  2.33%  29.6    4s
+* 3837    14              19       4.1586242    4.09206  1.60%  29.4    4s
+* 3937     0              20       4.1586242    4.15858  0.00%  29.0    4s
+
+Cutting planes:
+  MIR: 18
+  Flow cover: 4
+
+Explored 3940 nodes (114738 simplex iterations) in 4.72 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/02/15 10:51:15
+
+Optimize a model with 204 rows, 312 columns and 744 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 156 rows and 156 columns
+Presolve time: 0.02s
+Presolved: 60 rows, 300 columns, 444 nonzeros
+Variable types: 156 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584117    0.00000   100%     -    0s
+     0     0    2.62921    0   60    4.65841    2.62921  43.6%     -    0s
+     0     0    3.35561    0   60    4.65841    3.35561  28.0%     -    0s
+     0     0    3.46862    0   63    4.65841    3.46862  25.5%     -    0s
+     0     0    3.59280    0   61    4.65841    3.59280  22.9%     -    0s
+     0     0    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+     0     2    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+H   34    19                       4.2957627    3.63908  15.3%  29.0    0s
+H   84    49                       4.1586281    3.69379  11.2%  25.6    0s
+*  140    80              14       4.1586281    3.73572  10.2%  28.4    0s
+*  496   220              17       4.1586281    3.81505  8.26%  26.0    0s
+*  894   290              22       4.1586242    3.83731  7.73%  31.2    2s
+* 2207   361              22       4.1586242    3.96427  4.67%  31.3    3s
+* 3565   176              18       4.1586242    4.04637  2.70%  29.9    4s
+* 3719    95              27       4.1586242    4.06162  2.33%  29.6    4s
+* 3837    14              19       4.1586242    4.09206  1.60%  29.4    4s
+* 3937     0              20       4.1586242    4.15858  0.00%  29.0    4s
+
+Cutting planes:
+  MIR: 18
+  Flow cover: 4
+
+Explored 3940 nodes (114738 simplex iterations) in 4.64 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/02/15 10:51:31
+
+Optimize a model with 204 rows, 312 columns and 744 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 156 rows and 156 columns
+Presolve time: 0.02s
+Presolved: 60 rows, 300 columns, 444 nonzeros
+Variable types: 156 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584117    0.00000   100%     -    0s
+     0     0    2.62921    0   60    4.65841    2.62921  43.6%     -    0s
+     0     0    3.35561    0   60    4.65841    3.35561  28.0%     -    0s
+     0     0    3.46862    0   63    4.65841    3.46862  25.5%     -    0s
+     0     0    3.59280    0   61    4.65841    3.59280  22.9%     -    0s
+     0     0    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+     0     2    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+H   34    19                       4.2957627    3.63908  15.3%  29.0    0s
+H   84    49                       4.1586281    3.69379  11.2%  25.6    0s
+*  140    80              14       4.1586281    3.73572  10.2%  28.4    0s
+*  496   220              17       4.1586281    3.81505  8.26%  26.0    0s
+*  894   290              22       4.1586242    3.83731  7.73%  31.2    2s
+* 2207   361              22       4.1586242    3.96427  4.67%  31.3    3s
+* 3565   176              18       4.1586242    4.04637  2.70%  29.9    4s
+* 3719    95              27       4.1586242    4.06162  2.33%  29.6    4s
+* 3837    14              19       4.1586242    4.09206  1.60%  29.4    4s
+* 3937     0              20       4.1586242    4.15858  0.00%  29.0    4s
+
+Cutting planes:
+  MIR: 18
+  Flow cover: 4
+
+Explored 3940 nodes (114738 simplex iterations) in 4.74 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/02/15 12:37:41
+
+Optimize a model with 204 rows, 312 columns and 744 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 156 rows and 156 columns
+Presolve time: 0.03s
+Presolved: 60 rows, 300 columns, 444 nonzeros
+Variable types: 156 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584117    0.00000   100%     -    0s
+     0     0    2.62921    0   60    4.65841    2.62921  43.6%     -    0s
+     0     0    3.35561    0   60    4.65841    3.35561  28.0%     -    0s
+     0     0    3.46862    0   63    4.65841    3.46862  25.5%     -    0s
+     0     0    3.59280    0   61    4.65841    3.59280  22.9%     -    0s
+     0     0    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+     0     2    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+H   34    19                       4.2957627    3.63908  15.3%  29.0    0s
+H   84    49                       4.1586281    3.69379  11.2%  25.6    0s
+*  140    80              14       4.1586281    3.73572  10.2%  28.4    0s
+*  496   220              17       4.1586281    3.81505  8.26%  26.0    1s
+*  894   290              22       4.1586242    3.83731  7.73%  31.2    2s
+* 2207   361              22       4.1586242    3.96427  4.67%  31.3    3s
+  3283   231     cutoff   21         4.15862    4.03085  3.07%  30.2    5s
+* 3565   176              18       4.1586242    4.04637  2.70%  29.9    5s
+* 3719    95              27       4.1586242    4.06162  2.33%  29.6    5s
+* 3837    14              19       4.1586242    4.09206  1.60%  29.4    5s
+* 3937     0              20       4.1586242    4.15858  0.00%  29.0    5s
+
+Cutting planes:
+  MIR: 18
+  Flow cover: 4
+
+Explored 3940 nodes (114738 simplex iterations) in 5.40 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/02/15 13:25:20
+
+Optimize a model with 204 rows, 312 columns and 744 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 156 rows and 156 columns
+Presolve time: 0.02s
+Presolved: 60 rows, 300 columns, 444 nonzeros
+Variable types: 156 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584117    0.00000   100%     -    0s
+     0     0    2.62921    0   60    4.65841    2.62921  43.6%     -    0s
+     0     0    3.35561    0   60    4.65841    3.35561  28.0%     -    0s
+     0     0    3.46862    0   63    4.65841    3.46862  25.5%     -    0s
+     0     0    3.59280    0   61    4.65841    3.59280  22.9%     -    0s
+     0     0    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+     0     2    3.61146    0   61    4.65841    3.61146  22.5%     -    0s
+H   34    19                       4.2957627    3.63908  15.3%  29.0    0s
+H   84    49                       4.1586281    3.69379  11.2%  25.6    0s
+*  140    80              14       4.1586281    3.73572  10.2%  28.4    0s
+*  496   220              17       4.1586281    3.81505  8.26%  26.0    0s
+*  894   290              22       4.1586242    3.83731  7.73%  31.2    2s
+* 2207   361              22       4.1586242    3.96427  4.67%  31.3    3s
+* 3565   176              18       4.1586242    4.04637  2.70%  29.9    4s
+* 3719    95              27       4.1586242    4.06162  2.33%  29.6    4s
+* 3837    14              19       4.1586242    4.09206  1.60%  29.4    4s
+* 3937     0              20       4.1586242    4.15858  0.00%  29.0    4s
+
+Cutting planes:
+  MIR: 18
+  Flow cover: 4
+
+Explored 3940 nodes (114738 simplex iterations) in 4.92 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158624175358e+00, best bound 4.158624175358e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 11:23:47
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 11:53:06
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 12:59:24
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:01:05
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:03:04
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:05:29
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:06:22
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:11:58
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:15:24
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:18:59
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:20:00
+
+
+Gurobi 6.5.0 (win64) logging started 12/03/15 13:31:52
+
+Optimize a model with 156 rows, 804 columns and 480 nonzeros
+Model has 12 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 144 rows and 732 columns
+Presolve time: 0.04s
+Presolved: 24 rows, 204 columns, 204 nonzeros
+Variable types: 144 continuous, 60 integer (60 binary)
+
+Root relaxation: objective 3.000000e-01, 12 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       4.6584121    0.00000   100%     -    0s
+     0     0    2.42523    0   60    4.65841    2.42523  47.9%     -    0s
+     0     0    3.05103    0   60    4.65841    3.05103  34.5%     -    0s
+     0     0    3.18321    0   60    4.65841    3.18321  31.7%     -    0s
+     0     2    3.18321    0   60    4.65841    3.18321  31.7%     -    0s
+H  100    77                       4.6519021    3.33122  28.4%  66.2    0s
+H  129   104                       4.6210979    3.33122  27.9%  65.4    0s
+H  160   111                       4.5264579    3.37278  25.5%  57.3    0s
+H  200   125                       4.3713166    3.37278  22.8%  52.6    0s
+*  243   146              17       4.3713149    3.37278  22.8%  51.4    0s
+*  247   141              15       4.3363109    3.37278  22.2%  50.7    0s
+*  463   209              27       4.2392869    3.37278  20.4%  61.2    2s
+*  468   201              24       4.1969081    3.37278  19.6%  61.2    2s
+*  482   185              26       4.1586295    3.37278  18.9%  61.2    2s
+  1825   657     cutoff   27         4.15863    3.73262  10.2%  57.0    5s
+* 4832  1088              29       4.1586295    3.88640  6.55%  50.2    8s
+  5637  1046    4.14266   30   33    4.15863    3.92311  5.66%  49.2   10s
+* 6789   940              24       4.1586281    3.95928  4.79%  48.0   11s
+* 6853   942              28       4.1586281    3.95959  4.79%  48.0   11s
+* 8830    77              23       4.1586281    4.11334  1.09%  45.3   13s
+
+Cutting planes:
+  Gomory: 4
+  MIR: 8
+  Flow cover: 72
+
+Explored 8958 nodes (402855 simplex iterations) in 13.56 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 4.158628072426e+00, best bound 4.158602031922e+00, gap 0.0006%

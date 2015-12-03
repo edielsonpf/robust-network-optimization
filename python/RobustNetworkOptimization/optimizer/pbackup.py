@@ -5,7 +5,7 @@ Created on Nov 23, 2015
 '''
 from gurobipy import *
 
-class Backup(object):
+class PathBackup(object):
     '''
     classdocs
     '''
@@ -14,34 +14,40 @@ class Backup(object):
     
     # Private model variables
     __BackupCapacity = {}
-    __bBackupLink = {}
-    __ValidLink = {}
-        
+    __bPath = {}
+           
     # Private model parameters
     __links = []
+    __paths = []
     __nodes = []
     __capacity = []
     __mean = []
     __std = []
+    __Psd = []
+    __Pij = []
     __invstd = 1
     
-    def __init__(self,nodes,links,capacity,mean,std,invstd):
+    
+    def __init__(self,nodes,links,paths,Psd,Pij,capacity,mean,std,invstd):
         '''
         Constructor
         '''
         self.__links = links
         self.__nodes = nodes
+        self.__paths = paths
         self.__capacity = capacity
         self.__mean = mean
         self.__std = std
         self.__invstd = invstd
+        self.__Psd = Psd
+        self.__Pij = Pij
         
         self.__loadModel()
                 
     def __loadModel(self):
                 
         # Create optimization model
-        self.__model = Model('Backup')
+        self.__model = Model('PathBackup')
     
         # Auxiliary variables for SOCP reformulation
         U = {}
@@ -52,9 +58,8 @@ class Backup(object):
             self.__BackupCapacity[i,j] = self.__model.addVar(lb=0, obj=1, name='Backup_Capacity[%s,%s]' % (i, j))
         self.__model.update()
          
-        for i,j in self.__links:
-            for s,d in self.__links:
-                self.__bBackupLink[i,j,s,d] = self.__model.addVar(vtype=GRB.BINARY,obj=1,name='Backup_Link[%s,%s,%s,%s]' % (i, j, s, d))
+        for p in self.__paths:
+            self.__bPath[self.__paths.index(p)] = self.__model.addVar(vtype=GRB.BINARY,obj=1,name='Backup_Path[%s]' % (self.__paths.index(p)))
         self.__model.update()
         
         for i,j in self.__links:
@@ -62,8 +67,8 @@ class Backup(object):
         self.__model.update()
         
         for i,j in self.__links:
-            for s,d in self.__links:
-                R[i,j,s,d] = self.__model.addVar(obj=1,name='R[%s,%s,%s,%s]' % (i,j,s,d))
+            for p in self.__paths:
+                R[i,j,self.__paths.index(p)] = self.__model.addVar(obj=1,name='R[%s,%s,%s]' % (i,j,self.__paths.index(p)))
         self.__model.update()
         
         self.__model.modelSense = GRB.MINIMIZE
@@ -80,40 +85,28 @@ class Backup(object):
          
         # Link capacity constraints
         for i,j in self.__links:
-            self.__model.addConstr(self.__BackupCapacity[i,j] >= quicksum(self.__mean[s,d]*self.__bBackupLink[i,j,s,d] for (s,d) in self.__links) + U[i,j]*self.__invstd,'[CONST]Link_Cap_%s_%s' % (i, j))
+            self.__model.addConstr(self.__BackupCapacity[i,j] >= quicksum(self.__mean[self.__paths.index(p)]*self.__bPath[self.__paths.index(p)] for p in self.__Pij[i,j]) + U[i,j]*self.__invstd,'[CONST]Link_Cap[%s][%s]' % (i, j))
         self.__model.update()
             
         # SCOP Reformulation Constraints
         for i,j in self.__links:
-            self.__model.addConstr(quicksum(R[i,j,s,d]*R[i,j,s,d] for (s,d) in self.__links) <= U[i,j]*U[i,j],'[CONST]SCOP1[%s][%s]' % (i, j))
+            self.__model.addConstr(quicksum(R[i,j,self.__paths.index(p)]*R[i,j,self.__paths.index(p)] for p in self.__Pij[i,j]) <= U[i,j]*U[i,j],'[CONST]SCOP1[%s][%s]' % (i, j))
         self.__model.update()
             
         # SCOP Reformulation Constraints    
         for i,j in self.__links:
-            for s,d in self.__links:
-                self.__model.addConstr(self.__std[s,d]*self.__bBackupLink[i,j,s,d] == R[i,j,s,d],'[CONST]SCOP2[%s][%s][%s][%s]' % (i, j,s,d))
+            for p in self.__Pij[i,j]:
+                self.__model.addConstr(self.__std[self.__paths.index(p)]*self.__bPath[self.__paths.index(p)] == R[i,j,self.__paths.index(p)],'[CONST]SCOP2[%s][%s][%s]' % (i,j,self.__paths.index(p)))
         self.__model.update()
         
-        for i in self.__nodes:
-            for s,d in self.__links:
-                # Flow conservation constraints
-                if i == s:
-                    self.__model.addConstr(quicksum(self.__bBackupLink[i,j,s,d] for i,j in self.__links.select(i,'*')) - 
-                                           quicksum(self.__bBackupLink[j,i,s,d] for j,i in self.__links.select('*',i)) == 1,'Flow1[%s,%s,%s,%s]' % (i,j,s, d))
-                # Flow conservation constraints
-                elif i == d:
-                    self.__model.addConstr(quicksum(self.__bBackupLink[i,j,s,d] for i,j in self.__links.select(i,'*')) - 
-                                           quicksum(self.__bBackupLink[j,i,s,d] for j,i in self.__links.select('*',i)) == -1,'Flow2[%s,%s,%s,%s]' % (i,j,s, d))
-                # Flow conservation constraints
-                else:    
-                    self.__model.addConstr(quicksum(self.__bBackupLink[i,j,s,d] for i,j in self.__links.select(i,'*')) - 
-                                           quicksum(self.__bBackupLink[j,i,s,d] for j,i in self.__links.select('*',i)) == 0,'Flow3[%s,%s,%s,%s]' % (i,j,s, d))
+        for s,d in self.__links:
+            self.__model.addConstr(quicksum(self.__bPath[self.__paths.index(p)] for p in self.__Psd[s,d]) == 1,'UniquePath[%s,%s]' % (s, d))
         self.__model.update()
                 
         
     def optimize(self):
         
-        self.__model.write('backup.lp')
+        self.__model.write('pathbackup.lp')
  
         # Compute optimal solution
         self.__model.optimize()
