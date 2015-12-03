@@ -67,8 +67,8 @@ class PathBackup(object):
         self.__model.update()
         
         for i,j in self.__links:
-            for p in self.__paths:
-                R[i,j,self.__paths.index(p)] = self.__model.addVar(obj=1,name='R[%s,%s,%s]' % (i,j,self.__paths.index(p)))
+            for s,d in self.__links:
+                R[i,j,s,d] = self.__model.addVar(obj=1,name='R[%s,%s,%s,%s]' % (i,j,s,d))
         self.__model.update()
         
         self.__model.modelSense = GRB.MINIMIZE
@@ -85,18 +85,18 @@ class PathBackup(object):
          
         # Link capacity constraints
         for i,j in self.__links:
-            self.__model.addConstr(self.__BackupCapacity[i,j] >= quicksum(self.__mean[self.__paths.index(p)]*self.__bPath[self.__paths.index(p)] for p in self.__Pij[i,j]) + U[i,j]*self.__invstd,'[CONST]Link_Cap[%s][%s]' % (i, j))
+            self.__model.addConstr(self.__BackupCapacity[i,j] >= quicksum(self.__mean[s,d]*quicksum(self.__bPath[self.__paths.index(p)] for p in self.__Pij[i,j,s,d]) for s,d in self.__links) + U[i,j]*self.__invstd,'[CONST]Link_Cap[%s][%s]' % (i, j))
         self.__model.update()
             
         # SCOP Reformulation Constraints
         for i,j in self.__links:
-            self.__model.addConstr(quicksum(R[i,j,self.__paths.index(p)]*R[i,j,self.__paths.index(p)] for p in self.__Pij[i,j]) <= U[i,j]*U[i,j],'[CONST]SCOP1[%s][%s]' % (i, j))
+            self.__model.addConstr(quicksum(R[i,j,s,d]*R[i,j,s,d] for s,d in self.__links) <= U[i,j]*U[i,j],'[CONST]SCOP1[%s][%s]' % (i, j))
         self.__model.update()
             
         # SCOP Reformulation Constraints    
         for i,j in self.__links:
-            for p in self.__Pij[i,j]:
-                self.__model.addConstr(self.__std[self.__paths.index(p)]*self.__bPath[self.__paths.index(p)] == R[i,j,self.__paths.index(p)],'[CONST]SCOP2[%s][%s][%s]' % (i,j,self.__paths.index(p)))
+            for s,d in self.__links:
+                self.__model.addConstr(self.__std[s,d]*quicksum(self.__bPath[self.__paths.index(p)] for p in self.__Pij[i,j,s,d]) == R[i,j,s,d],'[CONST]SCOP2[%s][%s][%s][%s]' % (i,j,s,d))
         self.__model.update()
         
         for s,d in self.__links:

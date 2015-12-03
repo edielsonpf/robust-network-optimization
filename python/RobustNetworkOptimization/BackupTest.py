@@ -92,43 +92,41 @@ def BackupModelTest():
     plt.axis('off')
     plt.show() # display
     
-def BackupPathModelTest():
+
+def BackupPathModelTest(num_nodes,p,invstd):
     #don't stop on plotted figures 
     #plt.ion() 
     
-    # Constant definition
-    p = 0.025
-    invstd = 2.326347874
-    
     #Generating graphs
     #G=nx.DiGraph()
-    H = nx.complete_graph(4)
+    H = nx.complete_graph(num_nodes)
     G = H.to_directed()
     
     links = G.edges()
     nodes = G.nodes() 
     
-    paths = getAllPaths(G, links)
+    paths = getAllPaths(G)
     
     Psd = {}
     for s,d in links:
         Psd[s,d] = nx.all_simple_paths(G, source=s, target=d)
         #print(list(Psd[s,d]))
    
-    Pij = getPaths(G, links)
-        
+    Pij={}
+    for i,j in links:
+        for s,d in links:
+            Pij[i,j,s,d] = getLinkPaths(G,i,j,s,d)
+    
     capacity={}
     mean={}
     std={}
-    for i,j in links:
+    for s,d in links:
         #generating capacity list
-        capacity[i,j] = 1
+        capacity[s,d] = 1
+        mean[s,d] = p
+        std[s,d]=math.sqrt(p*(1-p))
+
     
-    for pth in paths:
-        #generating mean list
-        mean[paths.index(pth)] = p
-        std[paths.index(pth)]=math.sqrt(p*(1-p))
-     
     #elarge=[(u,v) for (u,v) in G.edges(data=True)]
     #esmall=[(u,v) for (u,v) in G.edges(data=True)]
      
@@ -174,32 +172,60 @@ def BackupPathModelTest():
     plt.axis('off')
     plt.show() # display
 
+def getLinkPaths(G,i,j,s,d):
+    """Generate all simple paths in the graph G from source = i to target = j that uses 
+    edge source = s to target = d.
 
-def getPaths(G,links):
-    P={}
-    for i,j in links:
-        #print('Link: '+ str([i,j]))
-        Pij=list()
-        for s,d in links:
-            #print('Paths in: '+ str([s,d]))
-            for path in nx.all_simple_paths(G, source=s, target=d):
+    A simple path is a path with no repeated nodes.
+
+    Parameters
+    ----------
+    G : NetworkX graph
+    i : starting node for path
+    j : ending node for path
+    s : starting node for path
+    d : ending node for path
+    
+    Returns
+    -------
+    path_generator: Paths
+       A tuple list with all paths for edge (s,d) that uses (i,j).
+
+    """
+    Paths=list()
+    for path in nx.all_simple_paths(G, source=s, target=d):
+        #print(path)
+        #print([i,j])
+        #print(set(path).issubset([i, j])) # => True
+        if set([i, j]).issubset(path):
+            if (list(path).index(j) == list(path).index(i)+1):
+                #print('True')
                 #print(path)
-                #print([i,j])
-                #print(set(path).issubset([i, j])) # => True
-                if set([i, j]).issubset(path):
-                    if (list(path).index(j) == list(path).index(i)+1):
-                        #print('True')
-                        #print(path)
-                        Pij.append(path) # => True
-                    #else:
-                        #print('False')
-        #print(Pij)
-        P[i,j]=Pij
-    return P 
+                Paths.append(path) # => True
+            #else:
+                #print('False')
+    return Paths 
 
-def getAllPaths(G,links):
-    P=list()
+def getAllPaths(G):
+    """Generate all simple paths in the graph G from each link (source to target).
+
+    A simple path is a path with no repeated nodes.
+
+    Parameters
+    ----------
+    G : NetworkX graph
+
+    Returns
+    -------
+    path_generator: Paths
+       A tuple list with all paths for each edge in the graph.
+
+    """
+    
+    links = G.edges()
+    
+    Paths=list()
     for i,j in links:
         for path in nx.all_simple_paths(G, source=i, target=j):
-            P.append(path)
-    return tuple(P)     
+            Paths.append(path)
+    return tuple(Paths)     
