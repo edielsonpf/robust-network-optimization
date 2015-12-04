@@ -63,7 +63,7 @@ def BackupModelTest():
     nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
     
     plt.axis('off')
-    plt.savefig("weighted_graph.png") # save as png
+    #plt.savefig("weighted_graph.png") # save as png
     plt.show() # display
     
     #optimization
@@ -94,24 +94,56 @@ def BackupModelTest():
     
 
 def BackupPathModelTest(num_nodes,p,invstd):
-    #don't stop on plotted figures 
-    #plt.ion() 
+    ""
+    #######################################
+    #        Generating graphs
+    #######################################
     
-    #Generating graphs
-    #G=nx.DiGraph()
+    #Generates a complete indirect graph 
     H = nx.complete_graph(num_nodes)
+    # transforms the indirect graph in directed one
     G = H.to_directed()
     
+    #Generates a list with all links (edges) in the graph
     links = G.edges()
+    #Generates a list with all nodes (vertex) in the graph
     nodes = G.nodes() 
     
+    ##############################################
+    #            Plot Initial Graph
+    ##############################################  
+    
+    #don't stop on plotted figures 
+    #plt.ion() 
+        
+    pos=nx.spring_layout(G) # positions for all nodes
+     
+    # nodes
+    nx.draw_networkx_nodes(G,pos,node_size=500)
+     
+    # edges
+    nx.draw_networkx_edges(G,pos,width=2)
+     
+    # labels
+    nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
+     
+    plt.axis('off')
+    #plt.savefig("weighted_graph.png") # save as png
+    plt.show() # display
+    
+    #######################################
+    #        Optimization Model
+    #######################################
+    
+    #Find all possible paths in the graph for all source -> destination pairs
     paths = getAllPaths(G)
     
+    #Find all possible paths for each source (s) -> destination (d) pair
     Psd = {}
     for s,d in links:
         Psd[s,d] = nx.all_simple_paths(G, source=s, target=d)
-        #print(list(Psd[s,d]))
-   
+    
+    #Find all s->d paths that uses the i->j link
     Pij={}
     for i,j in links:
         for s,d in links:
@@ -121,41 +153,31 @@ def BackupPathModelTest(num_nodes,p,invstd):
     mean={}
     std={}
     for s,d in links:
-        #generating capacity list
+        #generating capacity for each s,d link
         capacity[s,d] = 1
+        #Generate mean for each s,d link based on Bernouilli distribution 
         mean[s,d] = p
+        #Generate std for each s,d link based on Bernouilli distribution 
         std[s,d]=math.sqrt(p*(1-p))
 
     
-    #elarge=[(u,v) for (u,v) in G.edges(data=True)]
-    #esmall=[(u,v) for (u,v) in G.edges(data=True)]
-     
-    pos=nx.spring_layout(G) # positions for all nodes
-     
-    # nodes
-    nx.draw_networkx_nodes(G,pos,node_size=500)
-     
-    # edges
-    nx.draw_networkx_edges(G,pos,width=2)
-    #nx.draw_networkx_edges(G,pos,width=2,alpha=0.5,edge_color='b',style='dashed')
-     
-    # labels
-    nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-     
-    plt.axis('off')
-    plt.savefig("weighted_graph.png") # save as png
-    plt.show() # display
-     
     #optimization
+    MipGap = 0.1
+    TimeLimit = 300
     links = tuplelist(links)
+    # Creating a backup network model
     BackupNet = PathBackup(nodes,links,paths,Psd,Pij,capacity,mean,std,invstd)
-    solution = BackupNet.optimize()
-     
-    #penalizes the links chosen to be backup links
+    # Find a optimal solution
+    solution = BackupNet.optimize(MipGap,TimeLimit)
+         
+    #Remove links not chosen as backup link
     for i,j in links:
         if solution[i,j] < 0.1:
             G.remove_edge(i, j)
-         
+    
+    ##############################################
+    #            Plot Solution
+    ##############################################     
     esmall=[(u,v) for (u,v) in G.edges()]
      
     # nodes
@@ -167,10 +189,10 @@ def BackupPathModelTest(num_nodes,p,invstd):
     # labels
     nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
      
-    #plt.ioff() 
-     
     plt.axis('off')
     plt.show() # display
+    
+    #plt.ioff()
 
 def getLinkPaths(G,i,j,s,d):
     """Generate all simple paths in the graph G from source = i to target = j that uses 

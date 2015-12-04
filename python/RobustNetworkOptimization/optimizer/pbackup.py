@@ -104,10 +104,14 @@ class PathBackup(object):
         self.__model.update()
                 
         
-    def optimize(self):
+    def optimize(self,MipGap,TimeLimit):
         
         self.__model.write('pathbackup.lp')
  
+        self.__model.params.timeLimit = TimeLimit
+        
+        self.__model.params.MIPGap=MipGap
+         
         # Compute optimal solution
         self.__model.optimize()
         
@@ -120,6 +124,10 @@ class PathBackup(object):
             
         else:
             print('Optimal value not found!\n')
-            solution = []
+            solution = self.__model.getAttr('x', self.__BackupCapacity)
+            for i,j in self.__links:
+                if solution[i,j] > 0:
+                    print('%s -> %s: %g' % (i, j, solution[i,j]))
+            #solution = []
             
         return solution;    
