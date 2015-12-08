@@ -111,10 +111,15 @@ class Backup(object):
         self.__model.update()
                 
         
-    def optimize(self):
+    def optimize(self,MipGap, TimeLimit):
         
         self.__model.write('backup.lp')
- 
+        
+        if MipGap != None:
+            self.__model.params.timeLimit = TimeLimit
+        if TimeLimit != None:
+            self.__model.params.MIPGap = MipGap
+         
         # Compute optimal solution
         self.__model.optimize()
         

@@ -10,31 +10,20 @@ from optimizer.pbackup import PathBackup
 import math
 from gurobipy import tuplelist
 
-def BackupModelTest():
-    #don't stop on plotted figures 
-    #plt.ion() 
+def BackupModelTest(num_nodes,p,invstd,mip_gap, time_limit):
     
-    # Constant definition
-    p = 0.025
-    invstd = 2.326347874
+    #######################################
+    #        Generating graphs
+    #######################################
     
-    #Generating graphs
-    G=nx.DiGraph()
+    #Generates a complete indirect graph 
+    H = nx.complete_graph(num_nodes)
+    # transforms the indirect graph in directed one
+    G = H.to_directed()
     
-    G.add_edge('1','2',capcity=1)
-    G.add_edge('1','3',capcity=1)
-    G.add_edge('1','4',capcity=1)
-    G.add_edge('2','1',capcity=1)
-    G.add_edge('2','3',capcity=1)
-    G.add_edge('2','4',capcity=1)
-    G.add_edge('3','1',capcity=1)
-    G.add_edge('3','2',capcity=1)
-    G.add_edge('3','4',capcity=1)
-    G.add_edge('4','1',capcity=1)
-    G.add_edge('4','2',capcity=1)
-    G.add_edge('4','3',capcity=1)
-    
+    #Generates a list with all links (edges) in the graph
     links = G.edges()
+    #Generates a list with all nodes (vertex) in the graph
     nodes = G.nodes() 
     
     capacity={}
@@ -47,17 +36,13 @@ def BackupModelTest():
         mean[i,j] = p
         std[i,j]=math.sqrt(p*(1-p))
     
-    elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['capcity'] >0.5]
-    esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['capcity'] <=0.5]
-    
     pos=nx.spring_layout(G) # positions for all nodes
     
     # nodes
     nx.draw_networkx_nodes(G,pos,node_size=500)
     
     # edges
-    nx.draw_networkx_edges(G,pos,edgelist=elarge,width=2)
-    nx.draw_networkx_edges(G,pos,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
+    nx.draw_networkx_edges(G,pos,width=2)
     
     # labels
     nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
@@ -69,7 +54,7 @@ def BackupModelTest():
     #optimization
     links = tuplelist(links)
     BackupNet = Backup(nodes,links,capacity,mean,std,invstd)
-    solution = BackupNet.optimize()
+    solution = BackupNet.optimize(mip_gap,time_limit)
     
     #penalizes the links chosen to be backup links
     for i,j in links:
@@ -93,7 +78,7 @@ def BackupModelTest():
     plt.show() # display
     
 
-def BackupPathModelTest(num_nodes,p,invstd):
+def BackupPathModelTest(num_nodes,p,invstd,mip_gap,time_limit):
     ""
     #######################################
     #        Generating graphs
@@ -162,13 +147,11 @@ def BackupPathModelTest(num_nodes,p,invstd):
 
     
     #optimization
-    MipGap = 0.1
-    TimeLimit = 300
     links = tuplelist(links)
     # Creating a backup network model
     BackupNet = PathBackup(nodes,links,paths,Psd,Pij,capacity,mean,std,invstd)
     # Find a optimal solution
-    solution = BackupNet.optimize(MipGap,TimeLimit)
+    solution = BackupNet.optimize(mip_gap,time_limit)
          
     #Remove links not chosen as backup link
     for i,j in links:
@@ -216,16 +199,9 @@ def getLinkPaths(G,i,j,s,d):
     """
     Paths=list()
     for path in nx.all_simple_paths(G, source=s, target=d):
-        #print(path)
-        #print([i,j])
-        #print(set(path).issubset([i, j])) # => True
         if set([i, j]).issubset(path):
             if (list(path).index(j) == list(path).index(i)+1):
-                #print('True')
-                #print(path)
                 Paths.append(path) # => True
-            #else:
-                #print('False')
     return Paths 
 
 def getAllPaths(G):

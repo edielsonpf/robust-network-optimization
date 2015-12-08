@@ -108,9 +108,11 @@ class PathBackup(object):
         
         self.__model.write('pathbackup.lp')
  
-        self.__model.params.timeLimit = TimeLimit
+        if TimeLimit != None:
+            self.__model.params.timeLimit = TimeLimit
         
-        self.__model.params.MIPGap=MipGap
+        if MipGap != None:
+            self.__model.params.MIPGap=MipGap
          
         # Compute optimal solution
         self.__model.optimize()
