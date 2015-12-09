@@ -78,7 +78,7 @@ def BackupModelTest(num_nodes,p,invstd,mip_gap, time_limit):
     plt.show() # display
     
 
-def BackupPathModelTest(num_nodes,p,invstd,mip_gap,time_limit):
+def BackupPathModelTest(options,num_nodes,p,invstd,mip_gap,time_limit,cutoff):
     ""
     #######################################
     #        Generating graphs
@@ -98,41 +98,42 @@ def BackupPathModelTest(num_nodes,p,invstd,mip_gap,time_limit):
     #            Plot Initial Graph
     ##############################################  
     
-    #don't stop on plotted figures 
-    #plt.ion() 
+    if options == 1:
+        #don't stop on plotted figures 
+        #plt.ion() 
+            
+        pos=nx.spring_layout(G) # positions for all nodes
+         
+        # nodes
+        nx.draw_networkx_nodes(G,pos,node_size=500)
+         
+        # edges
+        nx.draw_networkx_edges(G,pos,width=2)
+         
+        # labels
+        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
+         
+        plt.axis('off')
+        #plt.savefig("weighted_graph.png") # save as png
+        plt.show() # display
         
-    pos=nx.spring_layout(G) # positions for all nodes
-     
-    # nodes
-    nx.draw_networkx_nodes(G,pos,node_size=500)
-     
-    # edges
-    nx.draw_networkx_edges(G,pos,width=2)
-     
-    # labels
-    nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-     
-    plt.axis('off')
-    #plt.savefig("weighted_graph.png") # save as png
-    plt.show() # display
-    
     #######################################
     #        Optimization Model
     #######################################
     
     #Find all possible paths in the graph for all source -> destination pairs
-    paths = getAllPaths(G)
-    
+    paths = getAllPaths(G,cutoff)
+ 
     #Find all possible paths for each source (s) -> destination (d) pair
     Psd = {}
     for s,d in links:
-        Psd[s,d] = nx.all_simple_paths(G, source=s, target=d)
+        Psd[s,d] = nx.all_simple_paths(G, s, d,cutoff)
     
     #Find all s->d paths that uses the i->j link
     Pij={}
     for i,j in links:
         for s,d in links:
-            Pij[i,j,s,d] = getLinkPaths(G,i,j,s,d)
+            Pij[i,j,s,d] = getLinkPaths(G,i,j,s,d,cutoff)
     
     capacity={}
     mean={}
@@ -161,23 +162,24 @@ def BackupPathModelTest(num_nodes,p,invstd,mip_gap,time_limit):
     ##############################################
     #            Plot Solution
     ##############################################     
-    esmall=[(u,v) for (u,v) in G.edges()]
-     
-    # nodes
-    nx.draw_networkx_nodes(G,pos,node_size=500)
-     
-    # edges
-    nx.draw_networkx_edges(G,pos,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
-     
-    # labels
-    nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-     
-    plt.axis('off')
-    plt.show() # display
+    if options == 1:
+        esmall=[(u,v) for (u,v) in G.edges()]
+         
+        # nodes
+        nx.draw_networkx_nodes(G,pos,node_size=500)
+         
+        # edges
+        nx.draw_networkx_edges(G,pos,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
+         
+        # labels
+        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
+         
+        plt.axis('off')
+        plt.show() # display
     
-    #plt.ioff()
+        #plt.ioff()
 
-def getLinkPaths(G,i,j,s,d):
+def getLinkPaths(G,i,j,s,d,cutoff):
     """Generate all simple paths in the graph G from source = i to target = j that uses 
     edge source = s to target = d.
 
@@ -198,13 +200,13 @@ def getLinkPaths(G,i,j,s,d):
 
     """
     Paths=list()
-    for path in nx.all_simple_paths(G, source=s, target=d):
+    for path in nx.all_simple_paths(G, s, d,cutoff):
         if set([i, j]).issubset(path):
             if (list(path).index(j) == list(path).index(i)+1):
                 Paths.append(path) # => True
     return Paths 
 
-def getAllPaths(G):
+def getAllPaths(G,cutoff):
     """Generate all simple paths in the graph G from each link (source to target).
 
     A simple path is a path with no repeated nodes.
@@ -224,6 +226,6 @@ def getAllPaths(G):
     
     Paths=list()
     for i,j in links:
-        for path in nx.all_simple_paths(G, source=i, target=j):
+        for path in nx.all_simple_paths(G, i, j,cutoff):
             Paths.append(path)
     return tuple(Paths)     
