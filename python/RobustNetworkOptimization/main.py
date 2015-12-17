@@ -12,13 +12,14 @@ invstd = 2.326347874
 
 MipGap = None
 TimeLimit = None
-  
-#BackupModelTest(NumNodes,p,invstd,MipGap,TimeLimit)
 Options = 0
-#CutoffList = [None, 3, 2, 1]
-CutoffList = [None, 1]
+  
+#BackupModelTest(Options, NumNodes,p,invstd,MipGap,TimeLimit)
+
+
+#CutoffList = [None, 2, 1]
+CutoffList = [None]
 
 for index in range(len(CutoffList)):
     cutoff = CutoffList[index]
-    print(cutoff)
     BackupPathModelTest(Options,NumNodes,p,invstd,MipGap,TimeLimit,cutoff)

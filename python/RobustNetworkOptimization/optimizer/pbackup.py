@@ -41,7 +41,7 @@ class PathBackup(object):
         self.__invstd = invstd
         self.__Psd = Psd
         self.__Pij = Pij
-        
+                
         self.__loadModel()
                 
     def __loadModel(self):
@@ -52,13 +52,15 @@ class PathBackup(object):
         # Auxiliary variables for SOCP reformulation
         U = {}
         R = {}
-      
+        
         # Create variables
         for i,j in self.__links:
             self.__BackupCapacity[i,j] = self.__model.addVar(lb=0, obj=1, name='Backup_Capacity[%s,%s]' % (i, j))
         self.__model.update()
          
         for p in self.__paths:
+            #LP Relaxation
+            #self.__bPath[self.__paths.index(p)] = self.__model.addVar(lb=0,obj=1,name='Backup_Path[%s]' % (self.__paths.index(p)))
             self.__bPath[self.__paths.index(p)] = self.__model.addVar(vtype=GRB.BINARY,obj=1,name='Backup_Path[%s]' % (self.__paths.index(p)))
         self.__model.update()
         
@@ -72,7 +74,6 @@ class PathBackup(object):
         self.__model.update()
         
         self.__model.modelSense = GRB.MINIMIZE
-        #m.setObjective(quicksum([fixedCosts[p]*open[p] for p in plants]))
         self.__model.setObjective(quicksum(self.__BackupCapacity[i,j] for i,j in self.__links))
         self.__model.update()
         
@@ -99,10 +100,10 @@ class PathBackup(object):
                 self.__model.addConstr(self.__std[s,d]*quicksum(self.__bPath[self.__paths.index(p)] for p in self.__Pij[i,j,s,d]) == R[i,j,s,d],'[CONST]SCOP2[%s][%s][%s][%s]' % (i,j,s,d))
         self.__model.update()
         
+        # Unique path 
         for s,d in self.__links:
             self.__model.addConstr(quicksum(self.__bPath[self.__paths.index(p)] for p in self.__Psd[s,d]) == 1,'UniquePath[%s,%s]' % (s, d))
         self.__model.update()
-                
         
     def optimize(self,MipGap,TimeLimit):
         
@@ -119,6 +120,10 @@ class PathBackup(object):
         
         # Print solution
         if self.__model.status == GRB.Status.OPTIMAL:
+            solution = self.__model.getAttr('x', self.__bPath)
+            for p in self.__paths:
+                if solution[self.__paths.index(p)] > 0.001:
+                    print('Path[%s] = %s = %s' % (self.__paths.index(p),p,solution[self.__paths.index(p)]))
             solution = self.__model.getAttr('x', self.__BackupCapacity)
             for i,j in self.__links:
                 if solution[i,j] > 0:

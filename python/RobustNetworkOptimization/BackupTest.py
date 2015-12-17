@@ -10,7 +10,7 @@ from optimizer.pbackup import PathBackup
 import math
 from gurobipy import tuplelist
 
-def BackupModelTest(num_nodes,p,invstd,mip_gap, time_limit):
+def BackupModelTest(options, num_nodes,p,invstd,mip_gap, time_limit):
     
     #######################################
     #        Generating graphs
@@ -29,27 +29,37 @@ def BackupModelTest(num_nodes,p,invstd,mip_gap, time_limit):
     capacity={}
     mean={}
     std={}
-    for i,j in links:
-        #generating capacity list
-        capacity[i,j] = 1
-        #generating mean list
-        mean[i,j] = p
-        std[i,j]=math.sqrt(p*(1-p))
+    AuxCount = 0
+    Aux=1
+    for s,d in links:
+        if AuxCount%2 == 0:
+            Aux = 2
+        else:
+            Aux = 1
+        #generating capacity for each s,d link
+        capacity[s,d] = Aux
+        #Generate mean for each s,d link based on Bernouilli distribution 
+        mean[s,d] = Aux*p
+        #Generate std for each s,d link based on Bernouilli distribution 
+        std[s,d]=math.sqrt(Aux*p*(1-(Aux*p)))
+        AuxCount = AuxCount+1
     
-    pos=nx.spring_layout(G) # positions for all nodes
-    
-    # nodes
-    nx.draw_networkx_nodes(G,pos,node_size=500)
-    
-    # edges
-    nx.draw_networkx_edges(G,pos,width=2)
-    
-    # labels
-    nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-    
-    plt.axis('off')
-    #plt.savefig("weighted_graph.png") # save as png
-    plt.show() # display
+    if options == 1:
+        
+        pos=nx.spring_layout(G) # positions for all nodes
+        
+        # nodes
+        nx.draw_networkx_nodes(G,pos,node_size=500)
+        
+        # edges
+        nx.draw_networkx_edges(G,pos,width=2)
+        
+        # labels
+        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
+        
+        plt.axis('off')
+        #plt.savefig("weighted_graph.png") # save as png
+        plt.show() # display
     
     #optimization
     links = tuplelist(links)
@@ -61,21 +71,24 @@ def BackupModelTest(num_nodes,p,invstd,mip_gap, time_limit):
         if solution[i,j] < 0.1:
             G.remove_edge(i, j)
         
-    esmall=[(u,v) for (u,v) in G.edges()]
     
-    # nodes
-    nx.draw_networkx_nodes(G,pos,node_size=500)
-    
-    # edges
-    nx.draw_networkx_edges(G,pos,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
-    
-    # labels
-    nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-    
-    #plt.ioff() 
-    
-    plt.axis('off')
-    plt.show() # display
+    if options == 1:
+        
+        esmall=[(u,v) for (u,v) in G.edges()]
+        
+        # nodes
+        nx.draw_networkx_nodes(G,pos,node_size=500)
+        
+        # edges
+        nx.draw_networkx_edges(G,pos,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
+        
+        # labels
+        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
+        
+        #plt.ioff() 
+        
+        plt.axis('off')
+        plt.show() # display
     
 
 def BackupPathModelTest(options,num_nodes,p,invstd,mip_gap,time_limit,cutoff):
@@ -138,14 +151,24 @@ def BackupPathModelTest(options,num_nodes,p,invstd,mip_gap,time_limit,cutoff):
     capacity={}
     mean={}
     std={}
+    
+    AuxCount = 0
+    Aux=1
     for s,d in links:
+#         if AuxCount%2 == 0:
+#             Aux = 2
+#         else:
+#             Aux = 1
         #generating capacity for each s,d link
-        capacity[s,d] = 1
+        capacity[s,d] = Aux
         #Generate mean for each s,d link based on Bernouilli distribution 
-        mean[s,d] = p
+        mean[s,d] = Aux*p
         #Generate std for each s,d link based on Bernouilli distribution 
-        std[s,d]=math.sqrt(p*(1-p))
-
+        std[s,d]=math.sqrt(Aux*p*(1-(Aux*p)))
+        AuxCount = AuxCount+1
+        
+    print(mean)
+    print(std)
     
     #optimization
     links = tuplelist(links)

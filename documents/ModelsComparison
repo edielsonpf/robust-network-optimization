@@ -1,0 +1,70 @@
+#################################################################################################################
+#
+#		Link Model (b)
+#
+#################################################################################################################   
+
+Optimize a model with 520 rows, 840 columns and 2040 nonzeros
+Model has 20 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 420 rows and 420 columns
+Presolve time: 0.05s
+Presolved: 120 rows, 820 columns, 1220 nonzeros
+Variable types: 420 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 5.000000e-01, 34 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       7.7640246    0.00000   100%     -    0s
+     0     0    4.30342    0  140    7.76402    4.30342  44.6%     -    0s
+     0     0    5.23219    0  156    7.76402    5.23219  32.6%     -    0s
+     0     0    5.42922    0  143    7.76402    5.42922  30.1%     -    0s
+     0     0    5.45526    0  140    7.76402    5.45526  29.7%     -    0s
+     0     0    5.45599    0  141    7.76402    5.45599  29.7%     -    0s
+     0     0    5.46080    0  143    7.76402    5.46080  29.7%     -    0s
+H    0     0                       7.7640189    5.46080  29.7%     -    0s
+     0     2    5.46080    0  143    7.76402    5.46080  29.7%     -    0s
+H   28    29                       7.7012649    5.52858  28.2%   146    0s
+H   56    54                       7.1181761    5.52858  22.3%   130    0s
+   405   352    5.99400   27  133    7.11818    5.56608  21.8%   103    5s
+
+   
+#################################################################################################################
+#
+#		Path Model (y)
+#
+#################################################################################################################   
+   
+Optimize a model with 440 rows, 760 columns and 2720 nonzeros
+Model has 20 quadratic constraints
+Coefficient statistics:
+  Matrix range    [3e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Solve qcp for cone disaggregation ...
+Presolve removed 180 rows and 180 columns
+Presolve time: 0.04s
+Presolved: 280 rows, 840 columns, 1800 nonzeros
+Variable types: 520 continuous, 320 integer (320 binary)
+
+Root relaxation: objective 5.000000e-01, 20 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+H    0     0                       7.7640225    0.00000   100%     -    0s
+     0     0    4.32435    0   80    7.76402    4.32435  44.3%     -    0s
+     0     0    5.28083    0   80    7.76402    5.28083  32.0%     -    0s
+     0     0    5.33514    0   80    7.76402    5.33514  31.3%     -    0s
+     0     0    5.38028    0   84    7.76402    5.38028  30.7%     -    0s
+     0     2    5.38028    0   84    7.76402    5.38028  30.7%     -    0s
+H  288   261                       7.6170689    5.42652  28.8%  62.1    1s
+H  329   281                       7.1664040    5.42652  24.3%  56.4    2s
