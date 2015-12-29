@@ -1,61 +1,61 @@
-CPLEX 12.6.2.0: mipgap=0.001
-mipdisplay=3
-MIQCP Presolve eliminated 12 rows and 12 columns.
-Reduced MIQCP has 204 rows, 444 columns, and 732 nonzeros.
-Reduced MIQCP has 144 binaries, 0 generals, 0 SOSs, and 0 indicators.
-Reduced MIQCP has 12 quadratic constraints.
-Probing time = 0.00 sec. (0.06 ticks)
-MIP emphasis: balance optimality and feasibility.
-MIP search method: dynamic search.
-Parallel mode: deterministic, using up to 4 threads.
-Root relaxation solution time = 0.00 sec. (0.26 ticks)
-
-        Nodes                                         Cuts/
-   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
-
-      0     0        0.3000     0                      0.0000       20         
-      0     0        0.6000     0                    Cone: 12       40         
-      0     0        0.6000     0                    Cone: 22       52         
-      0     0        2.3735     0                    Cone: 32       95         
-      0     0        2.5363    48                    Cone: 40      126         
-      0     0        2.9965    46                    Cone: 52      177         
-      0     0        3.0647    50                    Cone: 64      200         
-      0     0        3.5282    56                   Cone: 136      378         
-      0     0        3.5282    60                   Cone: 182      440         
-      0     0        3.5282    60                   Cone: 240      488         
-      0     0        3.5282    60                   Cone: 292      524         
-      0     0        3.5282    60                   Cone: 339      649         
-      0     0        3.5282    60                   Cone: 367      719         
-      0     0        3.5282    60                   Cone: 370      722         
-      0     0        3.5282    60                      3.5282      722         
-*     0+    0                            4.6584        3.5282            24.26%
-Found incumbent of value 4.658411 after 0.09 sec. (31.82 ticks)
-      0     0        3.6056    74        4.6584  LiftProj: 14      839   22.60%
-      0     0        3.6089    78        4.6584   LiftProj: 7      879   22.53%
-*     0+    0                            4.3418        3.6089            16.88%
-Found incumbent of value 4.341799 after 1.06 sec. (384.47 ticks)
-*     0+    0                            4.2393        3.6089            14.87%
-Found incumbent of value 4.239284 after 1.09 sec. (404.30 ticks)
-      0     2        3.6322    78        4.2393        3.6089      879   14.87%
-Elapsed time = 1.23 sec. (456.54 ticks, tree = 0.00 MB)
-*   231   196      integral     0        4.1916        3.7031     8574   11.65%
-                                                    Cone: 120                  
-Found incumbent of value 4.191561 after 1.53 sec. (607.01 ticks)
-    968   708        4.0882    22        4.1916        3.8218    26209    8.82%
-                                                     Cone: 56                  
-    972   710        4.0901    12        4.1916        3.8218    26290    8.82%
-    976   712        4.1392     9        4.1916        3.8218    26332    8.82%
-    980   714        cutoff              4.1916        3.8218    26525    8.82%
-    981   715        3.9433    55        4.1916        3.8218    26577    8.82%
-    984   717        4.1531     6        4.1916        3.8218    26622    8.82%
-    985   718        3.9567    53        4.1916        3.8218    26656    8.82%
-    988   719        cutoff              4.1916        3.8218    26701    8.82%
-    989   720        3.9781    47        4.1916        3.8218    26743    8.82%
-*  1274+  893                            4.1586        3.8566             7.26%
-                                                      Cone: 8                  
-Found incumbent of value 4.158628 after 2.13 sec. (927.54 ticks)
-   5062  2099        4.0948    28        4.1586        4.0021   111457    3.76%
-                                                     Cone: 35                  
-Elapsed time = 4.61 sec. (1881.62 ticks, tree = 5.42 MB)
-
+CPLEX 12.6.2.0: mipgap=0.001
+mipdisplay=3
+MIQCP Presolve eliminated 12 rows and 12 columns.
+Reduced MIQCP has 204 rows, 444 columns, and 732 nonzeros.
+Reduced MIQCP has 144 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Reduced MIQCP has 12 quadratic constraints.
+Probing time = 0.00 sec. (0.06 ticks)
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 4 threads.
+Root relaxation solution time = 0.00 sec. (0.26 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+      0     0        0.3000     0                      0.0000       20         
+      0     0        0.6000     0                    Cone: 12       40         
+      0     0        0.6000     0                    Cone: 22       52         
+      0     0        2.3735     0                    Cone: 32       95         
+      0     0        2.5363    48                    Cone: 40      126         
+      0     0        2.9965    46                    Cone: 52      177         
+      0     0        3.0647    50                    Cone: 64      200         
+      0     0        3.5282    56                   Cone: 136      378         
+      0     0        3.5282    60                   Cone: 182      440         
+      0     0        3.5282    60                   Cone: 240      488         
+      0     0        3.5282    60                   Cone: 292      524         
+      0     0        3.5282    60                   Cone: 339      649         
+      0     0        3.5282    60                   Cone: 367      719         
+      0     0        3.5282    60                   Cone: 370      722         
+      0     0        3.5282    60                      3.5282      722         
+*     0+    0                            4.6584        3.5282            24.26%
+Found incumbent of value 4.658411 after 0.09 sec. (31.82 ticks)
+      0     0        3.6056    74        4.6584  LiftProj: 14      839   22.60%
+      0     0        3.6089    78        4.6584   LiftProj: 7      879   22.53%
+*     0+    0                            4.3418        3.6089            16.88%
+Found incumbent of value 4.341799 after 1.06 sec. (384.47 ticks)
+*     0+    0                            4.2393        3.6089            14.87%
+Found incumbent of value 4.239284 after 1.09 sec. (404.30 ticks)
+      0     2        3.6322    78        4.2393        3.6089      879   14.87%
+Elapsed time = 1.23 sec. (456.54 ticks, tree = 0.00 MB)
+*   231   196      integral     0        4.1916        3.7031     8574   11.65%
+                                                    Cone: 120                  
+Found incumbent of value 4.191561 after 1.53 sec. (607.01 ticks)
+    968   708        4.0882    22        4.1916        3.8218    26209    8.82%
+                                                     Cone: 56                  
+    972   710        4.0901    12        4.1916        3.8218    26290    8.82%
+    976   712        4.1392     9        4.1916        3.8218    26332    8.82%
+    980   714        cutoff              4.1916        3.8218    26525    8.82%
+    981   715        3.9433    55        4.1916        3.8218    26577    8.82%
+    984   717        4.1531     6        4.1916        3.8218    26622    8.82%
+    985   718        3.9567    53        4.1916        3.8218    26656    8.82%
+    988   719        cutoff              4.1916        3.8218    26701    8.82%
+    989   720        3.9781    47        4.1916        3.8218    26743    8.82%
+*  1274+  893                            4.1586        3.8566             7.26%
+                                                      Cone: 8                  
+Found incumbent of value 4.158628 after 2.13 sec. (927.54 ticks)
+   5062  2099        4.0948    28        4.1586        4.0021   111457    3.76%
+                                                     Cone: 35                  
+Elapsed time = 4.61 sec. (1881.62 ticks, tree = 5.42 MB)
+
 L
