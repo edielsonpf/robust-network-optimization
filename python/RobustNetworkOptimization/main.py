@@ -8,8 +8,10 @@ if __name__ == '__main__':
 
 # Constant definition
 NumNodes = 5
-NumScenarios = 1000
+NumScenarios = 50
 p = 0.025
+#p=0.0005
+#p=0.025
 epsilon = 0.01
 invstd = 2.326347874
 

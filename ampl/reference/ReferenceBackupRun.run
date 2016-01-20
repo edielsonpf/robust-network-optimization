@@ -10,7 +10,7 @@ option log_file 'C:\Users\Edielson\Documents\Researches\robust-network-optimizat
 let K := (max{(s,d) in LINKS} capacity_P[s,d])+1;
 
 option solver cplex;
-option cplex_options 'mipgap=0.01 mipdisplay=3';
+#option cplex_options 'mipgap=0.01 mipdisplay=3';
 
 
 solve;

@@ -28,26 +28,28 @@ def MonteCarloTest(options, num_nodes,num_scenarios,p,epsilon,mip_gap, time_limi
     
     # Simulate data
     #np.random.seed(123)
-    
+    print('\nGenerating random scenarios...')
     nobs = num_nodes*(num_nodes-1)
     Y = np.random.binomial(1, p, (num_scenarios,nobs))
-    #print(Y)
-    
+    #mu, sigma = 2, 0.4 #
+    #Y = np.random.normal(mu,sigma,(num_scenarios,nobs))
+    print(Y)
+    print('Done!\n')
     # Plot the data
 #     fig = plt.figure(figsize=(7,3))
 #     gs = gridspec.GridSpec(1, 2, width_ratios=[5, 1]) 
 #     ax1 = fig.add_subplot(gs[0])
 #     ax2 = fig.add_subplot(gs[1])
-#     
-#     ax1.plot(range(nobs), Y, 'x')
-#     ax2.hist(-Y, bins=2)
-#     
+#      
+#     ax1.plot(range(nobs), Y[0], 'x')
+#     ax2.hist(-Y[0], bins=2)
+#      
 #     ax1.yaxis.set(ticks=(0,1), ticklabels=('Failure', 'Success'))
 #     ax2.xaxis.set(ticks=(-1,0), ticklabels=('Success', 'Failure'));
 #     
 #     ax1.set(title=r'Bernoulli Trial Outcomes $(\theta=0.3)$', xlabel='Trial', ylim=(-0.2, 1.2))
 #     ax2.set(ylabel='Frequency')
-#     
+#      
 #     fig.tight_layout()
     
     #Generates a complete indirect graph 
@@ -96,10 +98,13 @@ def MonteCarloTest(options, num_nodes,num_scenarios,p,epsilon,mip_gap, time_limi
             #plt.savefig("weighted_graph.png") # save as png
             plt.show() # display
             
-    print(capacity)
+    #print(capacity)
     #optimization
+    print('Creating model...')
     links = tuplelist(links)
     BackupNet = bpBackup(nodes,links,capacity,epsilon,num_scenarios)
+    print('Done!\n')
+    print('Solving...\n')
     solution = BackupNet.optimize(mip_gap,time_limit)
     
-    print(solution)
+    #print(solution)
