@@ -5,12 +5,12 @@ from BackupTest import BackupPathModelTest, BackupModelTest, BackupBFPModelTest
 if __name__ == '__main__':
     pass
 
-BACKUP_MODEL = 0
+BACKUP_MODEL = 1
 BACKUP_PATH_MODEL = 0
-BACKUP_BFP_MODEL = 1
+BACKUP_BFP_MODEL = 0
 
 # Constant definition
-NumNodes = 5
+NumNodes = 4
 p=0.025
 #constant for backup model and backup model with paths 
 invstd = 2.326347874
@@ -19,8 +19,8 @@ epsilon = 0.01
 
 
 #Optimization definitions
-#MipGap = None
-MipGap = 0.01
+MipGap = None
+#MipGap = 0.01
 TimeLimit = None
 
 #constant for choosing to plot (1) or not to plot (2) graphs

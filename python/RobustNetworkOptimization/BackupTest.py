@@ -32,39 +32,28 @@ def BackupModelTest(plot_options, num_nodes,p,invstd,mip_gap, time_limit):
     capacity={}
     mean={}
     std={}
-    AuxCount = 0
+
     Aux=1
     for s,d in links:
-        if AuxCount%2 == 0:
-            Aux = 2
-        else:
-            Aux = 1
         #generating capacity for each s,d link
         capacity[s,d] = Aux
         #Generate mean for each s,d link based on Bernouilli distribution 
         mean[s,d] = Aux*p
         #Generate std for each s,d link based on Bernouilli distribution 
         std[s,d]=math.sqrt(Aux*p*(1-(Aux*p)))
-        AuxCount = AuxCount+1
+        if capacity[s,d] > 0:
+            G.add_weighted_edges_from([(s,d,capacity[s,d])])
+        else:
+            G.add_weighted_edges_from([(s,d,capacity[s,d])])
     
     if plot_options == 1:
-        
-        pos=nx.spring_layout(G) # positions for all nodes
-        
-        # nodes
-        nx.draw_networkx_nodes(G,pos,node_size=500)
-        
-        # edges
-        nx.draw_networkx_edges(G,pos,width=2)
-        
-        # labels
-        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-        
-        plt.axis('off')
-        #plt.savefig("weighted_graph.png") # save as png
-        plt.show() # display
+        pos = plotGraph(G, option=0, position=None)
     
-    #optimization
+    ################################
+    #
+    #          optimization
+    #
+    ################################
     links = tuplelist(links)
     BackupNet = Backup(nodes,links,capacity,mean,std,invstd)
     solution = BackupNet.optimize(mip_gap,time_limit)
@@ -73,26 +62,11 @@ def BackupModelTest(plot_options, num_nodes,p,invstd,mip_gap, time_limit):
     for i,j in links:
         if solution[i,j] < 0.1:
             G.remove_edge(i, j)
-        
+       
     
     if plot_options == 1:
-        
-        esmall=[(u,v) for (u,v) in G.edges()]
-        
-        # nodes
-        nx.draw_networkx_nodes(G,pos,node_size=500)
-        
-        # edges
-        nx.draw_networkx_edges(G,pos,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
-        
-        # labels
-        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-        
-        #plt.ioff() 
-        
-        plt.axis('off')
-        plt.show() # display
-    
+        option=1
+        plotGraph(G, option, pos)
 
 def BackupPathModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutoff):
     ""
@@ -246,7 +220,7 @@ def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,
                (10,11),(11,8),(11,10),(11,12),(11,14),(12,9),(12,11),(12,13),(13,7),(13,12),(13,14),(14,9),(14,11),(14,13)]
         
         print('Number of links: %g' %(len(links)))
-        G=nx.Graph()
+        G=nx.DiGraph()
         
         G.add_nodes_from(nodes)
         G.add_edges_from(links)
@@ -271,32 +245,13 @@ def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,
                     G.add_weighted_edges_from([(s,d,capacity[i,s,d])])
             
     if plot_options == 1:    
-    ##############################################
-    #            Plot Initial Graph
-    ##############################################       
-
-        elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] > 0]
-        esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] <= 0]
-        
-        pos=nx.spring_layout(G) # positions for all nodes
-        
-        # nodes
-        nx.draw_networkx_nodes(G,pos,node_size=500)
-        
-        
-        # edges
-        nx.draw_networkx_edges(G,pos,edgelist=elarge,width=2)
-        nx.draw_networkx_edges(G,pos,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
-        
-        # labels
-        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-        
-        plt.axis('off')
-        #plt.savefig("weighted_graph.png") # save as png
-        plt.show() # display
-                
-    #print(capacity)
-    #optimization
+        #Plot Initial Graph
+        plotGraph(G,option=None,position=None)
+                        
+    ################################
+    #
+    #    Optimization
+    ################################
     print('Creating model...')
     links = tuplelist(links)
     BackupNet = BFPBackup(nodes,links,capacity,epsilon,num_scenarios)
@@ -363,3 +318,32 @@ def getAllPaths(G,cutoff):
         for path in nx.all_simple_paths(G, i, j,cutoff):
             Paths.append(path)
     return tuple(Paths)     
+
+def plotGraph(G,option,position=None):
+    
+    if option == 1:
+        elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] > 0]
+        esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] <= 0]
+    else:
+        elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] <= 0]
+        esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] > 0]
+        
+    
+    if position == None:
+        position=nx.spring_layout(G) # positions for all nodes
+    
+    # nodes
+    nx.draw_networkx_nodes(G,position,node_size=500)
+        
+    # edges
+    nx.draw_networkx_edges(G,position,edgelist=elarge,width=2)
+    nx.draw_networkx_edges(G,position,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
+    
+    # labels
+    nx.draw_networkx_labels(G,position,font_size=20,font_family='sans-serif')
+    
+    plt.axis('off')
+    #plt.savefig("weighted_graph.png") # save as png
+    plt.show() # display
+    
+    return position
