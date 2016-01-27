@@ -2,17 +2,20 @@ __author__ = "Edielson"
 
 from BackupTest import BackupPathModelTest, BackupModelTest
 from MonteCarlo import MonteCarloTest
+from NSFNET import NSFNET
 
 if __name__ == '__main__':
     pass
 
 # Constant definition
 NumNodes = 5
-NumScenarios = 50
-p = 0.025
-#p=0.0005
-#p=0.025
-epsilon = 0.01
+NumScenarios =500
+#p = 0.06
+p=0.06
+#NSFNET p=0.009 is equivalent to p=0.06
+#epsilon = 0.05
+epsilon = 0.05
+#NSFNET e=0.09 is equivalent to e=0.05  
 invstd = 2.326347874
 
 MipGap = None
@@ -32,3 +35,4 @@ Options = 0
 
 print('Buffer probability-based backup model')
 MonteCarloTest(Options, NumNodes, NumScenarios, p, epsilon,MipGap,TimeLimit)
+#NSFNET(Options,NumScenarios, p, epsilon,MipGap,TimeLimit)

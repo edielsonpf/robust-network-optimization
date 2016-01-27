@@ -15,7 +15,7 @@ class bpBackup(object):
     # Private model variables
     __BackupCapacity = {}
     __bBackupLink = {}
-    __z0 = 0
+    __z0 = {}
     __z = {}
          
     # Private model parameters
@@ -51,11 +51,13 @@ class bpBackup(object):
                 self.__bBackupLink[i,j,s,d] = self.__model.addVar(vtype=GRB.BINARY,name='Backup_Link[%s,%s,%s,%s]' % (i, j, s, d))
         self.__model.update()
          
-        for k in range(self.__N):
-            self.__z[k] = self.__model.addVar(lb=0,name='z[%s]' % (k))
+        for i,j in self.__links:
+            for k in range(self.__N):
+                self.__z[k,i,j] = self.__model.addVar(lb=0,name='z[%s][%s][%s]' % (k,i,j))
         self.__model.update()
-         
-        self.__z0 = self.__model.addVar(lb=-GRB.INFINITY,name='z0')
+        
+        for i,j in self.__links: 
+            self.__z0[i,j] = self.__model.addVar(lb=-GRB.INFINITY,name='z0[%s][%s]' %(i,j))
         self.__model.update()
          
         self.__model.modelSense = GRB.MINIMIZE
@@ -71,18 +73,20 @@ class bpBackup(object):
         #------------------------------------------------------------------------#
           
         # Buffer probability I
-        self.__model.addConstr(self.__z0 + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k] for (k) in range(self.__N)) <= 0,'[CONST]Buffer_Prob_I')
+        for i,j in self.__links:
+            self.__model.addConstr(self.__z0[i,j] + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k,i,j] for (k) in range(self.__N)) <= 0,'[CONST]Buffer_Prob_I[%s][%s]'%(i,j))
         self.__model.update()
          
         # Link capacity constraints
-        for k in range(self.__N):
-            for i,j in self.__links:
-                self.__model.addConstr(quicksum(self.__bBackupLink[i,j,s,d]*self.__capacity[k,s,d] for s,d in self.__links) - self.__BackupCapacity[i,j] - self.__z0 <= self.__z[k],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
+        for i,j in self.__links:
+            for k in range(self.__N):
+                self.__model.addConstr(quicksum(self.__bBackupLink[i,j,s,d]*self.__capacity[k,s,d] for s,d in self.__links) - self.__BackupCapacity[i,j] - self.__z0[i,j] <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
         # Link capacity constraints
-        for k in range(self.__N):
-            self.__model.addConstr(self.__z[k] >= 0,'[CONST]Buffer_Prob_III[%s]' % (k))
+        for i,j in self.__links:
+            for k in range(self.__N):
+                self.__model.addConstr(self.__z[k,i,j] >= 0,'[CONST]Buffer_Prob_III[%s][%s][%s]' % (k,i,j))
         self.__model.update()
          
         for i in self.__nodes:
@@ -115,11 +119,15 @@ class bpBackup(object):
         self.__model.optimize()
          
         # Print solution
+        ChoosenLinks={}
         if self.__model.status == GRB.Status.OPTIMAL:
             solution = self.__model.getAttr('x', self.__BackupCapacity)
             for i,j in self.__links:
-                if solution[i,j] > 0:
-                    print('%s -> %s: %g' % (i, j, solution[i,j]))
+                if solution[i,j] > 0.0001:
+                    print('%s -> %s: %g' % (i,j, solution[i,j]))
+                    ChoosenLinks[i,j]=1
+                else:
+                    ChoosenLinks[i,j]=0
             
             #solution = self.__model.getAttr('x', self.__z0)
             #print('z0: %g' % (solution))
@@ -133,9 +141,28 @@ class bpBackup(object):
             #    for s,d in self.__links:
             #        print('b[%s,%s,%s,%s]: %g' % (i,j,s,d, solution[i,j,s,d]))
             
-            #for v in self.__model.getVars():
-            #    print('%s %g' % (v.varName, v.x))
+            for v in self.__model.getVars():
+                print('%s %g' % (v.varName, v.x))
  
+            solution = self.__model.getAttr('x', self.__bBackupLink)
+            n={}
+            aux=0
+            cont=0
+            for i,j in self.__links:
+                n[i,j]=0
+                for s,d in self.__links:
+                    #print('b[%s,%s,%s,%s]: %g' % (i,j,s,d,solution[i,j,s,d]))
+                    if (solution[i,j,s,d] > 0.0001) & (ChoosenLinks[i,j] == 1):
+                        n[i,j] =(n[i,j]+solution[i,j,s,d])
+                #print('n[%s,%s]: %g' % (i,j,n[i,j]))
+                if((n[i,j] > 0) & ChoosenLinks[i,j] == 1):
+                    aux=aux+n[i,j]
+                    cont=cont+1
+                    #print('n[%g][%g]: %g' % (i,j,n[i,j]))
+            #print(aux)
+            #print(cont)
+            print('nij: %g' % (aux/cont))
+                                                
         else:
             print('Optimal value not found!\n')
             solution = []

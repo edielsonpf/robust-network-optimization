@@ -4,45 +4,26 @@ except:
     raise
 import networkx as nx
 import numpy as np
-# import math
 from gurobipy import tuplelist
 from optimizer.bpbackup import bpBackup
 
-
-#matplotlib inline
-#import numpy as np
-# import pandas as pd
-# import statsmodels.api as sm
-# import sympy as sp
-# import pymc
-# import matplotlib.gridspec as gridspec
-# from mpl_toolkits.mplot3d import Axes3D
-# from scipy import stats
-# from scipy.special import gamma
-
-from sympy.interactive import printing
-printing.init_printing()
-
-
-def MonteCarloTest(options, num_nodes,num_scenarios,p,epsilon,mip_gap, time_limit):
+def NSFNET(options, num_scenarios,p,epsilon,mip_gap, time_limit):
+    nodes = [i+1 for i in range(14)]
     
-    # Simulate data
-    #np.random.seed(123)
+    links=[(1,2),(1,3),(1,4),(2,1),(2,3),(2,8),(3,1),(3,2),(3,7),(4,1),(4,5),(4,9),(5,4),(5,6),(5,7),
+           (6,5),(6,8),(7,3),(7,5),(7,10),(7,13),(8,2),(8,6),(8,11),(9,4),(9,12),(9,14),(10,7),
+           (10,11),(11,8),(11,10),(11,12),(11,14),(12,9),(12,11),(12,13),(13,7),(13,12),(13,14),(14,9),(14,11),(14,13)]
+    
+    print('Number of links: %g' %(len(links)))
+    G=nx.Graph()
+    
+    G.add_nodes_from(nodes)
+    G.add_edges_from(links)
+    
     print('\nGenerating random scenarios...')
-    nobs = num_nodes*(num_nodes-1)
+    nobs = len(links)
     Y = np.random.binomial(1, p, (num_scenarios,nobs))
-#     print(Y)
     print('Done!\n')
-    
-    #Generates a complete indirect graph 
-    H = nx.complete_graph(num_nodes)
-    # transforms the indirect graph in directed one
-    G = H.to_directed()
-    
-    #Generates a list with all links (edges) in the graph
-    links = G.edges()
-    #Generates a list with all nodes (vertex) in the graph
-    nodes = G.nodes() 
     
     capacity={}
     Aux=1
@@ -80,7 +61,6 @@ def MonteCarloTest(options, num_nodes,num_scenarios,p,epsilon,mip_gap, time_limi
             #plt.savefig("weighted_graph.png") # save as png
             plt.show() # display
             
-    #print(capacity)
     #optimization
     print('Creating model...')
     links = tuplelist(links)
