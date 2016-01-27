@@ -5,8 +5,8 @@ from BackupTest import BackupPathModelTest, BackupModelTest, BackupBFPModelTest
 if __name__ == '__main__':
     pass
 
-BACKUP_MODEL = 1
-BACKUP_PATH_MODEL = 0
+BACKUP_MODEL = 0
+BACKUP_PATH_MODEL = 1
 BACKUP_BFP_MODEL = 0
 
 # Constant definition

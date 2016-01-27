@@ -84,28 +84,22 @@ def BackupPathModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutof
     #Generates a list with all nodes (vertex) in the graph
     nodes = G.nodes() 
     
+    capacity={}
+    Aux = 1
+    for s,d in links:
+        #generating capacity for each s,d link
+        capacity[s,d] = Aux
+        if capacity[s,d] > 0:
+            G.add_weighted_edges_from([(s,d,capacity[s,d])])
+        else:
+            G.add_weighted_edges_from([(s,d,capacity[s,d])])
+            
+    
+    if plot_options == 1:
     ##############################################
     #            Plot Initial Graph
     ##############################################  
-    
-    if plot_options == 1:
-        #don't stop on plotted figures 
-        #plt.ion() 
-            
-        pos=nx.spring_layout(G) # positions for all nodes
-         
-        # nodes
-        nx.draw_networkx_nodes(G,pos,node_size=500)
-         
-        # edges
-        nx.draw_networkx_edges(G,pos,width=2)
-         
-        # labels
-        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-         
-        plt.axis('off')
-        #plt.savefig("weighted_graph.png") # save as png
-        plt.show() # display
+        pos = plotGraph(G, option=None, position=None)
         
     #######################################
     #        Optimization Model
@@ -159,22 +153,8 @@ def BackupPathModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutof
     #            Plot Solution
     ##############################################     
     if plot_options == 1:
-        esmall=[(u,v) for (u,v) in G.edges()]
-         
-        # nodes
-        nx.draw_networkx_nodes(G,pos,node_size=500)
-         
-        # edges
-        nx.draw_networkx_edges(G,pos,edgelist=esmall,width=2,alpha=0.5,edge_color='b',style='dashed')
-         
-        # labels
-        nx.draw_networkx_labels(G,pos,font_size=20,font_family='sans-serif')
-         
-        plt.axis('off')
-        plt.show() # display
-    
-        #plt.ioff()
-
+        option=1
+        plotGraph(G, option, pos)
 
 def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,mip_gap, time_limit):
         
