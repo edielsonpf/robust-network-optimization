@@ -5,7 +5,7 @@ Created on Nov 23, 2015
 '''
 from gurobipy import *
  
-class bpBackup(object):
+class BFPBackup(object):
     '''
     classdocs
     '''
@@ -111,10 +111,9 @@ class bpBackup(object):
         self.__model.write('bpbackup.lp')
          
         if MipGap != None:
-            self.__model.params.timeLimit = TimeLimit
-        if TimeLimit != None:
             self.__model.params.MIPGap = MipGap
-          
+        if TimeLimit != None:
+            self.__model.params.timeLimit = TimeLimit
         # Compute optimal solution
         self.__model.optimize()
          
@@ -141,8 +140,8 @@ class bpBackup(object):
             #    for s,d in self.__links:
             #        print('b[%s,%s,%s,%s]: %g' % (i,j,s,d, solution[i,j,s,d]))
             
-            for v in self.__model.getVars():
-                print('%s %g' % (v.varName, v.x))
+            #for v in self.__model.getVars():
+            #    print('%s %g' % (v.varName, v.x))
  
             solution = self.__model.getAttr('x', self.__bBackupLink)
             n={}
