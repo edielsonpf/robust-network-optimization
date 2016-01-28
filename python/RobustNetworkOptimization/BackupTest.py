@@ -237,7 +237,7 @@ def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,
     BackupNet = BFPBackup(nodes,links,capacity,epsilon,num_scenarios)
     print('Done!\n')
     print('Solving...\n')
-    solution = BackupNet.optimize(mip_gap,time_limit)
+    BackupNet.optimize(mip_gap,time_limit)
     
     #print(solution)
 
