@@ -106,7 +106,7 @@ class BFPBackup(object):
         self.__model.update()
                  
          
-    def optimize(self,MipGap, TimeLimit):
+    def optimize(self,MipGap, TimeLimit, LogLevel = None):
          
         self.__model.write('bpbackup.lp')
          
@@ -118,52 +118,17 @@ class BFPBackup(object):
         self.__model.optimize()
          
         # Print solution
-        ChoosenLinks={}
         if self.__model.status == GRB.Status.OPTIMAL:
-            solution = self.__model.getAttr('x', self.__BackupCapacity)
-            for i,j in self.__links:
-                if solution[i,j] > 0.0001:
-                    print('%s -> %s: %g' % (i,j, solution[i,j]))
-                    ChoosenLinks[i,j]=1
-                else:
-                    ChoosenLinks[i,j]=0
-            
-            #solution = self.__model.getAttr('x', self.__z0)
-            #print('z0: %g' % (solution))
-            
-            #solution = self.__model.getAttr('x', self.__z)
-            #for i in range(self.__N):
-            #    print('z[%s]: %g' % (i, solution[i]))
-             
-            #solution = self.__model.getAttr('x', self.__bBackupLink)
-            #for i,j in self.__links:
-            #    for s,d in self.__links:
-            #        print('b[%s,%s,%s,%s]: %g' % (i,j,s,d, solution[i,j,s,d]))
-            
-            #for v in self.__model.getVars():
-            #    print('%s %g' % (v.varName, v.x))
- 
-            solution = self.__model.getAttr('x', self.__bBackupLink)
-            n={}
-            aux=0
-            cont=0
-            for i,j in self.__links:
-                n[i,j]=0
-                for s,d in self.__links:
-                    #print('b[%s,%s,%s,%s]: %g' % (i,j,s,d,solution[i,j,s,d]))
-                    if (solution[i,j,s,d] > 0.0001) & (ChoosenLinks[i,j] == 1):
-                        n[i,j] =(n[i,j]+solution[i,j,s,d])
-                #print('n[%s,%s]: %g' % (i,j,n[i,j]))
-                if((n[i,j] > 0) & ChoosenLinks[i,j] == 1):
-                    aux=aux+n[i,j]
-                    cont=cont+1
-                    #print('n[%g][%g]: %g' % (i,j,n[i,j]))
-            #print(aux)
-            #print(cont)
-            print('nij: %g' % (aux/cont))
+            BackupCapacitySolution = self.__model.getAttr('x', self.__BackupCapacity)
+            BackupLinkSolution = self.__model.getAttr('x', self.__bBackupLink)
+
+            if LogLevel == 1:
+                for v in self.__model.getVars():
+                    print('%s %g' % (v.varName, v.x))
                                                 
         else:
             print('Optimal value not found!\n')
-            solution = []
+            BackupCapacitySolution = []
+            BackupLinkSolution = {}
              
-        return solution;    
+        return BackupCapacitySolution,BackupLinkSolution    
