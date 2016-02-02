@@ -15,15 +15,15 @@ p=0.025
 #constant for backup model and backup model with paths 
 invstd = 2.326347874
 #constant for buffered failure backup model only
-epsilon = 0.01
+epsilon = 0.02
 
 
 #Optimization definitions
 #MipGap = None
-MipGap = 0.01
+MipGap = 0.001
 TimeLimit = None
 
-#constant for choosing to plot (1) or not to plot (2) graphs
+#constant for choosing to plot (1) or not to plot (0) graphs
 PlotOptions = 0
 
 if BACKUP_MODEL == 1:
@@ -31,7 +31,7 @@ if BACKUP_MODEL == 1:
     BackupModelTest(PlotOptions, NumNodes,p,invstd,MipGap,TimeLimit)
 
 if BACKUP_PATH_MODEL == 1:
-    print('Path-based backup model')  
+    print('Normal-based backup model with paths')  
     #CutoffList = [None, 2, 1]
     CutoffList = [None]
  
@@ -40,7 +40,7 @@ if BACKUP_PATH_MODEL == 1:
         BackupPathModelTest(PlotOptions,NumNodes,p,invstd,MipGap,TimeLimit,cutoff)
 
 if BACKUP_BFP_MODEL == 1:
-    NumScenarios = 1000
+    NumScenarios = 5000
     Scenario=0
-    print('Buffer probability-based backup model')
+    print('Buffered failure probability-based backup model')
     BackupBFPModelTest(PlotOptions, NumNodes, Scenario, NumScenarios, p, epsilon, MipGap, TimeLimit)

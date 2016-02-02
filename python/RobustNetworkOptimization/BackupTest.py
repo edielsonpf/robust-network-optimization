@@ -159,7 +159,7 @@ def BackupPathModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutof
 def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,mip_gap, time_limit):
         
     if scenario == 0:
-        print('Scenario based on a full connected and directed graph with %s nodes .' %(num_nodes))
+        print('Scenario based on a full connected and directed graph with %s nodes.' %(num_nodes))
         print('\nGenerating %s random scenarios...' %(num_scenarios))
         nobs = num_nodes*(num_nodes-1)
         Y = np.random.binomial(1, p, (num_scenarios,nobs))
@@ -231,15 +231,77 @@ def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,
     ################################
     #
     #    Optimization
+    #
     ################################
     print('Creating model...')
     links = tuplelist(links)
     BackupNet = BFPBackup(nodes,links,capacity,epsilon,num_scenarios)
     print('Done!\n')
     print('Solving...\n')
-    BackupNet.optimize(mip_gap,time_limit)
+    OptCapacity,BackupLinks = BackupNet.optimize(mip_gap,time_limit,None)
     
-    #print(solution)
+    print('\n[solution] Capacity assigned per backup link:\n' )
+    ChoosenLinks={}
+    for i,j in links:
+        if OptCapacity[i,j] > 0.0001:
+            print('C[%s,%s]: %g' % (i,j, OptCapacity[i,j]))
+            ChoosenLinks[i,j]=1
+        else:
+            ChoosenLinks[i,j]=0    
+    
+    n={}
+    aux=0
+    cont=0
+    for i,j in links:
+        n[i,j]=0
+        for s,d in links:
+            if (BackupLinks[i,j,s,d] > 0.0001) & (ChoosenLinks[i,j] == 1):
+                n[i,j] =(n[i,j]+BackupLinks[i,j,s,d])
+        if((n[i,j] > 0) & ChoosenLinks[i,j] == 1):
+            aux=aux+n[i,j]
+            cont=cont+1
+    print('\n[solution] Average nij: %g\n' % (aux/cont))
+    
+    ##############################
+    #    Survivability
+    ##############################
+    for i,j in links:
+        if OptCapacity[i,j] > 0.0001:
+            Reliability = 0
+            for k in range(num_scenarios):
+                Psd=0
+                for s,d in links:
+                    Psd=Psd+BackupLinks[i,j,s,d]*capacity[k,s,d]
+                if Psd > OptCapacity[i,j]:
+                    Reliability=Reliability+1
+            print('[solution][1]Reliability[%s,%s] = %g' %(i,j,(1.0*Reliability/num_scenarios)))    
+
+    num_scenarios = 1000000
+    print('\nGenerating %s random scenarios for survivability test...' %(num_scenarios))
+    nobs = len(links)
+    Y = np.random.binomial(1, p, (num_scenarios,nobs))
+    capacity={}
+    Aux=1
+    for k in range(num_scenarios):
+        AuxCount = 0
+        for s,d in links:
+            #generating capacity for each s,d link
+            capacity[k,s,d] = Aux*Y[k,AuxCount]
+            AuxCount = AuxCount+1
+    print('Done!\n')
+    
+    
+    for i,j in links:
+        if OptCapacity[i,j] > 0.0001:
+            Reliability = 0
+            for k in range(num_scenarios):
+                Psd=0
+                for s,d in links:
+                    Psd=Psd+BackupLinks[i,j,s,d]*capacity[k,s,d]
+                if Psd > OptCapacity[i,j]:
+                    Reliability=Reliability+1
+            print('[solution][2]Reliability[%s,%s] = %g' %(i,j,1.0*Reliability/num_scenarios)) 
+
 
 
 ###################################################
