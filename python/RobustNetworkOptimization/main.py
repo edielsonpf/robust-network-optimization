@@ -11,11 +11,12 @@ BACKUP_BFP_MODEL = 1
 
 # Constant definition
 NumNodes = 5
-p=0.025
+p=0.075
 #constant for backup model and backup model with paths 
 invstd = 2.326347874
 #constant for buffered failure backup model only
-epsilon = 0.02
+#0.045 to 0.05 blow up model with 3 nodes
+epsilon = 0.05
 
 
 #Optimization definitions
@@ -40,7 +41,9 @@ if BACKUP_PATH_MODEL == 1:
         BackupPathModelTest(PlotOptions,NumNodes,p,invstd,MipGap,TimeLimit,cutoff)
 
 if BACKUP_BFP_MODEL == 1:
-    NumScenarios = 5000
-    Scenario=0
+    NumScenarios = 200
+    #Choose scenario 0 for a full directed graph with the number of nodes equal to the value of the variable NumNodes
+    #or choose 1 to the NSFNET network with 14 nodes
+    Scenario=1
     print('Buffered failure probability-based backup model')
     BackupBFPModelTest(PlotOptions, NumNodes, Scenario, NumScenarios, p, epsilon, MipGap, TimeLimit)
