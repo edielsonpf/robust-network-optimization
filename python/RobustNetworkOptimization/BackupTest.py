@@ -4,6 +4,7 @@ except:
     raise
 import networkx as nx
 import numpy as np
+import scipy.stats as stats
 
 from optimizer.backup import Backup
 from optimizer.pbackup import PathBackup
@@ -162,7 +163,10 @@ def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,
         print('Scenario based on a full connected and directed graph with %s nodes.' %(num_nodes))
         print('\nGenerating %s random scenarios...' %(num_scenarios))
         nobs = num_nodes*(num_nodes-1)
-        Y = np.random.binomial(1, p, (num_scenarios,nobs))
+        p2=p+0.075
+        print('Failure probability for impotance sample: %g' %p2)
+        #Y = np.random.binomial(1, p, (num_scenarios,nobs))
+        Y=stats.binom.rvs(1,p2,size=(num_scenarios,nobs))
     #     print(Y)
         print('Done!\n')
         
@@ -189,7 +193,21 @@ def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,
                 else:
                     #G.remove_edge(s,d)
                     G.add_weighted_edges_from([(s,d,capacity[i,s,d])])
+        
+        #importance sample
+        ImpSamp={}
+        for i,j in links:
+            for k in range(num_scenarios):
+                sum_failue=0
+                for s,d in links:
+                    sum_failue=sum_failue+capacity[k,s,d]
+                #print('f(%g)=%g' % (sum_failue,stats.binom.pmf(sum_failue,len(links),p)))
+                #print('h(%g)=%g' % (sum_failue,stats.binom.pmf(sum_failue,len(links),p2)))
+                ImpSamp[k,i,j]=stats.binom.pmf(sum_failue,len(links),p)/stats.binom.pmf(sum_failue,len(links),p2)
+                #print('f(x)/h(x)=%g' %ImpSamp[k,i,j])
+            #print(len(ImpSamp))
             
+                
     elif scenario == 1:
         print('Scenario based on 14-node NSFNET (1991) with 14 nodes.')
         
@@ -235,7 +253,7 @@ def BackupBFPModelTest(plot_options,num_nodes,scenario, num_scenarios,p,epsilon,
     ################################
     print('Creating model...')
     links = tuplelist(links)
-    BackupNet = BFPBackup(nodes,links,capacity,epsilon,num_scenarios)
+    BackupNet = BFPBackup(ImpSamp,nodes,links,capacity,epsilon,num_scenarios)
     print('Done!\n')
     print('Solving...\n')
     OptCapacity,BackupLinks = BackupNet.optimize(mip_gap,time_limit,None)

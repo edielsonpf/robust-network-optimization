@@ -62814,3 +62814,2255 @@ Thread count was 4 (of 4 available processors)
 
 Optimal solution found (tolerance 1.00e-03)
 Best objective 3.070000000000e+01, best bound 3.066997785129e+01, gap 0.0978%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 15:29:54
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 15:30:44
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 15:31:09
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 15:32:08
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 15:33:05
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 15:35:01
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 15:35:44
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 2424 rows, 1248 columns and 7638 nonzeros
+Coefficient statistics:
+  Matrix range    [5e-01, 1e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 1218 rows and 30 columns
+Presolve time: 0.04s
+Presolved: 1206 rows, 1218 columns, 5586 nonzeros
+Variable types: 1212 continuous, 6 integer (6 binary)
+
+Root relaxation: cutoff, 117 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0     cutoff    0         6.00000    6.00000  0.00%     -    0s
+
+Explored 0 nodes (117 simplex iterations) in 0.19 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 6.000000000000e+00, best bound 6.000000000000e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 16:23:13
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 16:29:23
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 16:30:07
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 16:31:05
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 16:32:46
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 16:34:30
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 16:34:47
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:22:58
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:24:08
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:25:11
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:26:13
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:28:10
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:33:07
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:39:05
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:43:57
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:45:54
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:49:00
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:49:26
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:50:05
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:51:39
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:52:39
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:52:57
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:54:42
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:54:58
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:56:14
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:57:09
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:58:32
+
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:58:50
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 624 rows, 348 columns and 1986 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-04, 4e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 441 rows and 159 columns
+Presolve time: 0.02s
+Presolved: 183 rows, 189 columns, 906 nonzeros
+Variable types: 183 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.518118e+00, 90 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.5181177    3.51812  0.00%     -    0s
+
+Explored 0 nodes (90 simplex iterations) in 0.02 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.518117672950e+00, best bound 3.518117672950e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 17:59:35
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 624 rows, 348 columns and 1968 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-04, 4e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 451 rows and 169 columns
+Presolve time: 0.00s
+Presolved: 173 rows, 179 columns, 857 nonzeros
+Variable types: 173 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.636360e+00, 77 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.6363597    3.63636  0.00%     -    0s
+
+Explored 0 nodes (77 simplex iterations) in 0.00 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.636359745450e+00, best bound 3.636359745450e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:00:21
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 1224 rows, 648 columns and 3966 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-05, 4e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 750 rows and 168 columns
+Presolve time: 0.00s
+Presolved: 474 rows, 480 columns, 2310 nonzeros
+Variable types: 474 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.617032e+00, 138 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.6170319    3.61703  0.00%     -    0s
+
+Explored 0 nodes (138 simplex iterations) in 0.02 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.617031870810e+00, best bound 3.617031870810e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:02:02
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 4120 rows, 2440 columns and 19800 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-11, 1e+02]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 2040 rows and 120 columns
+Presolve time: 0.07s
+Presolved: 2080 rows, 2320 columns, 17180 nonzeros
+Variable types: 1920 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 8.628342e+00, 2019 iterations, 0.18 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    8.62834    0  114   20.00000    8.62834  56.9%     -    0s
+H    0     0                      13.5504499    8.62834  36.3%     -    0s
+H    0     0                      12.2665604    8.62834  29.7%     -    0s
+H    0     0                       8.9011441    8.62834  3.06%     -    0s
+     0     2    8.62834    0  114    8.90114    8.62834  3.06%     -    0s
+*    3     3               2       8.6716695    8.67056  0.01%   112    0s
+
+Explored 4 nodes (2356 simplex iterations) in 0.94 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.671669493229e+00, best bound 8.670561585262e+00, gap 0.0128%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:06:20
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 4120 rows, 2440 columns and 11900 nonzeros
+Coefficient statistics:
+  Matrix range    [6e-01, 1e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 3060 rows and 1080 columns
+Presolve time: 0.02s
+Presolved: 1060 rows, 1360 columns, 5620 nonzeros
+Variable types: 960 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 6.333333e+00, 1522 iterations, 0.07 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    6.33333    0   84   20.00000    6.33333  68.3%     -    0s
+H    0     0                       9.9188476    6.33333  36.1%     -    0s
+     0     0    6.44467    0  102    9.91885    6.44467  35.0%     -    0s
+H    0     0                       8.6315609    6.44467  25.3%     -    0s
+     0     0    6.45337    0  135    8.63156    6.45337  25.2%     -    0s
+     0     0    6.45851    0  135    8.63156    6.45851  25.2%     -    0s
+     0     0    6.46535    0  137    8.63156    6.46535  25.1%     -    0s
+     0     0    6.46650    0  137    8.63156    6.46650  25.1%     -    0s
+     0     0    6.46650    0  134    8.63156    6.46650  25.1%     -    0s
+     0     2    6.46650    0  134    8.63156    6.46650  25.1%     -    0s
+*    9     7               5       6.7617797    6.56578  2.90%   134    0s
+*   12     0               3       6.6315609    6.63156  0.00%   110    0s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 14 nodes (3213 simplex iterations) in 0.52 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 6.631560916365e+00, best bound 6.631560916365e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:08:22
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 4120 rows, 2440 columns and 11900 nonzeros
+Coefficient statistics:
+  Matrix range    [6e-01, 1e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 19
+Presolve removed 3065 rows and 1100 columns
+Presolve time: 0.03s
+Presolved: 1055 rows, 1340 columns, 5580 nonzeros
+Variable types: 960 continuous, 380 integer (380 binary)
+
+Root relaxation: objective 6.432129e+00, 1380 iterations, 0.08 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    6.43213    0  102   19.00000    6.43213  66.1%     -    0s
+H    0     0                       7.7617797    6.43213  17.1%     -    0s
+     0     0    6.43213    0  101    7.76178    6.43213  17.1%     -    0s
+H    0     0                       7.6315609    6.43213  15.7%     -    0s
+     0     0    6.50000    0   38    7.63156    6.50000  14.8%     -    0s
+     0     0    6.52527    0  125    7.63156    6.52527  14.5%     -    0s
+     0     0    6.53304    0  143    7.63156    6.53304  14.4%     -    0s
+     0     0    6.54634    0  137    7.63156    6.54634  14.2%     -    0s
+     0     0    6.55763    0  140    7.63156    6.55763  14.1%     -    0s
+     0     0    6.56061    0  142    7.63156    6.56061  14.0%     -    0s
+H    0     0                       7.0000000    6.56061  6.28%     -    0s
+     0     0    6.56061    0  141    7.00000    6.56061  6.28%     -    0s
+H    0     0                       6.6315609    6.56061  1.07%     -    0s
+     0     0    6.56061    0   99    6.63156    6.56061  1.07%     -    0s
+     0     0    6.58361    0  119    6.63156    6.58361  0.72%     -    0s
+     0     0    6.58948    0  116    6.63156    6.58948  0.63%     -    0s
+     0     0    6.59161    0  121    6.63156    6.59161  0.60%     -    0s
+     0     0    6.59509    0  122    6.63156    6.59509  0.55%     -    0s
+     0     0    6.59509    0  122    6.63156    6.59509  0.55%     -    0s
+     0     0    6.59509    0  122    6.63156    6.59509  0.55%     -    0s
+     0     0    6.59509    0  116    6.63156    6.59509  0.55%     -    0s
+     0     2    6.59509    0  116    6.63156    6.59509  0.55%     -    0s
+
+Cutting planes:
+  Gomory: 8
+
+Explored 9 nodes (3497 simplex iterations) in 0.82 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 6.631560916365e+00, best bound 6.631560916365e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:10:00
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 4120 rows, 2440 columns and 11900 nonzeros
+Coefficient statistics:
+  Matrix range    [5e-01, 1e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 18
+Presolve removed 3170 rows and 1220 columns
+Presolve time: 0.02s
+Presolved: 950 rows, 1220 columns, 5140 nonzeros
+Variable types: 860 continuous, 360 integer (360 binary)
+
+Root relaxation: objective 7.364802e+00, 1231 iterations, 0.07 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.36480    0   75   18.00000    7.36480  59.1%     -    0s
+H    0     0                      10.7617797    7.36480  31.6%     -    0s
+H    0     0                      10.5236018    7.36480  30.0%     -    0s
+     0     0    7.40169    0   98   10.52360    7.40169  29.7%     -    0s
+H    0     0                      10.0472036    7.40169  26.3%     -    0s
+     0     0    7.40456    0   99   10.04720    7.40456  26.3%     -    0s
+     0     0    7.41038    0  103   10.04720    7.41038  26.2%     -    0s
+     0     0    7.41073    0  105   10.04720    7.41073  26.2%     -    0s
+     0     0    7.44499    0  125   10.04720    7.44499  25.9%     -    0s
+H    0     0                       9.5236018    7.44499  21.8%     -    0s
+     0     0    7.44499    0  125    9.52360    7.44499  21.8%     -    0s
+     0     0    7.44499    0  121    9.52360    7.44499  21.8%     -    0s
+H    0     0                       8.0000000    7.44499  6.94%     -    0s
+     0     2    7.44499    0  121    8.00000    7.44499  6.94%     -    0s
+*    2     2               1       7.5236018    7.52075  0.04%  98.0    0s
+
+Cutting planes:
+  Gomory: 4
+
+Explored 3 nodes (1695 simplex iterations) in 0.40 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 7.523601785362e+00, best bound 7.520747631027e+00, gap 0.0379%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:11:09
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 2460 rows, 1368 columns and 6876 nonzeros
+Coefficient statistics:
+  Matrix range    [3e-01, 1e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 1908 rows and 720 columns
+Presolve time: 0.00s
+Presolved: 552 rows, 648 columns, 2820 nonzeros
+Variable types: 504 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 5.280699e+00, 371 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       5.2806988    5.28070  0.00%     -    0s
+
+Explored 0 nodes (371 simplex iterations) in 0.02 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 5.280698761190e+00, best bound 5.280698761190e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:14:27
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 2460 rows, 1368 columns and 6708 nonzeros
+Coefficient statistics:
+  Matrix range    [5e-01, 1e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 11
+Presolve removed 2044 rows and 864 columns
+Presolve time: 0.01s
+Presolved: 416 rows, 504 columns, 2100 nonzeros
+Variable types: 372 continuous, 132 integer (132 binary)
+
+Root relaxation: objective 4.926892e+00, 317 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.92689    0   46   11.00000    4.92689  55.2%     -    0s
+H    0     0                       6.4561355    4.92689  23.7%     -    0s
+H    0     0                       6.1973557    4.92689  20.5%     -    0s
+     0     0    4.94151    0   36    6.19736    4.94151  20.3%     -    0s
+H    0     0                       5.4561355    4.94151  9.43%     -    0s
+     0     0    4.95614    0   33    5.45614    4.95614  9.16%     -    0s
+     0     0    4.95853    0   47    5.45614    4.95853  9.12%     -    0s
+     0     0    4.96903    0   58    5.45614    4.96903  8.93%     -    0s
+     0     0    4.96988    0   52    5.45614    4.96988  8.91%     -    0s
+     0     0    4.96988    0   52    5.45614    4.96988  8.91%     -    0s
+H    0     0                       5.0000000    4.96988  0.60%     -    0s
+     0     0     cutoff    0         5.00000    4.96988  0.60%     -    0s
+
+Cutting planes:
+  Gomory: 4
+
+Explored 0 nodes (419 simplex iterations) in 0.21 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 5.000000000000e+00, best bound 5.000000000000e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:18:01
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 2460 rows, 1368 columns and 7380 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 1656 rows and 468 columns
+Presolve time: 0.00s
+Presolved: 804 rows, 900 columns, 4332 nonzeros
+Variable types: 756 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 6.269318e+00, 610 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    6.26932    0   58   12.00000    6.26932  47.8%     -    0s
+H    0     0                       7.2851847    6.26932  13.9%     -    0s
+     0     0    6.34976    0   32    7.28518    6.34976  12.8%     -    0s
+     0     0    6.36494    0   56    7.28518    6.36494  12.6%     -    0s
+     0     0    6.38745    0   67    7.28518    6.38745  12.3%     -    0s
+H    0     0                       7.2755386    6.38745  12.2%     -    0s
+     0     0    6.38858    0   65    7.27554    6.38858  12.2%     -    0s
+     0     0    6.39306    0   64    7.27554    6.39306  12.1%     -    0s
+     0     0    6.39991    0   63    7.27554    6.39991  12.0%     -    0s
+     0     0    6.40059    0   64    7.27554    6.40059  12.0%     -    0s
+     0     0    6.40059    0   64    7.27554    6.40059  12.0%     -    0s
+H    0     0                       7.0091441    6.40059  8.68%     -    0s
+     0     2    6.40059    0   64    7.00914    6.40059  8.68%     -    0s
+*    9    10               5       6.7991623    6.45815  5.02%  25.0    0s
+*   11     0               6       6.6517364    6.50157  2.26%  22.2    0s
+
+Cutting planes:
+  Gomory: 9
+
+Explored 33 nodes (1366 simplex iterations) in 0.30 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 6.651736410510e+00, best bound 6.651736410510e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:19:23
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 2460 rows, 1368 columns and 7668 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 1524 rows and 336 columns
+Presolve time: 0.02s
+Presolved: 936 rows, 1032 columns, 5148 nonzeros
+Variable types: 888 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 5.921645e+00, 647 iterations, 0.03 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    5.92164    0   62   12.00000    5.92164  50.7%     -    0s
+H    0     0                       9.4891036    5.92164  37.6%     -    0s
+H    0     0                       9.4816929    5.92164  37.5%     -    0s
+H    0     0                       8.4816929    5.92164  30.2%     -    0s
+     0     0    5.98327    0   56    8.48169    5.98327  29.5%     -    0s
+     0     0    5.98652    0   61    8.48169    5.98652  29.4%     -    0s
+     0     0    6.00295    0   61    8.48169    6.00295  29.2%     -    0s
+     0     0    6.00482    0   59    8.48169    6.00482  29.2%     -    0s
+     0     0    6.01173    0   60    8.48169    6.01173  29.1%     -    0s
+     0     0    6.01367    0   60    8.48169    6.01367  29.1%     -    0s
+     0     0    6.01392    0   61    8.48169    6.01392  29.1%     -    0s
+H    0     0                       6.9782071    6.01392  13.8%     -    0s
+     0     2    6.01392    0   61    6.97821    6.01392  13.8%     -    0s
+*    6     6               5       6.1815886    6.09589  1.39%  22.7    0s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 13 nodes (1000 simplex iterations) in 0.33 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 6.181588556887e+00, best bound 6.181588556887e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:21:01
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 4120 rows, 2440 columns and 15220 nonzeros
+Coefficient statistics:
+  Matrix range    [3e-03, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 2420 rows and 660 columns
+Presolve time: 0.03s
+Presolved: 1700 rows, 1780 columns, 10960 nonzeros
+Variable types: 1380 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 9.339432e+00, 1795 iterations, 0.17 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    9.33943    0  149   20.00000    9.33943  53.3%     -    0s
+H    0     0                      14.4114252    9.33943  35.2%     -    0s
+H    0     0                      12.3959243    9.33943  24.7%     -    0s
+     0     0    9.33943    0  149   12.39592    9.33943  24.7%     -    0s
+H    0     0                       9.9555197    9.33943  6.19%     -    0s
+     0     2    9.33943    0  149    9.95552    9.33943  6.19%     -    0s
+*   17     8               7       9.7369446    9.46619  2.78%   185    1s
+
+Explored 37 nodes (6441 simplex iterations) in 1.43 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 9.736944609153e+00, best bound 9.736944609153e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:22:57
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 8120 rows, 4440 columns and 29140 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 4000 rows and 0 columns
+Presolve time: 0.04s
+Presolved: 4120 rows, 4440 columns, 25140 nonzeros
+Variable types: 4040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 9.481031e+00, 3431 iterations, 0.62 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    9.48103    0  154   20.00000    9.48103  52.6%     -    0s
+H    0     0                      15.6037512    9.48103  39.2%     -    0s
+H    0     0                      12.8088985    9.48103  26.0%     -    2s
+     0     2    9.48103    0  154   12.80890    9.48103  26.0%     -    2s
+*   27    26              11      10.2948207    9.62962  6.46%   236    4s
+    52    33     cutoff    8        10.29482    9.69343  5.84%   216    5s
+*  147    36              11      10.1875248    9.84955  3.32%   165    6s
+
+Explored 294 nodes (45219 simplex iterations) in 8.88 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 1.018752477602e+01, best bound 1.018752477602e+01, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:24:43
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 8120 rows, 4440 columns and 28860 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 4000 rows and 0 columns
+Presolve time: 0.05s
+Presolved: 4120 rows, 4440 columns, 24860 nonzeros
+Variable types: 4040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.899884e+00, 3753 iterations, 0.63 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.89988    0  149   20.00000    7.89988  60.5%     -    0s
+H    0     0                      14.7479057    7.89988  46.4%     -    0s
+H    0     0                      13.4480477    7.89988  41.3%     -    0s
+H    0     0                      10.7532991    7.89988  26.5%     -    2s
+     0     2    7.89988    0  149   10.75330    7.89988  26.5%     -    2s
+*   30    28              11       8.7054275    8.10461  6.90%   212    4s
+    72    38     cutoff   12         8.70543    8.23959  5.35%   172    5s
+
+Explored 261 nodes (35174 simplex iterations) in 7.20 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.705427450432e+00, best bound 8.705427450432e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/04/16 18:28:23
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 71300 nonzeros
+Coefficient statistics:
+  Matrix range    [4e-05, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.19s
+Presolved: 10120 rows, 10440 columns, 61300 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 8.169841e+00, 5827 iterations, 1.91 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    8.16984    0  142   20.00000    8.16984  59.2%     -    2s
+H    0     0                      13.4593443    8.16984  39.3%     -    2s
+H    0     0                      13.2839155    8.16984  38.5%     -    2s
+     0     0    8.18084    0  142   13.28392    8.18084  38.4%     -    2s
+H    0     0                      12.9996820    8.18084  37.1%     -    2s
+     0     0    8.18287    0  142   12.99968    8.18287  37.1%     -    2s
+     0     0    8.19328    0  141   12.99968    8.19328  37.0%     -    2s
+     0     0    8.19387    0  141   12.99968    8.19387  37.0%     -    2s
+     0     0    8.20149    0  141   12.99968    8.20149  36.9%     -    3s
+     0     0    8.20422    0  141   12.99968    8.20422  36.9%     -    3s
+     0     0    8.20473    0  143   12.99968    8.20473  36.9%     -    3s
+     0     0    8.20476    0  143   12.99968    8.20476  36.9%     -    3s
+H    0     0                      11.8910954    8.20476  31.0%     -    7s
+H    0     0                      10.6738341    8.20476  23.1%     -    8s
+     0     2    8.20476    0  143   10.67383    8.20476  23.1%     -    9s
+     2     4    8.36343    1  148   10.67383    8.29596  22.3%   398   10s
+    24    27    9.19123    8  110   10.67383    8.36360  21.6%   329   15s
+*   53    51              17       9.5483037    8.36360  12.4%   289   17s
+*   55    49              19       9.4359249    8.36360  11.4%   279   17s
+*   74    41               7       9.1623461    8.41134  8.20%   281   19s
+    80    43    8.92850    7  114    9.16235    8.41134  8.20%   281   20s
+*   93    48              12       9.1619375    8.49389  7.29%   272   20s
+   165    64    8.85190    5  141    9.16194    8.52874  6.91%   249   25s
+   246    84    9.02301    7  135    9.16194    8.62127  5.90%   241   30s
+   344   100    8.97757    7  140    9.16194    8.73518  4.66%   226   35s
+   458   118    9.11132    7  130    9.16194    8.77045  4.27%   216   40s
+*  557   106              10       9.1433777    8.85676  3.13%   211   44s
+   562   102    8.96451    9  125    9.14338    8.86013  3.10%   211   45s
+   678    82    8.94352    8  151    9.14338    8.92043  2.44%   202   50s
+*  746    69              11       9.1307018    8.93152  2.18%   198   53s
+   793    37     cutoff   10         9.13070    8.96540  1.81%   194   55s
+
+Cutting planes:
+  Gomory: 9
+
+Explored 865 nodes (168145 simplex iterations) in 56.63 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 9.130701821574e+00, best bound 9.130701821574e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:13:38
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 70840 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 60840 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.212001e+00, 5973 iterations, 2.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.21200    0  140   20.00000    7.21200  63.9%     -    2s
+H    0     0                      13.5573746    7.21200  46.8%     -    2s
+H    0     0                      13.0932083    7.21200  44.9%     -    2s
+     0     0    7.21860    0  140   13.09321    7.21860  44.9%     -    2s
+     0     0    7.22256    0  140   13.09321    7.22256  44.8%     -    2s
+H    0     0                      12.5309988    7.22256  42.4%     -    3s
+     0     0    7.22300    0  140   12.53100    7.22300  42.4%     -    3s
+     0     0    7.23312    0  140   12.53100    7.23312  42.3%     -    3s
+H    0     0                      10.3990695    7.23312  30.4%     -    8s
+     0     2    7.23312    0  140   10.39907    7.23312  30.4%     -    9s
+     4     6    7.86064    4  152   10.39907    7.31263  29.7%   428   11s
+*   18    19               9       8.4058386    7.31263  13.0%   407   15s
+    45    25    8.16678   10   91    8.40584    7.47272  11.1%   377   20s
+    95    39    8.14433    7  135    8.40584    7.71043  8.27%   308   25s
+   144    48    8.05765    7  135    8.40584    7.79596  7.26%   297   30s
+   177    48    8.03664    7  141    8.40584    7.86176  6.47%   286   35s
+   226    55    8.23953    6  128    8.40584    7.95183  5.40%   270   40s
+   282    51    8.27724    6  134    8.40584    8.02180  4.57%   260   45s
+   343    46    8.30015    9  145    8.40584    8.05790  4.14%   252   50s
+   404    34     cutoff    9         8.40584    8.11403  3.47%   247   55s
+   482    13     cutoff   10         8.40584    8.19366  2.52%   237   60s
+*  494    13               9       8.3727979    8.23730  1.62%   236   60s
+
+Cutting planes:
+  Gomory: 3
+
+Explored 515 nodes (124980 simplex iterations) in 61.04 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.372797943338e+00, best bound 8.372797943338e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:23:59
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 71480 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 61480 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 9.880777e+00, 6511 iterations, 2.44 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    9.88078    0  140   20.00000    9.88078  50.6%     -    2s
+H    0     0                      19.0704124    9.88078  48.2%     -    7s
+H    0     0                      12.2690331    9.88078  19.5%     -    8s
+     0     2    9.88078    0  140   12.26903    9.88078  19.5%     -    9s
+     1     3    9.93819    1  150   12.26903    9.93819  19.0%   508   10s
+     6     9   10.24275    3  166   12.26903   10.05143  18.1%   721   15s
+    28    28   10.57023    9  107   12.26903   10.13797  17.4%   515   20s
+*   31    27              10      10.6802762   10.13797  5.08%   498   20s
+    73    33     cutoff   12        10.68028   10.17825  4.70%   385   25s
+   144    39   10.56401   11  160   10.68028   10.28618  3.69%   324   30s
+   197    41     cutoff    7        10.68028   10.35030  3.09%   313   35s
+   264    29   10.67870    8  146   10.68028   10.43410  2.30%   304   40s
+
+Explored 332 nodes (101978 simplex iterations) in 44.48 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 1.068027618580e+01, best bound 1.068027618580e+01, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:31:03
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 70120 nonzeros
+Coefficient statistics:
+  Matrix range    [1e-05, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 60120 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 8.784103e+00, 5756 iterations, 1.89 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    8.78410    0  135   20.00000    8.78410  56.1%     -    2s
+H    0     0                      17.2665988    8.78410  49.1%     -    2s
+H    0     0                      13.1220756    8.78410  33.1%     -    2s
+     0     0    8.78948    0  139   13.12208    8.78948  33.0%     -    2s
+H    0     0                      13.0328279    8.78948  32.6%     -    2s
+H    0     0                      11.8471111    8.78948  25.8%     -    7s
+     0     2    8.78948    0  139   11.84711    8.78948  25.8%     -    7s
+     4     6    9.24819    2  150   11.84711    8.84425  25.3%   437   10s
+    24    25    9.44990    8   91   11.84711    8.84446  25.3%   422   15s
+H   50    50                      10.4754592    8.84446  15.6%   366   17s
+*   52    49              18       9.9473310    8.84446  11.1%   359   18s
+    79    64    9.63453   11   84    9.94733    8.91352  10.4%   320   20s
+*  136    87              15       9.9242297    9.10104  8.29%   289   24s
+*  137    85              13       9.8799114    9.10104  7.88%   287   24s
+   150    89    9.81123   13  130    9.87991    9.10104  7.88%   280   25s
+   234    93    9.76543   13   70    9.87991    9.12526  7.64%   255   30s
+*  238    88              14       9.8097071    9.12526  6.98%   253   30s
+   306   106     cutoff    9         9.80971    9.21471  6.07%   253   35s
+   394   124     cutoff   12         9.80971    9.23865  5.82%   246   40s
+   475   141    9.58844    9  150    9.80971    9.26062  5.60%   244   45s
+   559   143     cutoff   14         9.80971    9.29802  5.22%   239   50s
+*  615   142               9       9.7514494    9.32142  4.41%   239   53s
+   640   138    9.74070   13  129    9.75145    9.32548  4.37%   239   55s
+   738   145     cutoff   10         9.75145    9.36055  4.01%   235   60s
+   822   140    9.72178    7  117    9.75145    9.38247  3.78%   232   65s
+   935   124    9.62489   11   96    9.75145    9.43800  3.21%   229   71s
+  1019   119     cutoff   10         9.75145    9.45283  3.06%   226   75s
+  1127    81    9.74478   10  100    9.75145    9.50989  2.48%   224   80s
+  1232    30     cutoff   10         9.75145    9.58874  1.67%   220   85s
+* 1282     0               9       9.7510360    9.62618  1.28%   217   86s
+* 1313     0              10       9.7421513    9.74215  0.00%   214   86s
+
+Cutting planes:
+  Gomory: 1
+
+Explored 1315 nodes (286565 simplex iterations) in 86.14 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 9.742151289994e+00, best bound 9.742151289994e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:33:15
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16830 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.05s
+Presolved: 3006 rows, 3018 columns, 12882 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.546972e+00, 431 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.5469721    3.54697  0.00%     -    0s
+
+Explored 0 nodes (431 simplex iterations) in 0.08 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.546972053434e+00, best bound 3.546972053434e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:34:05
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16926 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.05s
+Presolved: 3006 rows, 3018 columns, 12930 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.089764e+00, 630 iterations, 0.04 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.0897640    3.08976  0.00%     -    0s
+
+Explored 0 nodes (630 simplex iterations) in 0.08 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.089764044282e+00, best bound 3.089764044282e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:34:41
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16920 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.15s
+Presolved: 3006 rows, 3018 columns, 12927 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 2.979684e+00, 613 iterations, 0.05 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       2.9796841    2.97968  0.00%     -    0s
+
+Explored 0 nodes (613 simplex iterations) in 0.22 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 2.979684105417e+00, best bound 2.979684105417e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:35:09
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16836 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.05s
+Presolved: 3006 rows, 3018 columns, 12885 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.088964e+00, 646 iterations, 0.03 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.0889643    3.08896  0.00%     -    0s
+
+Explored 0 nodes (646 simplex iterations) in 0.08 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.088964293352e+00, best bound 3.088964293352e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:35:30
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16830 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.05s
+Presolved: 3006 rows, 3018 columns, 12882 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.103672e+00, 622 iterations, 0.03 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.1036725    3.10367  0.00%     -    0s
+
+Explored 0 nodes (622 simplex iterations) in 0.08 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.103672486891e+00, best bound 3.103672486891e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:35:54
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16890 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.05s
+Presolved: 3006 rows, 3018 columns, 12912 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.091710e+00, 618 iterations, 0.03 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.0917103    3.09171  0.00%     -    0s
+
+Explored 0 nodes (618 simplex iterations) in 0.08 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.091710276865e+00, best bound 3.091710276865e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:36:09
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16878 nonzeros
+Coefficient statistics:
+  Matrix range    [5e-03, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.05s
+Presolved: 3006 rows, 3018 columns, 12906 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.131524e+00, 629 iterations, 0.03 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.1315245    3.13152  0.00%     -    0s
+
+Explored 0 nodes (629 simplex iterations) in 0.08 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.131524482382e+00, best bound 3.131524482382e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:36:28
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16806 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.05s
+Presolved: 3006 rows, 3018 columns, 12870 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.028629e+00, 619 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.0286290    3.02863  0.00%     -    0s
+
+Explored 0 nodes (619 simplex iterations) in 0.07 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.028629043781e+00, best bound 3.028629043781e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:37:03
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 6024 rows, 3048 columns and 16908 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-02, 2e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 6
+Presolve removed 3018 rows and 30 columns
+Presolve time: 0.05s
+Presolved: 3006 rows, 3018 columns, 12921 nonzeros
+Variable types: 3012 continuous, 6 integer (6 binary)
+
+Root relaxation: objective 3.099182e+00, 642 iterations, 0.02 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.0991819    3.09918  0.00%     -    0s
+
+Explored 0 nodes (642 simplex iterations) in 0.10 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.099181911223e+00, best bound 3.099181911223e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:58:40
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37464 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.13s
+Presolved: 6060 rows, 6168 columns, 31464 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 6.569322e+00, 1936 iterations, 0.37 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    6.56932    0   39   12.00000    6.56932  45.3%     -    0s
+H    0     0                       9.2187305    6.56932  28.7%     -    0s
+H    0     0                       8.6821607    6.56932  24.3%     -    1s
+H    0     0                       7.7684538    6.56932  15.4%     -    1s
+     0     2    6.56932    0   39    7.76845    6.56932  15.4%     -    1s
+*   14    13               8       7.0314499    6.73984  4.15%  65.8    2s
+*   30     6               3       6.9945992    6.81968  2.50%  63.2    2s
+
+Explored 36 nodes (3970 simplex iterations) in 2.39 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 6.994599238332e+00, best bound 6.994599238332e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 09:59:09
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37284 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 31284 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.573928e+00, 2164 iterations, 0.32 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.57393    0   60   12.00000    4.57393  61.9%     -    0s
+H    0     0                       7.2924392    4.57393  37.3%     -    0s
+H    0     0                       6.8367279    4.57393  33.1%     -    0s
+     0     0    4.57857    0   60    6.83673    4.57857  33.0%     -    0s
+     0     0    4.58630    0   60    6.83673    4.58630  32.9%     -    0s
+     0     0    4.59042    0   60    6.83673    4.59042  32.9%     -    0s
+     0     0    4.59596    0   60    6.83673    4.59596  32.8%     -    0s
+H    0     0                       6.5002839    4.59596  29.3%     -    1s
+     0     2    4.59596    0   60    6.50028    4.59596  29.3%     -    2s
+*    3     2               3       4.8293099    4.68691  2.95%   126    2s
+*    7     0               3       4.7961741    4.79617  0.00%   108    2s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 8 nodes (2963 simplex iterations) in 2.43 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.796174068051e+00, best bound 4.796174068051e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:00:10
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37104 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 31104 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.509634e+00, 2542 iterations, 0.35 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.50963    0   60   12.00000    4.50963  62.4%     -    0s
+H    0     0                       6.0248312    4.50963  25.1%     -    0s
+     0     0    4.51857    0   60    6.02483    4.51857  25.0%     -    0s
+     0     0    4.51857    0   60    6.02483    4.51857  25.0%     -    0s
+     0     0    4.52750    0   60    6.02483    4.52750  24.9%     -    0s
+     0     0    4.53643    0   60    6.02483    4.53643  24.7%     -    0s
+     0     2    4.53643    0   60    6.02483    4.53643  24.7%     -    1s
+*    3     2               3       4.7733098    4.61798  3.25%   120    2s
+*    4     3               3       4.7411392    4.61798  2.60%  94.5    2s
+*    8     0               3       4.7230552    4.69838  0.52%  97.9    2s
+*    9     0               2       4.7185877    4.71859  0.00%  92.2    2s
+
+Cutting planes:
+  Gomory: 2
+
+Explored 10 nodes (3436 simplex iterations) in 2.32 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.718587695819e+00, best bound 4.718587695819e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:02:10
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37404 nonzeros
+Coefficient statistics:
+  Matrix range    [4e-04, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 31404 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.541535e+00, 2169 iterations, 0.30 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.54154    0   60   12.00000    4.54154  62.2%     -    0s
+H    0     0                       7.4688871    4.54154  39.2%     -    0s
+     0     0    4.54991    0   60    7.46889    4.54991  39.1%     -    0s
+     0     0    4.55270    0   60    7.46889    4.55270  39.0%     -    0s
+     0     0    4.55657    0   60    7.46889    4.55657  39.0%     -    0s
+     0     0    4.55796    0   60    7.46889    4.55796  39.0%     -    0s
+     0     0    4.56441    0   60    7.46889    4.56441  38.9%     -    0s
+     0     0    4.56913    0   60    7.46889    4.56913  38.8%     -    0s
+     0     0    4.56913    0   60    7.46889    4.56913  38.8%     -    0s
+     0     0    4.56913    0   60    7.46889    4.56913  38.8%     -    0s
+     0     0    4.56913    0   60    7.46889    4.56913  38.8%     -    0s
+     0     0    4.56917    0   60    7.46889    4.56917  38.8%     -    0s
+H    0     0                       6.8093726    4.56917  32.9%     -    1s
+H    0     0                       6.1132502    4.56917  25.3%     -    1s
+     0     2    4.56917    0   60    6.11325    4.56917  25.3%     -    2s
+*    4     4               2       4.7827816    4.66761  2.41%   178    2s
+*    8     0               3       4.7763468    4.77635  0.00%   126    2s
+
+Cutting planes:
+  Gomory: 13
+
+Explored 9 nodes (3270 simplex iterations) in 2.67 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.776346817340e+00, best bound 4.776346817340e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:02:42
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37608 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.17s
+Presolved: 6060 rows, 6168 columns, 31608 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.485241e+00, 2251 iterations, 0.32 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.48524    0   60   12.00000    4.48524  62.6%     -    0s
+H    0     0                       6.7551245    4.48524  33.6%     -    0s
+     0     0    4.48895    0   60    6.75512    4.48895  33.5%     -    0s
+     0     0    4.49266    0   60    6.75512    4.49266  33.5%     -    0s
+     0     0    4.50070    0   60    6.75512    4.50070  33.4%     -    0s
+     0     0    4.50132    0   60    6.75512    4.50132  33.4%     -    0s
+H    0     0                       6.1104994    4.50132  26.3%     -    1s
+     0     2    4.50132    0   60    6.11050    4.50132  26.3%     -    2s
+*    3     2               3       4.7369135    4.56613  3.61%   139    2s
+*    4     3               3       4.7360901    4.56613  3.59%   116    2s
+*    7     2               2       4.7296675    4.66661  1.33%   132    2s
+*    9     0               2       4.6974913    4.69749  0.00%   114    2s
+
+Cutting planes:
+  Gomory: 4
+
+Explored 10 nodes (3321 simplex iterations) in 2.70 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.697491313427e+00, best bound 4.697491313427e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:03:17
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37428 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 31428 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.465499e+00, 2269 iterations, 0.30 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.46550    0   60   12.00000    4.46550  62.8%     -    0s
+H    0     0                       7.3348771    4.46550  39.1%     -    0s
+H    0     0                       6.5263283    4.46550  31.6%     -    0s
+     0     0    4.46887    0   60    6.52633    4.46887  31.5%     -    0s
+     0     0    4.47225    0   60    6.52633    4.47225  31.5%     -    0s
+     0     0    4.47618    0   60    6.52633    4.47618  31.4%     -    0s
+     0     0    4.48012    0   60    6.52633    4.48012  31.4%     -    0s
+H    0     0                       6.1904168    4.48012  27.6%     -    1s
+H    0     0                       5.9058912    4.48012  24.1%     -    1s
+     0     2    4.48012    0   60    5.90589    4.48012  24.1%     -    2s
+*    3     2               3       4.6909983    4.55101  2.98%   151    2s
+*    4     3               3       4.6642370    4.55101  2.43%   122    2s
+*    7     1               2       4.6192985    4.61108  0.18%   115    2s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 9 nodes (3143 simplex iterations) in 2.48 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.619298544096e+00, best bound 4.619298544096e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:03:50
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 36900 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 30900 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.340688e+00, 2287 iterations, 0.25 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.34069    0   60   12.00000    4.34069  63.8%     -    0s
+H    0     0                       6.4670698    4.34069  32.9%     -    0s
+H    0     0                       6.1109991    4.34069  29.0%     -    0s
+     0     0    4.34354    0   60    6.11100    4.34354  28.9%     -    0s
+     0     0    4.34640    0   60    6.11100    4.34640  28.9%     -    0s
+     0     0    4.34925    0   60    6.11100    4.34925  28.8%     -    0s
+H    0     0                       6.1002147    4.34925  28.7%     -    1s
+H    0     0                       6.0269907    4.34925  27.8%     -    1s
+H    0     0                       4.9853177    4.34925  12.8%     -    1s
+     0     2    4.34925    0   60    4.98532    4.34925  12.8%     -    1s
+*    3     2               3       4.4612344    4.40981  1.15%   107    2s
+
+Cutting planes:
+  Gomory: 3
+
+Explored 7 nodes (2826 simplex iterations) in 2.23 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.461234407465e+00, best bound 4.461234407465e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:04:26
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37344 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 31344 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 3.906966e+00, 1832 iterations, 0.18 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       3.9069658    3.90697  0.00%     -    0s
+
+Explored 0 nodes (1832 simplex iterations) in 0.29 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 3.906965792197e+00, best bound 3.906965792197e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:04:40
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37704 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 31704 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.307712e+00, 2518 iterations, 0.32 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0       4.3077120    4.30771  0.00%     -    0s
+
+Explored 0 nodes (2518 simplex iterations) in 0.42 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.307711962232e+00, best bound 4.307711962232e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:04:52
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37416 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 31416 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.348325e+00, 2593 iterations, 0.32 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.34833    0   60   12.00000    4.34833  63.8%     -    0s
+H    0     0                       7.5338073    4.34833  42.3%     -    0s
+H    0     0                       6.2658419    4.34833  30.6%     -    0s
+     0     0    4.35424    0   60    6.26584    4.35424  30.5%     -    0s
+     0     0    4.35621    0   60    6.26584    4.35621  30.5%     -    0s
+     0     0    4.35782    0   60    6.26584    4.35782  30.5%     -    0s
+     0     0    4.35845    0   60    6.26584    4.35845  30.4%     -    0s
+H    0     0                       4.3596421    4.35845  0.03%     -    1s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 0 nodes (2635 simplex iterations) in 1.24 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.359642061066e+00, best bound 4.358452329615e+00, gap 0.0273%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:05:03
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 12060 rows, 6168 columns and 37320 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-03, 3e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 12
+Presolve removed 6000 rows and 0 columns
+Presolve time: 0.10s
+Presolved: 6060 rows, 6168 columns, 31320 nonzeros
+Variable types: 6024 continuous, 144 integer (144 binary)
+
+Root relaxation: objective 4.386765e+00, 2554 iterations, 0.30 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    4.38677    0   60   12.00000    4.38677  63.4%     -    0s
+H    0     0                       5.2481252    4.38677  16.4%     -    0s
+H    0     0                       5.1116570    4.38677  14.2%     -    0s
+     0     0    4.38962    0   60    5.11166    4.38962  14.1%     -    0s
+     0     0    4.39247    0   60    5.11166    4.39247  14.1%     -    0s
+     0     0    4.39913    0   60    5.11166    4.39913  13.9%     -    0s
+     0     2    4.39913    0   60    5.11166    4.39913  13.9%     -    1s
+*    3     3               2       4.5779925    4.47339  2.28%   199    2s
+*    6     2               3       4.5326184    4.47347  1.31%   124    2s
+
+Cutting planes:
+  Gomory: 3
+
+Explored 9 nodes (3468 simplex iterations) in 2.33 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 4.532618405422e+00, best bound 4.532618405422e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:07:52
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 70700 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.17s
+Presolved: 10120 rows, 10440 columns, 60700 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 9.507393e+00, 5902 iterations, 2.09 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    9.50739    0  141   20.00000    9.50739  52.5%     -    2s
+H    0     0                      19.0805383    9.50739  50.2%     -    2s
+     0     0    9.51227    0  141   19.08054    9.51227  50.1%     -    2s
+     0     0    9.51639    0  141   19.08054    9.51639  50.1%     -    2s
+     0     0    9.52314    0  141   19.08054    9.52314  50.1%     -    2s
+     0     0    9.52801    0  141   19.08054    9.52801  50.1%     -    2s
+H    0     0                      11.6563331    9.52801  18.3%     -    8s
+     0     2    9.52801    0  141   11.65633    9.52801  18.3%     -    9s
+     1     3    9.63745    1  158   11.65633    9.54334  18.1%   623   10s
+    12    13   10.03541    6  147   11.65633    9.73148  16.5%   504   15s
+*   42    38              17      10.5189087    9.73148  7.49%   348   19s
+    48    39     cutoff   18        10.51891    9.80301  6.81%   330   20s
+   100    54   10.48400    9   98   10.51891    9.85975  6.27%   313   25s
+   179    67     cutoff    8        10.51891    9.88167  6.06%   270   30s
+*  218    78              15      10.5182882    9.91388  5.75%   280   34s
+   235    87   10.26556    6  154   10.51829    9.94976  5.41%   278   35s
+*  251    86              13      10.4947968    9.94976  5.19%   274   36s
+   292    93   10.22788    5  163   10.49480   10.03564  4.38%   277   40s
+   354    94   10.48603   11  119   10.49480   10.10862  3.68%   275   45s
+   433    93     cutoff   12        10.49480   10.16681  3.13%   269   50s
+   517    89     cutoff    9        10.49480   10.21851  2.63%   256   55s
+*  538    72              15      10.4166383   10.25603  1.54%   256   56s
+
+Cutting planes:
+  Gomory: 4
+
+Explored 637 nodes (155423 simplex iterations) in 58.95 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 1.041663832824e+01, best bound 1.041663832824e+01, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:10:14
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 71200 nonzeros
+Coefficient statistics:
+  Matrix range    [4e-05, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 61200 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 6.622532e+00, 6064 iterations, 2.12 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    6.62253    0  140   20.00000    6.62253  66.9%     -    2s
+H    0     0                      13.1432325    6.62253  49.6%     -    2s
+H    0     0                      12.2224029    6.62253  45.8%     -    2s
+     0     0    6.62913    0  140   12.22240    6.62913  45.8%     -    2s
+H    0     0                      11.6939314    6.62913  43.3%     -    3s
+     0     0    6.63243    0  140   11.69393    6.63243  43.3%     -    3s
+     0     0    6.64462    0  140   11.69393    6.64462  43.2%     -    3s
+     0     0    6.66164    0  140   11.69393    6.66164  43.0%     -    3s
+     0     0    6.66327    0  140   11.69393    6.66327  43.0%     -    3s
+H    0     0                       8.8659542    6.66327  24.8%     -    8s
+     0     2    6.66327    0  140    8.86595    6.66327  24.8%     -    9s
+     2     4    6.86207    2  155    8.86595    6.74848  23.9%   618   10s
+     7     8    7.00917    4  157    8.86595    6.93420  21.8%   720   15s
+*   19    14               9       7.8369710    7.00933  10.6%   522   17s
+*   31    23               9       7.8368712    7.01008  10.6%   421   19s
+    42    27    7.71564   12   83    7.83687    7.01008  10.6%   408   20s
+*   69    33              12       7.7975191    7.10891  8.83%   361   22s
+    94    35    7.68944   10  148    7.79752    7.23100  7.27%   340   25s
+*   99    35               9       7.7851237    7.23100  7.12%   329   25s
+   169    40    7.37232    4  128    7.78512    7.26971  6.62%   286   30s
+   255    45    7.69374   11  113    7.78512    7.33404  5.79%   263   35s
+   336    44     cutoff   12         7.78512    7.44264  4.40%   250   40s
+*  364    36              16       7.7801575    7.49507  3.66%   245   41s
+*  424    32              12       7.7785487    7.57310  2.64%   232   43s
+   449     4     cutoff    8         7.77855    7.65562  1.58%   227   45s
+
+Cutting planes:
+  Gomory: 6
+
+Explored 471 nodes (110332 simplex iterations) in 45.57 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 7.778548657184e+00, best bound 7.778548657184e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:11:43
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 71300 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 61300 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 6.867502e+00, 6317 iterations, 2.10 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    6.86750    0  140   20.00000    6.86750  65.7%     -    2s
+H    0     0                      15.7040266    6.86750  56.3%     -    2s
+H    0     0                      12.8897075    6.86750  46.7%     -    2s
+     0     0    6.87316    0  140   12.88971    6.87316  46.7%     -    2s
+H    0     0                      12.5610636    6.87316  45.3%     -    2s
+     0     0    6.87882    0  140   12.56106    6.87882  45.2%     -    2s
+     0     0    6.89013    0  140   12.56106    6.89013  45.1%     -    3s
+H    0     0                       9.6561790    6.89013  28.6%     -    8s
+     0     2    6.89013    0  140    9.65618    6.89013  28.6%     -    8s
+     3     5    7.38625    2  149    9.65618    6.99617  27.5%   668   11s
+    21    23    7.91884   10  132    9.65618    7.31964  24.2%   428   15s
+*   27    25              12       8.1200901    7.31964  9.86%   412   15s
+    63    34    8.10510   10   97    8.12009    7.38695  9.03%   343   20s
+*   80    35              12       8.0745093    7.41890  8.12%   320   21s
+*   85    41              11       8.0178973    7.41890  7.47%   320   22s
+   128    46    7.80204    3  137    8.01790    7.45349  7.04%   297   25s
+   202    45    7.89357    7  147    8.01790    7.55381  5.79%   279   30s
+   254    35     cutoff    8         8.01790    7.61511  5.02%   282   35s
+   319    11    7.98484    8  131    8.01790    7.81446  2.54%   275   40s
+
+Cutting planes:
+  Gomory: 3
+
+Explored 345 nodes (97819 simplex iterations) in 41.11 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.017897302806e+00, best bound 8.017897302806e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:16:57
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 71120 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.32s
+Presolved: 10120 rows, 10440 columns, 61120 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.157075e+00, 6405 iterations, 2.37 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.15707    0  140   20.00000    7.15707  64.2%     -    2s
+H    0     0                      16.1455256    7.15707  55.7%     -    2s
+H    0     0                      15.3976891    7.15707  53.5%     -    3s
+     0     0    7.16367    0  140   15.39769    7.16367  53.5%     -    3s
+H    0     0                      14.0090389    7.16367  48.9%     -    3s
+H    0     0                      12.9280880    7.16367  44.6%     -    3s
+     0     0    7.17687    0  140   12.92809    7.17687  44.5%     -    3s
+     0     0    7.17687    0  140   12.92809    7.17687  44.5%     -    3s
+     0     0    7.18347    0  140   12.92809    7.18347  44.4%     -    3s
+H    0     0                      12.3949099    7.18347  42.0%     -    7s
+H    0     0                      11.0887465    7.18347  35.2%     -    9s
+     0     2    7.18347    0  140   11.08875    7.18347  35.2%     -   10s
+    14    15    7.99313    6  150   11.08875    7.32022  34.0%   526   15s
+*   26    26               7       8.3273132    7.32022  12.1%   433   16s
+    59    35    8.02918    6  139    8.32731    7.70111  7.52%   353   20s
+   139    41    8.21413    3  126    8.32731    7.71878  7.31%   276   25s
+*  206    46               9       8.3239933    7.85004  5.69%   257   28s
+*  215    43              12       8.3038123    7.85004  5.46%   253   29s
+   222    48    8.06709    6  115    8.30381    7.85777  5.37%   254   30s
+*  289    42               7       8.2805122    7.95177  3.97%   254   34s
+   291    42    8.26850   10  141    8.28051    7.97857  3.65%   255   35s
+*  302    37               6       8.2275656    7.97863  3.03%   255   35s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 387 nodes (97977 simplex iterations) in 39.09 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.227565641623e+00, best bound 8.227565641623e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:18:30
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 70680 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 60680 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.417268e+00, 5820 iterations, 1.89 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.41727    0  140   20.00000    7.41727  62.9%     -    2s
+H    0     0                      15.5555253    7.41727  52.3%     -    2s
+H    0     0                      14.5700328    7.41727  49.1%     -    2s
+     0     0    7.42458    0  140   14.57003    7.42458  49.0%     -    2s
+H    0     0                      13.8886514    7.42458  46.5%     -    2s
+     0     0    7.43372    0  140   13.88865    7.43372  46.5%     -    2s
+     0     0    7.43859    0  140   13.88865    7.43859  46.4%     -    2s
+     0     0    7.44651    0  140   13.88865    7.44651  46.4%     -    2s
+     0     0    7.44706    0  140   13.88865    7.44706  46.4%     -    3s
+     0     0    7.44773    0  140   13.88865    7.44773  46.4%     -    3s
+H    0     0                       9.0451908    7.44773  17.7%     -    7s
+     0     2    7.44773    0  140    9.04519    7.44773  17.7%     -    8s
+     3     5    7.70466    2  138    9.04519    7.59156  16.1%   564   10s
+*   20    16               9       8.6929530    7.70542  11.4%   382   14s
+    29    20    8.65414    9   41    8.69295    7.70542  11.4%   314   15s
+    91    43    8.29694    6  116    8.69295    7.94266  8.63%   267   20s
+*  107    48              11       8.6729854    7.94266  8.42%   264   21s
+*  117    45              10       8.6491519    7.95664  8.01%   265   21s
+   162    49    8.58937    8   96    8.64915    7.95664  8.01%   256   25s
+   252    63     cutoff   11         8.64915    8.05846  6.83%   238   30s
+*  277    62              11       8.5911607    8.07358  6.02%   235   31s
+   348    61     cutoff   13         8.59116    8.12895  5.38%   225   35s
+   449    55    8.38861    6  117    8.59116    8.22462  4.27%   222   40s
+*  452    55               9       8.5844691    8.22462  4.19%   222   40s
+   542    32    8.54638    9  107    8.58447    8.32532  3.02%   219   45s
+
+Cutting planes:
+  Gomory: 6
+
+Explored 634 nodes (138062 simplex iterations) in 48.13 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.584469129074e+00, best bound 8.584469129074e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:20:59
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 70720 nonzeros
+Coefficient statistics:
+  Matrix range    [3e-03, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 60720 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.334623e+00, 5996 iterations, 1.91 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.33462    0  140   20.00000    7.33462  63.3%     -    2s
+H    0     0                      18.8023453    7.33462  61.0%     -    2s
+H    0     0                      14.0678669    7.33462  47.9%     -    2s
+     0     0    7.34169    0  140   14.06787    7.34169  47.8%     -    2s
+     0     0    7.34877    0  140   14.06787    7.34877  47.8%     -    2s
+H    0     0                      14.0597642    7.34877  47.7%     -    2s
+     0     0    7.35584    0  140   14.05976    7.35584  47.7%     -    2s
+H    0     0                      13.3864369    7.35584  45.1%     -    7s
+H    0     0                      13.0168809    7.35584  43.5%     -    7s
+H    0     0                      10.1481454    7.35584  27.5%     -    8s
+     0     2    7.35584    0  140   10.14815    7.35584  27.5%     -    8s
+     3     5    7.57866    2  157   10.14815    7.50222  26.1%   567   10s
+    19    20    8.89995    9  108   10.14815    7.57910  25.3%   455   15s
+H   27    27                       9.4471477    7.57910  19.8%   379   15s
+*   35    28              12       9.1166743    7.57910  16.9%   332   15s
+*   36    25              12       8.8974540    7.57910  14.8%   326   15s
+*   71    44              17       8.8111619    7.75393  12.0%   288   19s
+    76    45    8.01156    4  152    8.81116    7.75960  11.9%   286   20s
+*  122    62              13       8.7363680    7.80002  10.7%   272   23s
+   148    68    8.49309    5  119    8.73637    7.83170  10.4%   272   25s
+*  154    67               9       8.6895921    7.83170  9.87%   272   25s
+   234    81     cutoff   12         8.68959    7.96474  8.34%   251   30s
+*  320    88               9       8.4994011    8.02246  5.61%   237   34s
+   325    88     cutoff    9         8.49940    8.02521  5.58%   235   35s
+   429    88     cutoff   11         8.49940    8.11580  4.51%   226   40s
+   527    76    8.29888    5  151    8.49940    8.18763  3.67%   221   45s
+*  576    67              11       8.4913502    8.21493  3.26%   216   46s
+   622    53     cutoff    8         8.49135    8.25550  2.78%   215   50s
+
+Cutting planes:
+  Gomory: 3
+
+Explored 728 nodes (152860 simplex iterations) in 53.14 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.491350237229e+00, best bound 8.491350237229e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:25:12
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 72220 nonzeros
+Coefficient statistics:
+  Matrix range    [4e-05, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.20s
+Presolved: 10120 rows, 10440 columns, 62220 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.105296e+00, 5572 iterations, 2.05 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.10530    0  140   20.00000    7.10530  64.5%     -    2s
+H    0     0                      16.3109901    7.10530  56.4%     -    2s
+H    0     0                      15.3584666    7.10530  53.7%     -    2s
+     0     0    7.11349    0  140   15.35847    7.11349  53.7%     -    2s
+H    0     0                      14.4519979    7.11349  50.8%     -    2s
+H    0     0                      13.3636889    7.11349  46.8%     -    2s
+     0     0    7.11895    0  140   13.36369    7.11895  46.7%     -    2s
+     0     0    7.12805    0  140   13.36369    7.12805  46.7%     -    2s
+     0     0    7.13261    0  140   13.36369    7.13261  46.6%     -    3s
+     0     0    7.14171    0  140   13.36369    7.14171  46.6%     -    3s
+     0     0    7.14626    0  140   13.36369    7.14626  46.5%     -    3s
+H    0     0                      10.8026340    7.14626  33.8%     -    8s
+     0     2    7.14626    0  140   10.80263    7.14626  33.8%     -    9s
+     2     4    7.33084    2  138   10.80263    7.24840  32.9%   318   10s
+     9    12    7.91661    5  149   10.80263    7.33094  32.1%   595   15s
+H   27    24                       8.9304340    7.33094  17.9%   408   18s
+*   28    24              12       8.2905406    7.33094  11.6%   398   18s
+    43    33    8.23885    7  102    8.29054    7.49446  9.60%   374   20s
+   111    45     cutoff    9         8.29054    7.79531  5.97%   289   25s
+*  121    47              11       8.2609349    7.79531  5.64%   284   25s
+*  140    47              14       8.2432715    7.80342  5.34%   270   26s
+   184    45    8.21003    9  109    8.24327    7.86790  4.55%   271   30s
+   260    22    8.18974    6  122    8.24327    7.98223  3.17%   254   35s
+
+Cutting planes:
+  Gomory: 6
+
+Explored 329 nodes (80967 simplex iterations) in 38.46 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.243271464306e+00, best bound 8.243271464306e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:26:50
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 70000 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.31s
+Presolved: 10120 rows, 10440 columns, 60000 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.002871e+00, 6182 iterations, 1.95 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.00287    0  140   20.00000    7.00287  65.0%     -    2s
+H    0     0                      15.1914485    7.00287  53.9%     -    2s
+     0     0    7.00994    0  140   15.19145    7.00994  53.9%     -    2s
+H    0     0                      14.2338082    7.00994  50.8%     -    2s
+H    0     0                      13.2305267    7.00994  47.0%     -    2s
+     0     0    7.01843    0  140   13.23053    7.01843  47.0%     -    2s
+     0     0    7.01843    0  140   13.23053    7.01843  47.0%     -    3s
+     0     0    7.02408    0  140   13.23053    7.02408  46.9%     -    3s
+H    0     0                      12.8085075    7.02408  45.2%     -    6s
+H    0     0                      10.6728723    7.02408  34.2%     -    8s
+     0     2    7.02408    0  140   10.67287    7.02408  34.2%     -    9s
+     2     4    7.47256    2  151   10.67287    7.16224  32.9%   456   10s
+*   16    15               7       8.1925528    7.33610  10.5%   386   14s
+    20    16     cutoff    9         8.19255    7.44446  9.13%   342   15s
+*   78    35              10       8.1397752    7.54981  7.25%   272   19s
+    86    36     cutoff    8         8.13978    7.54981  7.25%   262   20s
+   174    41    8.05119    9  147    8.13978    7.72250  5.13%   231   25s
+   256    32    8.07341    9  150    8.13978    7.79613  4.22%   229   30s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 360 nodes (79154 simplex iterations) in 33.40 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.139775232694e+00, best bound 8.139775232694e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:27:54
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 71160 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.19s
+Presolved: 10120 rows, 10440 columns, 61160 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.061691e+00, 6145 iterations, 2.15 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.06169    0  140   20.00000    7.06169  64.7%     -    2s
+H    0     0                      14.9350312    7.06169  52.7%     -    2s
+H    0     0                      12.7296608    7.06169  44.5%     -    2s
+     0     0    7.06335    0  140   12.72966    7.06335  44.5%     -    2s
+     0     0    7.06972    0  140   12.72966    7.06972  44.5%     -    2s
+     0     0    7.07831    0  140   12.72966    7.07831  44.4%     -    3s
+     0     0    7.07863    0  140   12.72966    7.07863  44.4%     -    3s
+H    0     0                      10.2729236    7.07863  31.1%     -    8s
+     0     2    7.07863    0  140   10.27292    7.07863  31.1%     -    9s
+     2     4    7.33155    2  153   10.27292    7.21332  29.8%   478   10s
+*   11    10               6       8.2873330    7.33172  11.5%   512   14s
+    17    14     cutoff    7         8.28733    7.33189  11.5%   449   15s
+    72    29    7.81630    9  155    8.28733    7.48859  9.64%   304   20s
+   144    33    8.24695   11  102    8.28733    7.60503  8.23%   267   25s
+*  198    37               9       8.2406180    7.75315  5.92%   244   27s
+   237    29    8.23660   11  139    8.24062    7.80099  5.33%   244   30s
+*  284    26              11       8.2186574    7.89196  3.98%   242   33s
+   314    21    8.19809    7  114    8.21866    7.93390  3.46%   239   35s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 375 nodes (91433 simplex iterations) in 37.69 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.218657393076e+00, best bound 8.218657393076e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:28:53
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 70920 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.19s
+Presolved: 10120 rows, 10440 columns, 60920 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.333416e+00, 6556 iterations, 2.66 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.33342    0  140   20.00000    7.33342  63.3%     -    2s
+H    0     0                      16.9756469    7.33342  56.8%     -    3s
+H    0     0                      14.0889833    7.33342  47.9%     -    3s
+     0     0    7.34808    0  140   14.08898    7.34808  47.8%     -    3s
+H    0     0                      12.4562238    7.34808  41.0%     -    3s
+     0     0    7.35982    0  140   12.45622    7.35982  40.9%     -    3s
+     0     0    7.36275    0  140   12.45622    7.36275  40.9%     -    3s
+     0     0    7.37532    0  140   12.45622    7.37532  40.8%     -    3s
+H    0     0                      11.7474382    7.37532  37.2%     -    4s
+     0     0    7.38265    0  140   11.74744    7.38265  37.2%     -    4s
+H    0     0                      11.5382311    7.38265  36.0%     -   10s
+     0     2    7.38265    0  140   11.53823    7.38265  36.0%     -   11s
+     4     6    7.83854    2  144   11.53823    7.57624  34.3%   675   15s
+*   19    19               7       8.4564379    7.68067  9.17%   402   18s
+*   26    19              11       8.4526516    7.68067  9.13%   348   19s
+    29    19    8.40355   12  119    8.45265    7.78523  7.90%   330   20s
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:29:34
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 70940 nonzeros
+Coefficient statistics:
+  Matrix range    [7e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 60940 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.032283e+00, 6027 iterations, 2.19 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.03228    0  140   20.00000    7.03228  64.8%     -    2s
+H    0     0                      14.4248656    7.03228  51.2%     -    2s
+     0     0    7.03948    0  140   14.42487    7.03948  51.2%     -    2s
+H    0     0                      13.8365367    7.03948  49.1%     -    2s
+     0     0    7.04668    0  140   13.83654    7.04668  49.1%     -    3s
+H    0     0                      13.2843871    7.04668  47.0%     -    3s
+H    0     0                      12.5709738    7.04668  43.9%     -    3s
+     0     0    7.06108    0  140   12.57097    7.06108  43.8%     -    3s
+H    0     0                      10.7356353    7.06108  34.2%     -    8s
+     0     2    7.06108    0  140   10.73564    7.06108  34.2%     -    9s
+     1     3    7.21648    1  159   10.73564    7.21419  32.8%   894   10s
+    17    19    8.31085    7  137   10.73564    7.21663  32.8%   448   15s
+*   25    24              11       8.4668601    7.21663  14.8%   372   15s
+*   53    33              10       8.3529574    7.31891  12.4%   295   18s
+*   58    30              11       8.2006316    7.31891  10.8%   290   18s
+    73    33    8.02620    7  141    8.20063    7.36795  10.2%   278   20s
+*  136    38              10       8.1497265    7.56585  7.16%   253   24s
+   145    39    7.94352    6  146    8.14973    7.64745  6.16%   254   25s
+*  177    40               6       8.1335586    7.74298  4.80%   239   27s
+   226    35     cutoff   10         8.13356    7.77122  4.45%   232   30s
+   323    17    8.11847    7  127    8.13356    7.91667  2.67%   217   35s
+
+Cutting planes:
+  Gomory: 6
+
+Explored 361 nodes (80456 simplex iterations) in 36.21 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.133558578656e+00, best bound 8.133558578656e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:31:06
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 71320 nonzeros
+Coefficient statistics:
+  Matrix range    [2e-04, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.28s
+Presolved: 10120 rows, 10440 columns, 61320 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.192072e+00, 6159 iterations, 2.03 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.19207    0  140   20.00000    7.19207  64.0%     -    2s
+H    0     0                      15.4472783    7.19207  53.4%     -    2s
+H    0     0                      13.5968056    7.19207  47.1%     -    2s
+     0     0    7.20674    0  140   13.59681    7.20674  47.0%     -    2s
+H    0     0                      13.3255861    7.20674  45.9%     -    2s
+     0     0    7.21407    0  140   13.32559    7.21407  45.9%     -    2s
+H    0     0                      11.4467855    7.21407  37.0%     -    3s
+     0     0    7.22385    0  140   11.44679    7.22385  36.9%     -    3s
+     0     0    7.22711    0  140   11.44679    7.22711  36.9%     -    3s
+     0     0    7.22874    0  140   11.44679    7.22874  36.8%     -    3s
+H    0     0                      10.7026046    7.22874  32.5%     -    8s
+     0     2    7.22874    0  140   10.70260    7.22874  32.5%     -    8s
+     2     4    7.70493    1  142   10.70260    7.34547  31.4%   641   10s
+    16    18    8.13879    7  115   10.70260    7.44784  30.4%   478   15s
+*   26    26              10       8.5271916    7.44784  12.7%   404   16s
+    44    34    8.02178    7  149    8.52719    7.57254  11.2%   361   20s
+    75    48    8.43755    8  102    8.52719    7.62417  10.6%   332   25s
+*  114    54              11       8.4923592    7.70502  9.27%   298   29s
+   119    53    8.47589   12  129    8.49236    7.72289  9.06%   300   30s
+*  185    68               9       8.4101330    7.90531  6.00%   274   34s
+   197    69    8.25348    8  137    8.41013    7.90531  6.00%   269   35s
+   271    70    8.29135   10  123    8.41013    7.96768  5.26%   257   40s
+   329    69     cutoff   12         8.41013    8.05446  4.23%   249   45s
+   418    57    8.31671    8  109    8.41013    8.10268  3.66%   238   50s
+   510    30     cutoff    8         8.41013    8.18738  2.65%   226   55s
+
+Cutting planes:
+  Gomory: 5
+
+Explored 578 nodes (130273 simplex iterations) in 57.61 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.410132994771e+00, best bound 8.410132994771e+00, gap 0.0%
+
+Gurobi 6.5.0 (win64) logging started 02/05/16 10:33:23
+
+Changed value of parameter MIPGap to 0.001
+   Prev: 0.0001  Min: 0.0  Max: 1e+100  Default: 0.0001
+Optimize a model with 20120 rows, 10440 columns and 71200 nonzeros
+Coefficient statistics:
+  Matrix range    [4e-05, 5e+00]
+  Objective range [1e+00, 1e+00]
+  Bounds range    [1e+00, 1e+00]
+  RHS range       [1e+00, 1e+00]
+Found heuristic solution: objective 20
+Presolve removed 10000 rows and 0 columns
+Presolve time: 0.18s
+Presolved: 10120 rows, 10440 columns, 61200 nonzeros
+Variable types: 10040 continuous, 400 integer (400 binary)
+
+Root relaxation: objective 7.606998e+00, 6029 iterations, 2.13 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0    7.60700    0  140   20.00000    7.60700  62.0%     -    2s
+H    0     0                      17.0153146    7.60700  55.3%     -    2s
+H    0     0                      15.1430129    7.60700  49.8%     -    2s
+     0     0    7.61492    0  140   15.14301    7.61492  49.7%     -    2s
+     0     0    7.62020    0  140   15.14301    7.62020  49.7%     -    3s
+H    0     0                      14.9640936    7.62020  49.1%     -    3s
+     0     0    7.62284    0  140   14.96409    7.62284  49.1%     -    3s
+     0     0    7.63868    0  140   14.96409    7.63868  49.0%     -    3s
+H    0     0                      14.5208653    7.63868  47.4%     -    7s
+H    0     0                      14.0551822    7.63868  45.7%     -    7s
+H    0     0                      10.0200747    7.63868  23.8%     -    9s
+     0     2    7.63868    0  140   10.02007    7.63868  23.8%     -    9s
+     1     3    7.72276    1  138   10.02007    7.72276  22.9%   408   10s
+    16    17    8.12579    9  152   10.02007    7.74582  22.7%   405   15s
+*   28    26              10       9.0305219    7.74582  14.2%   350   16s
+*   38    31              13       9.0162319    7.74582  14.1%   296   17s
+*   40    28              17       8.8051999    7.81798  11.2%   299   18s
+    57    38    8.61611    6   80    8.80520    7.81798  11.2%   313   20s
+*   63    39              15       8.7950898    7.81798  11.1%   290   20s
+*   88    51              11       8.7891319    7.90919  10.0%   286   22s
+*   92    46              13       8.7728766    7.90919  9.84%   282   23s
+*  110    52              12       8.6096255    8.04494  6.56%   280   24s
+   113    47     cutoff   14         8.60963    8.05852  6.40%   276   25s
+   193    48    8.36032   13  141    8.60963    8.20079  4.75%   253   30s
+   257    43    8.56189   11  143    8.60963    8.27094  3.93%   253   35s
+   322    35    8.53413   11   59    8.60963    8.35424  2.97%   246   40s
+
+Cutting planes:
+  Gomory: 4
+
+Explored 413 nodes (103519 simplex iterations) in 44.89 seconds
+Thread count was 4 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-03)
+Best objective 8.609625464789e+00, best bound 8.609625464789e+00, gap 0.0%

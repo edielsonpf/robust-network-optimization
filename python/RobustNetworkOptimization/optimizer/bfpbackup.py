@@ -11,7 +11,7 @@ class BFPBackup(object):
     '''
     # Private model object
     __model = []
-     
+         
     # Private model variables
     __BackupCapacity = {}
     __bBackupLink = {}
@@ -23,9 +23,10 @@ class BFPBackup(object):
     __nodes = []
     __capacity = []
     __epsilon = 1
+    __impSample = {}
     __N = 1
         
-    def __init__(self,nodes,links,capacity,epsilon,N):
+    def __init__(self,imp_samp,nodes,links,capacity,epsilon,N):
         '''
         Constructor
         '''
@@ -34,9 +35,9 @@ class BFPBackup(object):
         self.__capacity = capacity
         self.__epsilon = epsilon
         self.__N = N
-        self.__loadModel()
-                 
-    def __loadModel(self):
+        self.__loadModel(imp_samp)
+                         
+    def __loadModel(self,imp_samp):
                  
         # Create optimization model
         self.__model = Model('Backup')
@@ -80,7 +81,7 @@ class BFPBackup(object):
         # Link capacity constraints
         for i,j in self.__links:
             for k in range(self.__N):
-                self.__model.addConstr(quicksum(self.__bBackupLink[i,j,s,d]*self.__capacity[k,s,d] for s,d in self.__links) - self.__BackupCapacity[i,j] - self.__z0[i,j] <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
+                self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__capacity[k,s,d] for s,d in self.__links) - self.__BackupCapacity[i,j] - self.__z0[i,j])*imp_samp[k,i,j] <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
         # Link capacity constraints
