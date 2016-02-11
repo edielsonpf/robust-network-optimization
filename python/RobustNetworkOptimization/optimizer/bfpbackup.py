@@ -44,7 +44,7 @@ class BFPBackup(object):
      
         # Create variables
         for i,j in self.__links:
-            self.__BackupCapacity[i,j] = self.__model.addVar(lb=0, name='Backup_Capacity[%s,%s]' % (i, j))
+            self.__BackupCapacity[i,j] = self.__model.addVar(vtype=GRB.INTEGER,lb=0, name='Backup_Capacity[%s,%s]' % (i, j))
         self.__model.update()
           
         for i,j in self.__links:
