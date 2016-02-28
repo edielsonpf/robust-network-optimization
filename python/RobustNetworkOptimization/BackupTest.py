@@ -1,4 +1,3 @@
-from optimizer import sqmodel
 from math import sqrt
 try:
     import matplotlib.pyplot as plt
@@ -160,7 +159,7 @@ def BackupPathModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutof
         option=1
         plotGraph(G, option, pos)
 
-def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,epsilon,mip_gap,time_limit):
+def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,epsilon,mip_gap,time_limit):
         
     ############################################
     #
@@ -179,9 +178,11 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         links = G.edges()
         #Generates a list with all nodes (vertex) in the graph
         nodes = G.nodes() 
-                
+        
     elif scenario == 1:
         print('Scenario based on 14-node NSFNET (1991) with 14 nodes.')
+        
+        num_nodes=14
         
         nodes = [i+1 for i in range(14)]
     
@@ -195,23 +196,20 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         G.add_nodes_from(nodes)
         G.add_edges_from(links)
         
-    
     ###########################################
     #
     #    Random Scenarios
     #
     ###########################################
     print('\nGenerating %s random scenarios...' %(num_scenarios))
+    
     nobs = num_nodes*(num_nodes-1)
+    
     if importance_sampling == 0:
         Y = np.random.binomial(1, p, (num_scenarios,nobs))
     else:
-        p2=p+0.075
-        #p2=0.1
         print('Failure probability for importance sample: %g' %p2)
-    
         Y=stats.binom.rvs(1,p2,size=(num_scenarios,nobs))
-#     print(Y)
     
     capacity={}
     Aux=1
@@ -232,12 +230,13 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         ImpSamp={}
         for i,j in links:
             for k in range(num_scenarios):
-                sum_failue=0
+                sum_failure=0
                 for s,d in links:
-                    sum_failue=sum_failue+capacity[k,s,d]
+                    sum_failure=sum_failure+capacity[k,s,d]
                 #print('f(%g)=%g' % (sum_failue,stats.binom.pmf(sum_failue,len(links),p)))
                 #print('h(%g)=%g' % (sum_failue,stats.binom.pmf(sum_failue,len(links),p2)))
-                ImpSamp[k,i,j]=stats.binom.pmf(sum_failue,len(links),p)/stats.binom.pmf(sum_failue,len(links),p2)
+                #ImpSamp[k,i,j]=stats.binom.pmf(sum_failure,len(links),p)/stats.binom.pmf(sum_failure,len(links),p2)
+                ImpSamp[k,i,j]=(p**(sum_failure)*(1-p)**(len(links)-sum_failure))/(p2**(sum_failure)*(1-p2)**(len(links)-sum_failure))
                 #print('f(x)/h(x)=%g' %ImpSamp[k,i,j])
             #print(len(ImpSamp))
 
@@ -267,10 +266,15 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
     
     print('\nCapacity assigned per backup link:\n' )
     ChoosenLinks={}
+    BkpLinks={}
     for i,j in links:
         if OptCapacity[i,j] > 0.0001:
             print('C[%s,%s]: %g' % (i,j, OptCapacity[i,j]))
             ChoosenLinks[i,j]=1
+            if (len(BkpLinks) == 0):
+                BkpLinks=[(i,j)]
+            else:
+                BkpLinks=BkpLinks+[(i,j)]
         else:
             ChoosenLinks[i,j]=0    
     
@@ -299,7 +303,7 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
                 for s,d in links:
                     Psd=Psd+BackupLinks[i,j,s,d]*capacity[k,s,d]
                 if Psd > OptCapacity[i,j]:
-                    Reliability=Reliability+1
+                    Reliability=Reliability+1*ImpSamp[k,i,j]
             print('p[1][%s,%s](x) = %g' %(i,j,(1.0*Reliability/num_scenarios)))
             
     ################################################################
@@ -328,23 +332,27 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         
         #importance sampling
         ImpSamp={}
-        for i,j in links:
+        #for i,j in links:
+        for i,j in BkpLinks:
             for k in range(num_scenarios):
-                sum_failue=0
+                sum_failure=0
                 for s,d in links:
-                    sum_failue=sum_failue+capacity[k,s,d]
-                ImpSamp[k,i,j]=stats.binom.pmf(sum_failue,len(links),p)/stats.binom.pmf(sum_failue,len(links),p2)
+                    sum_failure=sum_failure+capacity[k,s,d]
+                #ImpSamp[k,i,j]=stats.binom.pmf(sum_failue,len(links),p)/stats.binom.pmf(sum_failue,len(links),p2)
+                ImpSamp[k,i,j]=(p**(sum_failure)*(1-p)**(len(links)-sum_failure))/(p2**(sum_failure)*(1-p2)**(len(links)-sum_failure))
                 
         print('Done!\n')
             
         print('Creating super quantile model...')
-        MySQModel = SQModel(ImpSamp,nodes,links,capacity,epsilon,num_scenarios,BackupLinks,OptCapacity)
+        #MySQModel = SQModel(ImpSamp,nodes,links,capacity,epsilon,num_scenarios,BackupLinks,OptCapacity)
+        MySQModel = SQModel(ImpSamp,nodes,BkpLinks,capacity,epsilon,num_scenarios,BackupLinks,OptCapacity)
         print('Done!\n')
         print('Solving...\n')
         SuperQuantile = MySQModel.optimize(mip_gap,time_limit,None)
         
         print('\nSuper quantile assigned per backup link:\n' )
-        for i,j in links:
+        #for i,j in links:
+        for i,j in BkpLinks:
             print('q[%s,%s](x)=%g' % (i,j, SuperQuantile[i,j]))
             
     #########################################
@@ -361,45 +369,48 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         
         ImpSamp={}
         capacity={}
-        for i,j in links:
+        #for i,j in links:
+        for i,j in BkpLinks:
             Aux=1
             for k in range(num_scenarios):
                 AuxCount = 0
-                sum_failue=0
+                sum_failure=0
                 for s,d in links:
                     #generating capacity for each s,d link
                     capacity[k,s,d] = Aux*Y[k,AuxCount]
                     AuxCount = AuxCount+1
-                    sum_failue=sum_failue+capacity[k,s,d]
-                ImpSamp[k,i,j]=stats.binom.pmf(sum_failue,len(links),p)/stats.binom.pmf(sum_failue,len(links),p2)
+                    sum_failure=sum_failure+capacity[k,s,d]
+                #ImpSamp[k,i,j]=stats.binom.pmf(sum_failue,len(links),p)/stats.binom.pmf(sum_failue,len(links),p2)
+                ImpSamp[k,i,j]=(p**(sum_failure)*(1-p)**(len(links)-sum_failure))/(p2**(sum_failure)*(1-p2)**(len(links)-sum_failure))
                 #print('[%g,%g,%g]f(x)=%g, h(x)=%g,%g'%(k,i,j,stats.binom.pmf(sum_failue,len(links),p),stats.binom.pmf(sum_failue,len(links),p2),ImpSamp[k,i,j]))
-                
                 
         print('Done!\n')
         
         print('Upper bound for q(x):\n')
         u={}
         U={}
-        for i,j in links:
+        #for i,j in links:
+        for i,j in BkpLinks:
             U[i,j]=0
             for k in range(num_scenarios):
                 Psd=0
                 for s,d in links:
                     Psd=Psd+BackupLinks[i,j,s,d]*capacity[k,s,d]
                 u[k,i,j]=SuperQuantile[i,j]+(1/epsilon)*max((Psd-OptCapacity[i,j]-SuperQuantile[i,j]),0)*ImpSamp[k,i,j]
-                #print('%g,%g, u[%g,%g,%g]=%g'%(ImpSamp[k,i,j],max((Psd-OptCapacity[i,j]-SuperQuantile[i,j]),0),k,i,j,u[k,i,j]))
+                #if(u[k,i,j] != 0): print('%g,%g, u[%g,%g,%g]=%g'%(ImpSamp[k,i,j],max((Psd-OptCapacity[i,j]-SuperQuantile[i,j]),0),k,i,j,u[k,i,j]))
                 U[i,j]=U[i,j]+u[k,i,j]
             U[i,j]=U[i,j]/num_scenarios
             print('U[%g,%g]=%g'%(i,j,U[i,j]))
         
         print('\nCalculating variance for confidence interval:\n')
         Var={}
-        for i,j in links:
+        #for i,j in links:
+        for i,j in BkpLinks:
             Var[i,j]=0
             for k in range(num_scenarios):
                 Var[i,j]=Var[i,j]+(u[k,i,j]-U[i,j])**2
             Var[i,j]=Var[i,j]/(num_scenarios-1)
-            #print('Var[%g,%g]=%g'%(i,j,Var[i,j]))  
+            print('Var[%g,%g]=%g'%(i,j,Var[i,j]))  
             print('Confidence interval[%g,%g]=[%g,%g]'%(i,j,U[i,j]-1.96*sqrt(Var[i,j]),U[i,j]+1.96*sqrt(Var[i,j])))
     
     ###############################################
@@ -408,16 +419,17 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
     #
     ###############################################
     num_scenarios = 1000000
+    #num_scenarios = 500000
     print('\nGenerating %s random scenarios for new failure probability test...' %(num_scenarios))
     nobs = len(links)
     Y = np.random.binomial(1, p, (num_scenarios,nobs))
     
     capacity={}
-    for i,j in links:
+    #for i,j in links:
+    for i,j in BkpLinks:
         Aux=1
         for k in range(num_scenarios):
             AuxCount = 0
-            sum_failue=0
             for s,d in links:
                 #generating capacity for each s,d link
                 capacity[k,s,d] = Aux*Y[k,AuxCount]
@@ -426,16 +438,17 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
     print('Done!\n')
     
     print('Buffered failure probability using new scenarios:\n')
-    for i,j in links:
-        if OptCapacity[i,j] > 0.0001:
-            Reliability = 0
-            for k in range(num_scenarios):
-                Psd=0
-                for s,d in links:
-                    Psd=Psd+BackupLinks[i,j,s,d]*capacity[k,s,d]
-                if Psd > OptCapacity[i,j]:
-                    Reliability=Reliability+1
-            print('p[2][%s,%s](x) = %g' %(i,j,1.0*Reliability/num_scenarios)) 
+    #for i,j in links:
+    for i,j in BkpLinks:
+        #if OptCapacity[i,j] > 0.0001:
+        Reliability = 0
+        for k in range(num_scenarios):
+            Psd=0
+            for s,d in links:
+                Psd=Psd+BackupLinks[i,j,s,d]*capacity[k,s,d]
+            if Psd > OptCapacity[i,j]:
+                Reliability=Reliability+1
+        print('p[2][%s,%s](x) = %g' %(i,j,1.0*Reliability/num_scenarios)) 
 
 
 
