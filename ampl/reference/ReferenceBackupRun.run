@@ -11,10 +11,10 @@ let K := (max{(s,d) in LINKS} capacity_P[s,d])+1;
 
 option solver cplex;
 #option cplex_options 'mipgap=0.01 mipdisplay=3';
-
+#option cplex_options 'mipdisplay=3';
 
 solve;
 display CB;
-#display B;
+display B;
 
 option log_file '';

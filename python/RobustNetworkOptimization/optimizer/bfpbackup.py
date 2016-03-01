@@ -45,6 +45,7 @@ class BFPBackup(object):
         # Create variables
         for i,j in self.__links:
             self.__BackupCapacity[i,j] = self.__model.addVar(vtype=GRB.INTEGER,lb=0, name='Backup_Capacity[%s,%s]' % (i, j))
+            #self.__BackupCapacity[i,j] = self.__model.addVar(lb=0, name='Backup_Capacity[%s,%s]' % (i, j))
         self.__model.update()
           
         for i,j in self.__links:
@@ -75,13 +76,13 @@ class BFPBackup(object):
           
         # Buffer probability I
         for i,j in self.__links:
-            self.__model.addConstr(self.__z0[i,j] + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k,i,j]*imp_samp[k,i,j] for (k) in range(self.__N)) <= 0,'[CONST]Buffer_Prob_I[%s][%s]'%(i,j))
+            self.__model.addConstr(self.__z0[i,j] + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k,i,j] for (k) in range(self.__N)) <= 0,'[CONST]Buffer_Prob_I[%s][%s]'%(i,j))
         self.__model.update()
          
         # Link capacity constraints
         for i,j in self.__links:
             for k in range(self.__N):
-                self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__capacity[k,s,d] for s,d in self.__links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
+                self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__capacity[k,s,d] for s,d in self.__links) - self.__BackupCapacity[i,j] - self.__z0[i,j])*imp_samp[k,i,j] <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
         # Link capacity constraints

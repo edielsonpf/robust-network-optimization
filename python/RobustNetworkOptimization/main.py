@@ -1,4 +1,4 @@
-__author__ = "Edielson"
+__author__ = "edielsonpf"
 
 from BackupTest import BackupPathModelTest, BackupModelTest, BackupBFPModelTest
 
@@ -10,8 +10,9 @@ BACKUP_PATH_MODEL = 0
 BACKUP_BFP_MODEL = 1
 
 # Constant definition
-NumNodes = 3
-p=0.025
+NumNodes = 14
+p=0.0001
+
 #constant for backup model and backup model with paths 
 invstd = 2.326347874
 #constant for buffered failure backup model only
@@ -25,11 +26,13 @@ invstd = 2.326347874
 
 #5 nodes
 #0.027 blows up
-epsilon = 0.01
+
+epsilon = 0.1
+#epsilon = 0.01
 
 #Optimization definitions
-#MipGap = None
-MipGap = 0.001
+MipGap = None
+#MipGap = 0.001
 TimeLimit = None
 
 #constant for choosing to plot (1) or not to plot (0) graphs
@@ -49,10 +52,13 @@ if BACKUP_PATH_MODEL == 1:
         BackupPathModelTest(PlotOptions,NumNodes,p,invstd,MipGap,TimeLimit,cutoff)
 
 if BACKUP_BFP_MODEL == 1:
-    NumScenarios = 500
+    NumScenarios = 200
     #Choose scenario 0 for a full directed graph with the number of nodes equal to the value of the variable NumNodes
     #or choose 1 to the NSFNET network with 14 nodes
-    Scenario=0
+    Scenario=1
+    
     ImportanceSampling=1
+    p2=50*p
+    #p2=p
     print('Buffered failure probability-based backup model')
-    BackupBFPModelTest(ImportanceSampling,PlotOptions, NumNodes, Scenario, NumScenarios, p, epsilon, MipGap, TimeLimit)
+    BackupBFPModelTest(ImportanceSampling,PlotOptions, NumNodes, Scenario, NumScenarios, p,p2, epsilon, MipGap, TimeLimit)

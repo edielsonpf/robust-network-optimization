@@ -161,11 +161,18 @@ def BackupPathModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutof
 
 def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,epsilon,mip_gap,time_limit):
         
+    print('\n=======Simulation parameters=========\n')
+    print('Failure prob. (p): %g' %p)
+    print('Failure prob. for IS (p2): %g' %p2)
+    print('Survivability (epsilon): %g' %epsilon)
+    print('=====================================\n')
+    
     ############################################
     #
     #            Creating Graphs
     #
     ############################################
+    
     if scenario == 0:
         print('Scenario based on a full connected and directed graph with %s nodes.' %(num_nodes))
         
@@ -313,7 +320,7 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
     ################################################################
     if importance_sampling == 1:
     
-        num_scenarios=num_scenarios*10
+        num_scenarios=10000
         print('\nGenerating new %s random scenarios for super quantile...' %(num_scenarios))
         nobs = num_nodes*(num_nodes-1)
         
@@ -404,21 +411,25 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         
         print('\nCalculating variance for confidence interval:\n')
         Var={}
+        AverageVar=0
+        AverageCount=0
         #for i,j in links:
         for i,j in BkpLinks:
             Var[i,j]=0
             for k in range(num_scenarios):
                 Var[i,j]=Var[i,j]+(u[k,i,j]-U[i,j])**2
             Var[i,j]=Var[i,j]/(num_scenarios-1)
+            AverageVar=AverageVar+Var[i,j]
+            AverageCount=AverageCount+1
             print('Var[%g,%g]=%g'%(i,j,Var[i,j]))  
             print('Confidence interval[%g,%g]=[%g,%g]'%(i,j,U[i,j]-1.96*sqrt(Var[i,j]),U[i,j]+1.96*sqrt(Var[i,j])))
-    
+        print('Average variance: %g' %(AverageVar/AverageCount))    
     ###############################################
     #
     #    Actual buffered failure probability
     #
     ###############################################
-    num_scenarios = 1000000
+    num_scenarios = 1005000
     #num_scenarios = 500000
     print('\nGenerating %s random scenarios for new failure probability test...' %(num_scenarios))
     nobs = len(links)
