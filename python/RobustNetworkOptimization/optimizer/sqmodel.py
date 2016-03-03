@@ -105,3 +105,9 @@ class SQModel(object):
             SuperQuantileSolution = []
                          
         return SuperQuantileSolution    
+    
+    def reset(self):
+        '''
+        Reset model solution
+        '''
+        self.__model.reset()

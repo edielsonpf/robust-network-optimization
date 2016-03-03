@@ -138,3 +138,9 @@ class PathBackup(object):
             #solution = []
             
         return solution;    
+    
+    def reset(self):
+        '''
+        Reset model solution
+        '''
+        self.__model.reset()

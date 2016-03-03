@@ -134,3 +134,9 @@ class BFPBackup(object):
             BackupLinkSolution = {}
              
         return BackupCapacitySolution,BackupLinkSolution    
+    
+    def reset(self):
+        '''
+        Reset model solution
+        '''
+        self.__model.reset()
