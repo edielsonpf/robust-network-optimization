@@ -15,6 +15,7 @@ class SQModel(object):
     # Private model variables
     __z0 = {}
     __z = {}
+    __q = {}
          
     # Private model parameters
     __BackupCapacity = {}
@@ -51,10 +52,14 @@ class SQModel(object):
             self.__z0[i,j] = self.__model.addVar(lb=-GRB.INFINITY,name='z0[%s][%s]' %(i,j))
         self.__model.update()
          
+        for i,j in self.__links: 
+            self.__q[i,j] = self.__model.addVar(lb=-GRB.INFINITY,name='q[%s][%s]' %(i,j))
+        self.__model.update()
+        
         self.__model.modelSense = GRB.MINIMIZE
         
-        #self.__model.setObjective(quicksum(self.__z0[i,j] for i,j in self.__links))
-        self.__model.setObjective(quicksum((self.__z0[i,j] + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k,i,j]*imp_samp[k,i,j] for (k) in range(self.__N))) for i,j in self.__links))
+        self.__model.setObjective(quicksum(self.__q[i,j] for i,j in self.__links))
+        #self.__model.setObjective(quicksum((self.__z0[i,j] + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k,i,j]*imp_samp[k,i,j] for (k) in range(self.__N))) for i,j in self.__links))
         self.__model.update()
          
             
@@ -65,9 +70,9 @@ class SQModel(object):
         #------------------------------------------------------------------------#
           
         # Buffer probability I
-#         for i,j in self.__links:
-#             self.__model.addConstr(self.__z0[i,j] + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k,i,j] for (k) in range(self.__N)) <= 0,'[CONST]Buffer_Prob_I[%s][%s]'%(i,j))
-#         self.__model.update()
+        for i,j in self.__links:
+            self.__model.addConstr(self.__z0[i,j] + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k,i,j]*imp_samp[k,i,j] for (k) in range(self.__N)) <= self.__q[i,j],'[CONST]Buffer_Prob_I[%s][%s]'%(i,j))
+        self.__model.update()
          
         # Link capacity constraints
         for i,j in self.__links:
@@ -94,7 +99,16 @@ class SQModel(object):
          
         # Print solution
         if self.__model.status == GRB.Status.OPTIMAL:
-            SuperQuantileSolution = self.__model.getAttr('x', self.__z0)
+            #SuperQuantileSolution = self.__model.getAttr('x', self.__z0)
+            SuperQuantileSolution = {}
+            OptimalZnot = {}
+            for i,j in self.__links:
+                name='q[%s][%s]'%(i,j)
+                v = self.__model.getVarByName(name)
+                SuperQuantileSolution[i,j]=v.x
+                name='z0[%s][%s]'%(i,j)
+                v = self.__model.getVarByName(name)
+                OptimalZnot[i,j]=v.x
             
             if LogLevel == 1:
                 for v in self.__model.getVars():
@@ -102,9 +116,10 @@ class SQModel(object):
                                                 
         else:
             print('Optimal value not found!\n')
-            SuperQuantileSolution = []
+            SuperQuantileSolution = {}
+            OptimalZnot={}
                          
-        return SuperQuantileSolution    
+        return SuperQuantileSolution, OptimalZnot    
     
     def reset(self):
         '''
