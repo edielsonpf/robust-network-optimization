@@ -2,3 +2,4 @@
 /NormalBackupModel.pyc
 /PathBackupModel.pyc
 /SuperquantileModel.pyc
+*.pyc
