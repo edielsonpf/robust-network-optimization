@@ -9,3 +9,4 @@
 /ParallelTest.pyc
 /PathBackupModelTest.pyc
 /SurvivabilityTest.pyc
+*.pyc
