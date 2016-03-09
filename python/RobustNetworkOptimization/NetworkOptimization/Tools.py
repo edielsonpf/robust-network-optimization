@@ -107,7 +107,7 @@ def plotGraph(G,option,position=None):
     
     return position
 
-def GetRandScenarios(RandSeed = None, FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
+def GetRandScenarios(RandSeed, FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
     """Generate random failure scenarios based on Binomial distribution.
 
     Parameters
@@ -298,7 +298,7 @@ def GetBufferedFailureProbPar(FailureProb, Scenarios, NumScenarios, Links, CapPe
     
     return P
 
-def GetBufferedFailureProb(ImportanceSampling=None, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+def GetBufferedFailureProb(ImportanceSampling, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
     """Calculate the buffered failure probability.
 
     Parameters
