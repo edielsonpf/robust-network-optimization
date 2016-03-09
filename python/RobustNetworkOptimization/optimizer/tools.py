@@ -1,6 +1,6 @@
 import numpy as np
 import networkx as nx
-
+import time
 try:
     import matplotlib.pyplot as plt
 except:
@@ -95,8 +95,12 @@ def plotGraph(G,option,position=None):
     
     return position
 
-def GetRandScenarios(FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
+def GetRandScenarios(RandSeed, FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
      
+    if RandSeed != None:
+#         print('My seed: %g' %RandSeed)
+        np.random.seed(RandSeed)
+    
     Y = np.random.binomial(1, FailureProb, (NumScenarios,NumLinks))
      
     Scenarios={}
@@ -165,7 +169,9 @@ def GetBufferedFailureProbPar(FailureProb, Scenarios, NumScenarios, Links, CapPe
             start=0
         else:
             start=start+NewDivision[k-1]
-        args[k]=(FailureProb, NewDivision[k], Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks) 
+        
+        RandSeed = int(np.random.exponential(time.clock()))
+        args[k]=(RandSeed, FailureProb, NewDivision[k], Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks) 
                     
     # launching multiple evaluations asynchronously *may* use more processes
     multiple_results = [p.apply_async(ThreadGetBufferedFailureProb, (args[k])) for k in range(nb_processes)]
@@ -182,6 +188,10 @@ def GetBufferedFailureProbPar(FailureProb, Scenarios, NumScenarios, Links, CapPe
     
     for i,j in BackupLinks:
         P[i,j]=1.0*P[i,j]/Counter
+        
+    p.close()
+    p.join()
+    
     return P
 
 def GetBufferedFailureProb(Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
@@ -198,9 +208,9 @@ def GetBufferedFailureProb(Scenarios, NumScenarios, Links, BackupLinks, CapPerBa
         P[i,j]=1.0*P[i,j]/NumScenarios
     return P
 
-def ThreadGetBufferedFailureProb(FailureProb, NumScenarios, Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks):    
     
-    Scenarios = GetRandScenarios(FailureProb, NumScenarios, len(Links), Links, CapPerLink)
+    Scenarios = GetRandScenarios(RandSeed, FailureProb, NumScenarios, len(Links), Links, CapPerLink)
         
     P={}
     for i,j in BackupLinks:

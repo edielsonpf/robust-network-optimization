@@ -1,13 +1,13 @@
 import time
 from math import sqrt
 
-# import networkx as nx
+import networkx as nx
 
 from optimizer.backup import Backup
 from optimizer.pbackup import PathBackup
 from optimizer.bfpbackup import BFPBackup
 from optimizer.sqmodel import SQModel
-from optimizer.tools import *
+from optimizer.tools import GetBufferedFailureProbPar, GetBufferedFailureProb, GetRandScenarios, plotGraph, getAllPaths, getLinkPaths
 
 import math
 from gurobipy import tuplelist
@@ -155,7 +155,7 @@ def BackupPathModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutof
         option=1
         plotGraph(G, option, pos)
 
-def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,epsilon,mip_gap,time_limit):
+def BackupBFPModelTest(use_parallel, importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,epsilon,mip_gap,time_limit):
         
     print('\n=======Simulation parameters=========\n')
     print('Failure prob. (p): %g' %p)
@@ -225,10 +225,10 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         
     start = time.clock()
     if importance_sampling == 0:
-        scenarios = GetRandScenarios(p, num_scenarios[0], nobs, links, CapPerLink)  
+        scenarios = GetRandScenarios(None, p, num_scenarios[0], nobs, links, CapPerLink)  
     else:
         print('Failure probability for importance sample: %g' %p2)
-        scenarios = GetRandScenarios(p2, num_scenarios[0], nobs, links, CapPerLink)
+        scenarios = GetRandScenarios(None, p2, num_scenarios[0], nobs, links, CapPerLink)
         
         #Generates the importance sampling factor for each sample
         ImpSamp={}
@@ -307,7 +307,7 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         print('Failure probability for importance sampling: %g' %p2)
         
         start = time.clock()
-        scenarios = GetRandScenarios(p2, num_scenarios[1], nobs, links, CapPerLink)
+        scenarios = GetRandScenarios(None, p2, num_scenarios[1], nobs, links, CapPerLink)
              
         #importance sampling
         ImpSamp={}
@@ -341,7 +341,7 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         print('\nGenerating %s random scenarios for design assessment...' %(num_scenarios[2]))
         
         start = time.clock()
-        scenarios = GetRandScenarios(p2, num_scenarios[2], nobs, links, CapPerLink)
+        scenarios = GetRandScenarios(None, p2, num_scenarios[2], nobs, links, CapPerLink)
         
         ImpSamp={}
         for i,j in BkpLinks:
@@ -388,20 +388,22 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
     #
     ###############################################
     print('\nGenerating %s random scenarios for new failure probability test...' %(num_scenarios[3]))
-    
-    start = time.clock()
-    scenarios = GetRandScenarios(p, num_scenarios[3], nobs, links, CapPerLink)
+        
+    if use_parallel == 0:
+        print('Normal operation\n' %(num_scenarios[3]))
+        start = time.clock()
+        scenarios = GetRandScenarios(None, p, num_scenarios[3], nobs, links, CapPerLink)
+        BufferedP = GetBufferedFailureProb(scenarios, num_scenarios[3], links, BkpLinks, OptCapacity, BackupLinks)
+         
+    else:
+        print('Using parallel processing!!\n')
+        start = time.clock()
+        BufferedP = GetBufferedFailureProbPar(p, scenarios, num_scenarios[3], links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
+        
     stop = time.clock()        
     print('[%g seconds]Done!\n'%(stop-start))
-
     
     print('\nBuffered failure probability using new scenarios:\n')
-    
-    start = time.clock()
-    BufferedP = GetBufferedFailureProb(scenarios, num_scenarios[3], links, BkpLinks, OptCapacity, BackupLinks)
-    stop = time.clock()        
-    print('[%g seconds]Done!\n'%(stop-start))
-    
     AverageP=0
     MaxP=0
     for i,j in BkpLinks:
@@ -411,40 +413,6 @@ def BackupBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_s
         AverageP=AverageP+BufferedP[i,j]  
     print('Average p(x)=%g'%(1.0*AverageP/len(BkpLinks)))
     print('p(x) <= %g'%MaxP)
-
-#     start = time.clock()
-#     BufferedP = GetBufferedFailureProbPar(p, scenarios, num_scenarios[3], links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
-#     stop = time.clock()        
-#     print('[%g seconds]Done!\n'%(stop-start))
-#     
-#     AverageP=0
-#     MaxP=0
-#     for i,j in BkpLinks:
-#         print('p[2][%s,%s](x) = %g' %(i,j,1.0*BufferedP[i,j])) 
-#         if BufferedP[i,j] >= MaxP:
-#             MaxP=1.0*BufferedP[i,j]
-#         AverageP=AverageP+BufferedP[i,j]  
-#     print('Average p(x)=%g'%(1.0*AverageP/len(BkpLinks)))
-#     print('p(x) <= %g'%MaxP)
-
-    
-#    AverageP=0
-#    MaxP=0
-#    for i,j in BkpLinks:
-        #if OptCapacity[i,j] > 0.0001:
-#        Reliability = 0
-#        for k in range(num_scenarios[3]):
-#            Psd=0
-#            for s,d in links:
-#                Psd=Psd+BackupLinks[i,j,s,d]*scenarios[k,s,d]
-#            if Psd > OptCapacity[i,j]:
-#                Reliability=Reliability+1
-#        print('p[2][%s,%s](x) = %g' %(i,j,1.0*Reliability/num_scenarios[3])) 
-#        if (1.0*Reliability/num_scenarios[3]) >= MaxP:
-#            MaxP=(1.0*Reliability/num_scenarios[3])
-#       AverageP=AverageP+1.0*Reliability/num_scenarios[3]  
-#   print('Average p(x)=%g'%(AverageP/len(BkpLinks)))
-#   print('p(x) <= %g'%MaxP)    
 
 def EpsilonBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,EpsilonList,mip_gap,time_limit):
         
@@ -497,10 +465,10 @@ def EpsilonBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_
     print('Generating %s random scenarios...' %(k1))
       
     if importance_sampling == 0:
-        scenarios_1 = GetRandScenarios(p, k1, nobs, links, CapPerLink)
+        scenarios_1 = GetRandScenarios(None, p, k1, nobs, links, CapPerLink)
     else:
         print('Failure probability for importance sample: %g' %p2)
-        scenarios_1 = GetRandScenarios(p2, k1, nobs, links, CapPerLink)
+        scenarios_1 = GetRandScenarios(None, p2, k1, nobs, links, CapPerLink)
       
     for i in range(k1):
         for s,d in links:
@@ -529,19 +497,7 @@ def EpsilonBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_
     k4 = num_scenarios[3]
     print('Generating %s random scenarios for new failure probability test...' %(k4))
     nobs = len(links)
-#     Y = np.random.binomial(1, p, (k4,nobs))
-    
-#     capacity_4={}
-#     for i,j in links:
-#         Aux=1
-#         for k in range(k4):
-#             AuxCount = 0
-#             for s,d in links:
-#                 #generating capacity for each s,d link
-#                 capacity_4[k,s,d] = Aux*Y[k,AuxCount]
-#                 AuxCount = AuxCount+1
-    scenarios_4 = GetRandScenarios(p, k4, nobs, links, CapPerLink)
-            
+    scenarios_4 = GetRandScenarios(None, p, k4, nobs, links, CapPerLink)
     print('Done!\n')
     
     ################################################################
@@ -557,17 +513,7 @@ def EpsilonBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_
         
         print('Failure probability for importance sampling: %g' %p2)
         
-#         Y=stats.binom.rvs(1,p2,size=(k2,nobs))
-#         
-#         capacity_2={}
-#         Aux=1
-#         for k in range(k2):
-#             AuxCount = 0
-#             for s,d in links:
-#                 #generating capacity for each s,d link
-#                 capacity_2[k,s,d] = Aux*Y[k,AuxCount]
-#                 AuxCount = AuxCount+1
-        scenarios_2 = GetRandScenarios(p2, k2, nobs, links, CapPerLink)
+        scenarios_2 = GetRandScenarios(None, p2, k2, nobs, links, CapPerLink)
         
         #importance sampling
         ImpSamp_2={}
@@ -588,23 +534,16 @@ def EpsilonBFPModelTest(importance_sampling,plot_options,num_nodes,scenario,num_
         k3 = num_scenarios[2]
         print('Generating %s random scenarios for design assessment...' %(k3))
         nobs = len(links)
-#         Y = np.random.binomial(1, p2, (k3,nobs))
-        scenarios_3 = GetRandScenarios(p2, k3, nobs, links, CapPerLink)
+
+        scenarios_3 = GetRandScenarios(None, p2, k3, nobs, links, CapPerLink)
         
         ImpSamp_3={}
-#         capacity_3={}
         for i,j in links:
-#             Aux=1
             for k in range(k3):
-#                 AuxCount = 0
                 sum_failure=0
                 for s,d in links:
-                    #generating capacity for each s,d link
-#                     capacity_3[k,s,d] = Aux*Y[k,AuxCount]
-#                     AuxCount = AuxCount+1
                     sum_failure=sum_failure+scenarios_3[k,s,d]
                 ImpSamp_3[k,i,j]=(p**(sum_failure)*(1-p)**(len(links)-sum_failure))/(p2**(sum_failure)*(1-p2)**(len(links)-sum_failure))
-                
         print('Done!\n')
     
     ##################################
