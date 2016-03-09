@@ -111,7 +111,7 @@ def GetRandScenarios(RandSeed, FailureProb,NumScenarios, NumLinks, Links, CapPer
             Index=Index+1
     return Scenarios
 
-def GetRandScenariosThread(RandSeed, FailureProb,NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
+def ThreadGetRandScenarios(RandSeed, FailureProb,NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
      
     if RandSeed != None:
 #         print('My seed: %g' %RandSeed)
@@ -150,7 +150,7 @@ def GetRandScenariosPar(FailureProb,NumScenarios, NumLinks, Links, CapPerLink):
         args[k]=(RandSeed, FailureProb, NewDivision[k], start, NumLinks, Links, CapPerLink)
 
     # launching multiple evaluations asynchronously *may* use more processes
-    multiple_results = [p.apply_async(GetRandScenariosThread, (args[k])) for k in range(nb_processes)]
+    multiple_results = [p.apply_async(ThreadGetRandScenarios, (args[k])) for k in range(nb_processes)]
     
     Scenarios={}
     for res in multiple_results:
@@ -210,7 +210,7 @@ def GetBufferedFailureProbPar(FailureProb, Scenarios, NumScenarios, Links, CapPe
     
     return P
 
-def GetBufferedFailureProb(Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+def GetBufferedFailureProb(ImportanceSampling, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
     
     P={}
     for i,j in BackupLinks:
@@ -220,7 +220,10 @@ def GetBufferedFailureProb(Scenarios, NumScenarios, Links, BackupLinks, CapPerBa
             for s,d in Links:
                 Psd=Psd+OptBackupLinks[i,j,s,d]*Scenarios[k,s,d]
             if Psd > CapPerBackupLink[i,j]:
-                P[i,j]=P[i,j]+1
+                if ImportanceSampling == None:
+                    P[i,j]=P[i,j]+1
+                else:
+                    P[i,j]=P[i,j]+1*ImportanceSampling[k,i,j]
         P[i,j]=1.0*P[i,j]/NumScenarios
     return P
 
@@ -239,3 +242,13 @@ def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, Cap
                 P[i,j]=P[i,j]+1
         P[i,j]=1.0*P[i,j]/NumScenarios
     return P
+
+def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS):
+    ImpSamp={}
+    for i,j in Links:
+        for k in range(NumScenarios):
+            sum_failure=0
+            for s,d in Links:
+                sum_failure=sum_failure+Scenarios[k,s,d]
+            ImpSamp[k,i,j]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
+    return ImpSamp
