@@ -4,3 +4,8 @@
 /weighted_graph.png
 /quantile.lp
 /backup.lp
+/BFPBackupModelTest.pyc
+/NormalBackupModelTest.pyc
+/ParallelTest.pyc
+/PathBackupModelTest.pyc
+/SurvivabilityTest.pyc
