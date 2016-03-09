@@ -3,7 +3,7 @@ Created on Nov 23, 2015
 
 @author: Edielson
 '''
-from gurobipy import *
+from gurobipy import Model, GRB, quicksum
 
 class PathBackup(object):
     '''

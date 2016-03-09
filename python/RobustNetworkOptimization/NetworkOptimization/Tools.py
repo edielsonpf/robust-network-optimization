@@ -67,7 +67,19 @@ def getAllPaths(G,cutoff):
     return tuple(Paths)     
 
 def plotGraph(G,option,position=None):
+    """Plot a graph G with specific position.
+
+    Parameters
+    ----------
+    G : NetworkX graph
+    option : if 1, edges with weight greater then 0 are enlarged. The opposite happens for option equal to 0.
+    position : nodes position 
     
+    Returns
+    -------
+    position: nodes position generated during plot (or same positions if supplied).
+
+    """
     if option == 1:
         elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] > 0]
         esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] <= 0]
@@ -95,10 +107,24 @@ def plotGraph(G,option,position=None):
     
     return position
 
-def GetRandScenarios(RandSeed, FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
-     
+def GetRandScenarios(RandSeed = None, FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
+    """Generate random failure scenarios based on Binomial distribution.
+
+    Parameters
+    ----------
+    RandSeed : Random seed (necessary for multiprocessing calls).
+    FailureProb: Failure probability for each edge (link) in the graph.
+    NumScenarios : Number of scenarios to be generated.
+    NumLinks: Number of edges (links) on each scenario.
+    Links: Graph edges (links)
+    CapPerLink: Edge (link) capacity (weight) 
+    
+    Returns
+    -------
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+
+    """ 
     if RandSeed != None:
-#         print('My seed: %g' %RandSeed)
         np.random.seed(RandSeed)
     
     Y = np.random.binomial(1, FailureProb, (NumScenarios,NumLinks))
@@ -112,7 +138,23 @@ def GetRandScenarios(RandSeed, FailureProb,NumScenarios, NumLinks, Links, CapPer
     return Scenarios
 
 def ThreadGetRandScenarios(RandSeed, FailureProb,NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
-     
+    """Generate random failure scenarios based on Binomial distribution.
+
+    Parameters
+    ----------
+    RandSeed : Random seed (necessary for multiprocessing calls).
+    FailureProb: Failure probability for each edge (link) in the graph.
+    NumScenarios : Number of scenarios to be generated.
+    StartIndex: Start index for each thread
+    NumLinks: Number of edges (links) on each scenario.
+    Links: Graph edges (links)
+    CapPerLink: Edge (link) capacity (weight) 
+    
+    Returns
+    -------
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+
+    """     
     if RandSeed != None:
 #         print('My seed: %g' %RandSeed)
         np.random.seed(RandSeed)
@@ -128,7 +170,23 @@ def ThreadGetRandScenarios(RandSeed, FailureProb,NumScenarios, StartIndex, NumLi
     return Scenarios
 
 def GetRandScenariosPar(FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
+    """Generate random failure scenarios based on Binomial distribution using multiprocessing.
+
+    Parameters
+    ----------
+    FailureProb: Failure probability for each edge (link) in the graph.
+    NumScenarios : Number of scenarios to be generated.
+    NumLinks: Number of edges (links) on each scenario.
+    Links: Graph edges (links)
+    CapPerLink: Edge (link) capacity (weight) 
     
+    Returns
+    -------
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+
+    """
+    
+    #check the number of available processors
     nb_processes = multiprocessing.cpu_count ()
     print('Number of available processors: %g' %nb_processes)
     
@@ -159,20 +217,50 @@ def GetRandScenariosPar(FailureProb,NumScenarios, NumLinks, Links, CapPerLink):
     return Scenarios 
 
 def GetNumFailures(Scenario, Links):    
+    """Calculate the sum of failures in the scenarios.
+
+    Parameters
+    ----------
+    Scenario: Scenario for calculating the number of failures.
+    Links: Graph edges (links)
+    
+    Returns
+    -------
+    NumFailures: Number of failures in the scenario.
+
+    """
     NumFailures=0
     for s,d in Links:
         NumFailures = NumFailures + Scenario[s,d]
     return NumFailures
 
 def GetBufferedFailureProbPar(FailureProb, Scenarios, NumScenarios, Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+    """Calculate the buffered failure probability using multiprocessing.
 
-#     info('function GetRandScenariosPar')
+    Parameters
+    ----------
+    FailureProb: Failure probability for each edge (link) in the graph.
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+    NumScenarios : Number of scenarios to be generated.
+    Links: Graph edges (links)
+    NumLinks: Number of edges (links) on each scenario.
+    CapPerLink: Set of edge (link) capacity (weight).
+    BackupLinks: Set of backup edges (links).
+    CapPerBackupLink: Set of backup edge (link) capacity (weight)
+    OptBackupLinks: Set of backup edges (links).
     
+    Returns
+    -------
+    P: Buffered failure probability.
+
+    """
+    #check the number of available processors 
     nb_processes = multiprocessing.cpu_count ()
     print('Number of available processors: %g' %nb_processes)
     
     p = Pool(nb_processes)
     
+    #divide the total number of scenarios to be generated among the available processes 
     Dividend = NumScenarios/nb_processes
     Rest=NumScenarios-(nb_processes*Dividend)
     NewDivision=[0 for k in range(nb_processes)]
@@ -210,8 +298,27 @@ def GetBufferedFailureProbPar(FailureProb, Scenarios, NumScenarios, Links, CapPe
     
     return P
 
-def GetBufferedFailureProb(ImportanceSampling, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+def GetBufferedFailureProb(ImportanceSampling=None, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+    """Calculate the buffered failure probability.
+
+    Parameters
+    ----------
+    ImportanceSampling: Importance sampling vector (obtained by GetImportanceSamplingVector method). None if scenarios were not generated using importance sampling.
+    FailureProb: Failure probability for each edge (link) in the graph.
+    Scenarios: Set of scenarios with random failure following Binomial distribution.
+    NumScenarios : Number of scenarios to be generated.
+    Links: Graph edges (links)
+    NumLinks: Number of edges (links) on each scenario.
+    CapPerLink: Set of edge (link) capacity (weight).
+    BackupLinks: Set of backup edges (links).
+    CapPerBackupLink: Set of backup edge (link) capacity (weight)
+    OptBackupLinks: Set of backup edges (links).
     
+    Returns
+    -------
+    P: Buffered failure probability.
+
+    """
     P={}
     for i,j in BackupLinks:
         P[i,j] = 0
@@ -228,6 +335,24 @@ def GetBufferedFailureProb(ImportanceSampling, Scenarios, NumScenarios, Links, B
     return P
 
 def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+    """Thread to calculate the buffered failure probability.
+
+    Parameters
+    ----------
+    RandSeed : Random seed (necessary for multiprocessing calls).
+    FailureProb: Failure probability for each edge (link) in the graph.
+    NumScenarios : Number of scenarios to be generated.
+    Links: Graph edges (links)
+    CapPerLink: Set of edge (link) capacity (weight).
+    BackupLinks: Set of backup edges (links).
+    CapPerBackupLink: Set of backup edge (link) capacity (weight)
+    OptBackupLinks: Set of backup edges (links).
+    
+    Returns
+    -------
+    P: Buffered failure probability.
+
+    """
     
     Scenarios = GetRandScenarios(RandSeed, FailureProb, NumScenarios, len(Links), Links, CapPerLink)
         
@@ -244,6 +369,22 @@ def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, Cap
     return P
 
 def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS):
+    """Calculate the importance sampling vector.
+    
+    Parameters
+    ----------
+    Links: Graph edges (links)
+    Scenarios: Set of scenarios with random failure following Binomial distribution.
+    NumScenarios : Number of scenarios to be generated.
+    FailureProb: Failure probability for each edge (link) in the graph.
+    FailureProbIS: Importance sampling failure probability for each edge (link) in the graph.
+    
+    Returns
+    -------
+    ImpSamp: Importance sampling vector.
+
+    """
+    
     ImpSamp={}
     for i,j in Links:
         for k in range(NumScenarios):

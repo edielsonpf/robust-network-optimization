@@ -3,7 +3,7 @@ Created on Nov 23, 2015
  
 @author: Edielson
 '''
-from gurobipy import *
+from gurobipy import Model, GRB, quicksum
  
 class BFPBackup(object):
     '''
@@ -63,7 +63,7 @@ class BFPBackup(object):
         self.__model.update()
          
         self.__model.modelSense = GRB.MINIMIZE
-        #m.setObjective(quicksum([fixedCosts[p]*open[p] for p in plants]))
+        
         self.__model.setObjective(quicksum(self.__BackupCapacity[i,j] for i,j in self.__links))
         self.__model.update()
          

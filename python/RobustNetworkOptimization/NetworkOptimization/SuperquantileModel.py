@@ -3,7 +3,7 @@ Created on Fev 05, 2016
  
 @author: Edielson P. Frigieri
 '''
-from gurobipy import *
+from gurobipy import Model, GRB, quicksum
  
 class SQModel(object):
     '''
@@ -59,7 +59,7 @@ class SQModel(object):
         self.__model.modelSense = GRB.MINIMIZE
         
         self.__model.setObjective(quicksum(self.__q[i,j] for i,j in self.__links))
-        #self.__model.setObjective(quicksum((self.__z0[i,j] + 1/(self.__N*self.__epsilon)*quicksum(self.__z[k,i,j]*imp_samp[k,i,j] for (k) in range(self.__N))) for i,j in self.__links))
+        
         self.__model.update()
          
             
