@@ -60,7 +60,7 @@ def ParallelValidation(NumNodes, NumScenarios, NumScenariosValid, p, p2, epsilon
     print('Done!\n')    
     
     print('\nBuffered failure probability using new scenarios:\n')
-    BufferedP = GetBufferedFailureProb(scenarios, NumScenariosValid, links, BkpLinks, OptCapacity, BackupLinks)
+    BufferedP = GetBufferedFailureProb(None, scenarios, NumScenariosValid, links, BkpLinks, OptCapacity, BackupLinks)
     stop = time.clock()        
     print('[%g seconds]Done!\n'%(stop-start))
     
