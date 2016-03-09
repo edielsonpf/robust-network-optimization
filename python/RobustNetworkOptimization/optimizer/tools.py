@@ -111,36 +111,52 @@ def GetRandScenarios(RandSeed, FailureProb,NumScenarios, NumLinks, Links, CapPer
             Index=Index+1
     return Scenarios
 
-#def GetRandScenariosPar(FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
-    
-#    nb_processes = multiprocessing.cpu_count ()
-#    print('Number of available processors: %g' %nb_processes)
-    
-#    p = Pool(nb_processes)
+def GetRandScenariosThread(RandSeed, FailureProb,NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
      
-#    Dividend = NumScenarios/nb_processes
-#    Rest=NumScenarios-(nb_processes*Dividend)
-#    NewDivision=[0 for k in range(nb_processes)]
-#    args = [0 for k in range(nb_processes)]
-#    start=0
-#    for k in range(nb_processes):
-#        NewDivision[k]=Dividend
-#        if k == 0:
-#            NewDivision[k]=NewDivision[k]+Rest
-#            start=0
-#        else:
-#            start=start+NewDivision[k-1]
-#         print(start)
-#        args[k]=(FailureProb, NewDivision[k], start, NumLinks, Links, CapPerLink)
+    if RandSeed != None:
+#         print('My seed: %g' %RandSeed)
+        np.random.seed(RandSeed)
+    
+    Y = np.random.binomial(1, FailureProb, (NumScenarios,NumLinks))
+     
+    Scenarios={}
+    for k in range(NumScenarios):
+        Index=0
+        for s,d in Links:
+            Scenarios[StartIndex+k,s,d]=CapPerLink[Index]*Y[k,Index]
+            Index=Index+1
+    return Scenarios
+
+def GetRandScenariosPar(FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
+    
+    nb_processes = multiprocessing.cpu_count ()
+    print('Number of available processors: %g' %nb_processes)
+    
+    p = Pool(nb_processes)
+     
+    Dividend = NumScenarios/nb_processes
+    Rest=NumScenarios-(nb_processes*Dividend)
+    NewDivision=[0 for k in range(nb_processes)]
+    args = [0 for k in range(nb_processes)]
+    start=0
+    for k in range(nb_processes):
+        NewDivision[k]=Dividend
+        if k == 0:
+            NewDivision[k]=NewDivision[k]+Rest
+            start=0
+        else:
+            start=start+NewDivision[k-1]
+        RandSeed = int(np.random.exponential(time.clock()))
+        args[k]=(RandSeed, FailureProb, NewDivision[k], start, NumLinks, Links, CapPerLink)
 
     # launching multiple evaluations asynchronously *may* use more processes
-#    multiple_results = [p.apply_async(GetRandScenarios, (args[k])) for k in range(nb_processes)]
+    multiple_results = [p.apply_async(GetRandScenariosThread, (args[k])) for k in range(nb_processes)]
     
-#    Scenarios={}
-#    for res in multiple_results:
-#        Scenarios.update(res.get(timeout=120))
+    Scenarios={}
+    for res in multiple_results:
+        Scenarios.update(res.get(timeout=120))
     
-#    return Scenarios 
+    return Scenarios 
 
 def GetNumFailures(Scenario, Links):    
     NumFailures=0
