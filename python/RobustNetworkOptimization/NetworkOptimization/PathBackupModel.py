@@ -6,9 +6,25 @@ Created on Nov 23, 2015
 from gurobipy import Model, GRB, quicksum
 
 class PathBackup(object):
-    '''
-    classdocs
-    '''
+    """ Class object for normal-based backup network model.
+
+    Parameters
+    ----------
+    nodes: set of nodes
+    links: set of links
+    paths: set of paths in the graph
+    Psd: set of backup paths for link (s,d). 
+    Pij: set of (s,d) paths that use link (i,j).
+    capacity: capacities per link based based on random failures 
+    mean: mean for failure random variable
+    std: standard deviation for failure random variable
+    invstd: inverse of Phi-normal distribution for (1-epsilon)
+
+    Returns
+    -------
+    solution: set of capacity assigned per backup link. 
+    
+    """
     # Private model object
     __model = []
     

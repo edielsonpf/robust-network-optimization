@@ -1,7 +1,7 @@
 '''
 Created on Nov 23, 2015
  
-@author: Edielson
+@author: Edielson P. Frigieri
 '''
 from gurobipy import Model, GRB, quicksum
  
