@@ -13,32 +13,48 @@ from SurvivabilityTest import SurvivabilityTest
 
 if __name__ == '__main__':
    
-    PARALLEL_TEST = 0
+    #chose this option for running tests on multiprocessing methods
+    PARALLEL_TEST = 1
+    
+    #chose this option for running tests where it is possible to check different suvivability (epsilon) values to the same scenarios
     SURVIVABILITY_TEST = 0
     
-    
+    #choose this option to use a normal-based backup network optimization model    
     NORMAL_BACKUP_MODEL = 0
+    #choose this option to use a normal with paths-based backup network optimization model
     PATH_BACKUP_MODEL = 0
-    BFP_BACKUP_MODEL = 1
+    #choose this option to use a buffered failure probability-based backup network optimization model
+    BFP_BACKUP_MODEL = 0
     
-    # Constant definition
-    NumNodes = 5
-    p=0.025
     
-    #constant for buffered failure backup model only
-    epsilon = 0.14
     
-    #Optimization definitions
-    MipGap = None
-    #MipGap = 0.001
-    TimeLimit = None
-    
-    #constant for choosing to plot (1) or not to plot (0) graphs
-    PlotOptions = 0
-    
+    ###############################################################
+    #
+    #                    Running the tests
+    #
+    ###############################################################
     if NORMAL_BACKUP_MODEL == 1:
         
-        #constant for backup model and backup model with paths 
+        #definition of the number of nodes in the network
+        NumNodes = 14
+        
+        #definition of the link failure probability
+        p=0.001
+        
+        #definition of the desired survivability (epsilon)
+        epsilon = 0.01
+        
+        #Optimization definitions
+        #definition of the desired MipGap, or None for optimal
+        MipGap = None
+        #definition of the time limit, or None for no time limit
+        TimeLimit = None
+        
+        #constant for choosing to plot (1) or not to plot (0) the graphs
+        PlotOptions = 0
+        
+        #constant for backup model and backup model with paths
+        #definition of the Phi-standard inverse of (1-epsilon) 
         invstd = 2.326347874
     
         print('Normal-based backup model')  
@@ -46,10 +62,27 @@ if __name__ == '__main__':
     
     if PATH_BACKUP_MODEL == 1:
         
-        #constant for backup model and backup model with paths 
+        #definition of the number of nodes in the network
+        NumNodes = 14
+        
+        #definition of the link failure probability
+        p=0.001
+        
+        #definition of the desired survivability (epsilon)
+        epsilon = 0.01
+        
+        #Optimization definitions
+        #definition of the desired MipGap, or None for optimal
+        MipGap = None
+        #definition of the time limit, or None for no time limit
+        TimeLimit = None
+        
+        #constant for backup model and backup model with paths
+        #definition of the Phi-standard inverse of (1-epsilon) 
         invstd = 2.326347874
     
-        #CutoffList = [None, 2, 1]
+        #definition of the graph depth (cutoff) when looking for paths, i.e. path extension
+        # Example: CutoffList = [None, 2, 1], will test for no limit, max path extension of  2 and 1
         CutoffList = [None]
      
         for index in range(len(CutoffList)):
@@ -59,44 +92,106 @@ if __name__ == '__main__':
     
     if BFP_BACKUP_MODEL == 1:
         
-        print('Buffered failure probability-based backup model')
+        #definition of the number of nodes in the network
+        NumNodes = 14
         
+        #definition of the link failure probability
+        p=0.001
+        
+        #definition of the desired survivability (epsilon)
+        epsilon = 0.01
+        
+        #Optimization definitions
+        #definition of the desired MipGap, or None for optimal
+        MipGap = None
+        #definition of the time limit, or None for no time limit
+        TimeLimit = None
+        
+        #definition of the number of scenarios on each step:
+        # 1- Number of scenarios for the optimization model
+        # 2- Number of scenarios for superquantile model (calculus of CVaR)
+        # 3- Number of scenarios for design assessment (confidence interval)
+        # 4- Number of scenarios for buffered failure probability 
         NumScenarios = [100,10000,10000,1010500]
         
         #Choose scenario 0 for a full directed graph with the number of nodes equal to the value of the variable NumNodes
         #or choose 1 to the NSFNET network with 14 nodes
         Scenario=0
         
+        #Choose 1 to indicate the use of importance sampling and 0 otherwise
         ImportanceSampling=1
+        #Choose 1 to indicate the use of multiprocessing methods and 0 otherwise
         UseParallel = 1
+        #If using importance sampling, define here the failure probability ratio
         p2=5*p
         
+        print('Buffered failure probability-based backup model')
         BFPBackupModelTest(UseParallel, ImportanceSampling,PlotOptions, NumNodes, Scenario, NumScenarios, p,p2, epsilon, MipGap, TimeLimit)
         
     if PARALLEL_TEST:
         
-        NumScenarios = 50
-        NumScenariosValid = 500000
+        #definition of the number of nodes in the network
+        NumNodes = 14
+        
+        #definition of the link failure probability
+        p=0.001
+        
+        #definition of the desired survivability (epsilon)
+        epsilon = 0.01
+        
+        #Optimization definitions
+        #definition of the desired MipGap, or None for optimal
+        MipGap = None
+        #definition of the time limit, or None for no time limit
+        TimeLimit = None
+        
+        #definition of the number of scenarios on each step:
+        # 1- Number of scenarios for the optimization model
+        # 2- Number of scenarios for buffered failure probability 
+        NumScenarios = [50,500000]
+        
+        #define here the failure probability ratio for importance sampling
         p2=2*p
         
-        ParallelValidation(NumNodes, NumScenarios, NumScenariosValid, p, p2, epsilon, MipGap, TimeLimit)
+        ParallelValidation(NumNodes, NumScenarios, p, p2, epsilon, MipGap, TimeLimit)
         
     if SURVIVABILITY_TEST:
         
-        # Constant definition
+        #definition of the number of nodes in the network
+        NumNodes = 14
+        
+        #definition of the link failure probability
+        p=0.001
+        
+        #definition of the desired survivability (epsilon)
+        epsilon = 0.01
+        
+        #Optimization definitions
+        #definition of the desired MipGap, or None for optimal
+        MipGap = None
+        #definition of the time limit, or None for no time limit
+        TimeLimit = None
+        
+        #define here the failure probability ratio for importance sampling
         p2=5*p
         
+        #definition of the number of scenarios on each step:
+        # 1- Number of scenarios for the optimization model
+        # 2- Number of scenarios for superquantile model (calculus of CVaR)
+        # 3- Number of scenarios for design assessment (confidence interval)
+        # 4- Number of scenarios for buffered failure probability 
         NumScenarios = [100,10000,10000,501050]
         
+        #define here the list of survivability to be tested
         EpsilonList = [0.5, 0.1, 0.01]
         
         #Choose scenario 0 for a full directed graph with the number of nodes equal to the value of the variable NumNodes
         #or choose 1 to the NSFNET network with 14 nodes
-        Scenario=0
-        
+        Scenario=1
+        #Choose 1 to indicate the use of importance sampling and 0 otherwise
         ImportanceSampling=1
-        
+        #Choose 1 to indicate the use of multiprocessing methods and 0 otherwise
         UseParallel = 1
         
         print('Buffered failure probability-based backup model: survivability test')
-        SurvivabilityTest(UseParallel, ImportanceSampling,PlotOptions,NumNodes,Scenario,NumScenarios,p,p2,EpsilonList,MipGap,TimeLimit)    
+        SurvivabilityTest(UseParallel, ImportanceSampling,PlotOptions,NumNodes,Scenario,NumScenarios,p,p2,EpsilonList,MipGap,TimeLimit)            
