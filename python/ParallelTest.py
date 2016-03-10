@@ -4,7 +4,7 @@ from gurobipy import tuplelist
 import time
 from NetworkOptimization.Tools import GetRandScenarios, GetBufferedFailureProbPar, GetBufferedFailureProb
 
-def ParallelValidation(NumNodes, NumScenarios, NumScenariosValid, p, p2, epsilon, MipGap, TimeLimit):
+def ParallelValidation(NumNodes, NumScenarios, p, p2, epsilon, MipGap, TimeLimit):
 
     #================================================================     
     #Generates a complete indirect graph 
@@ -23,13 +23,13 @@ def ParallelValidation(NumNodes, NumScenarios, NumScenariosValid, p, p2, epsilon
     #You must change here if there is a different capacity for each link 
     CapPerLink=[1 for i in range(nobs)]
     
-    print('Failure probability for importance sample: %g' %p2)
-    scenarios = GetRandScenarios(None, p2, NumScenarios, nobs, links, CapPerLink)
+    print('Generating %g scenarios with importance sample of %g...'%(NumScenarios[0],p2))
+    scenarios = GetRandScenarios(None, p2, NumScenarios[0], nobs, links, CapPerLink)
     
     #Generates the importance sampling factor for each sample
     ImpSamp={}
     for i,j in links:
-        for k in range(NumScenarios):
+        for k in range(NumScenarios[0]):
             sum_failure=0
             for s,d in links:
                 sum_failure=sum_failure+scenarios[k,s,d]
@@ -38,7 +38,7 @@ def ParallelValidation(NumNodes, NumScenarios, NumScenariosValid, p, p2, epsilon
     
     print('Creating model...')
     links = tuplelist(links)
-    BackupNet = BFPBackup(ImpSamp,nodes,links,scenarios,epsilon,NumScenarios)
+    BackupNet = BFPBackup(ImpSamp,nodes,links,scenarios,epsilon,NumScenarios[0])
     print('Done!\n')
     print('Solving...\n')
     OptCapacity,BackupLinks = BackupNet.optimize(MipGap,TimeLimit,None)
@@ -53,14 +53,14 @@ def ParallelValidation(NumNodes, NumScenarios, NumScenariosValid, p, p2, epsilon
             else:
                 BkpLinks=BkpLinks+[(i,j)]
         
-    print('\nGenerating %g random scenarios for new failure probability test...' %NumScenariosValid)
+    print('\nGenerating %g random scenarios for new failure probability test...' %NumScenarios[1])
     
     start = time.clock()
-    scenarios = GetRandScenarios(None, p, NumScenariosValid, nobs, links, CapPerLink)
+    scenarios = GetRandScenarios(None, p, NumScenarios[1], nobs, links, CapPerLink)
     print('Done!\n')    
     
     print('\nBuffered failure probability using new scenarios:\n')
-    BufferedP = GetBufferedFailureProb(None, scenarios, NumScenariosValid, links, BkpLinks, OptCapacity, BackupLinks)
+    BufferedP = GetBufferedFailureProb(None, scenarios, NumScenarios[1], links, BkpLinks, OptCapacity, BackupLinks)
     stop = time.clock()        
     print('[%g seconds]Done!\n'%(stop-start))
     
@@ -76,7 +76,7 @@ def ParallelValidation(NumNodes, NumScenarios, NumScenariosValid, p, p2, epsilon
     
     print('\nTesting with parallel processing...')
     start = time.clock()
-    BufferedP = GetBufferedFailureProbPar(p, scenarios, NumScenariosValid, links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
+    BufferedP = GetBufferedFailureProbPar(p, scenarios, NumScenarios[1], links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
     stop = time.clock()        
     print('[%g seconds]Done!\n'%(stop-start))
      
