@@ -230,7 +230,7 @@ def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,sc
                     Psd=0
                     for s,d in links:
                         Psd=Psd+BackupLinks[i,j,s,d]*scenarios_3[k,s,d]
-                    u[k,i,j]=OptimalZ[i,j]+(1/epsilon)*max((Psd-OptCapacity[i,j]-OptimalZ[i,j]),0)*ImpSamp_3[k,i,j]
+                    u[k,i,j]=OptimalZ[i,j]+(1/epsilon)*max((Psd-OptCapacity[i,j]-OptimalZ[i,j]),0)*ImpSamp_3[k]
                     U[i,j]=U[i,j]+u[k,i,j]
                 U[i,j]=U[i,j]/k3
                 print('U[%g,%g]=%g'%(i,j,U[i,j]))
