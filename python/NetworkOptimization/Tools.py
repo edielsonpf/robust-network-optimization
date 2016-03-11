@@ -330,7 +330,7 @@ def GetBufferedFailureProb(ImportanceSampling, Scenarios, NumScenarios, Links, B
                 if ImportanceSampling == None:
                     P[i,j]=P[i,j]+1
                 else:
-                    P[i,j]=P[i,j]+1*ImportanceSampling[k,i,j]
+                    P[i,j]=P[i,j]+1*ImportanceSampling[k]
         P[i,j]=1.0*P[i,j]/NumScenarios
     return P
 
@@ -368,7 +368,7 @@ def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, Cap
         P[i,j]=1.0*P[i,j]/NumScenarios
     return P
 
-def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS):
+def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS, Epsilon):
     """Calculate the importance sampling vector.
     
     Parameters
@@ -384,12 +384,22 @@ def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, Fai
     ImpSamp: Importance sampling vector.
 
     """
-    
+    print('1/n x epsilon = %g'%(1/(NumScenarios*Epsilon)))
     ImpSamp={}
-    for i,j in Links:
-        for k in range(NumScenarios):
-            sum_failure=0
-            for s,d in Links:
-                sum_failure=sum_failure+Scenarios[k,s,d]
-            ImpSamp[k,i,j]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
-    return ImpSamp
+    A={}
+    MaxA={}
+    for k in range(NumScenarios):
+        sum_failure=0
+        for s,d in Links:
+            sum_failure=sum_failure+Scenarios[k,s,d]
+        ImpSamp[k]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
+        A[k]=1.0*(ImpSamp[k]/(NumScenarios*Epsilon))
+        if k == 0:
+            MaxA=A[k]
+        else:    
+            if A[k] > MaxA:
+                MaxA=A[k]
+#    print A
+#    print MaxA        
+#    print ImpSamp
+    return ImpSamp, A, MaxA

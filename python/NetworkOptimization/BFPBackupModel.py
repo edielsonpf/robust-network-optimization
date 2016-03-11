@@ -32,6 +32,8 @@ class BFPBackup(object):
     __bBackupLink = {}
     __z0 = {}
     __z = {}
+    __zBar0={}
+    __zBar={}
          
     # Private model parameters
     __Links = []
@@ -41,7 +43,7 @@ class BFPBackup(object):
     __impSample = {}
     __K = 1
         
-    def __init__(self,ImpSamp,Nodes,Links,Capacity,Survivability,K):
+    def __init__(self,ImpSamp,A,MaxA, Nodes,Links,Capacity,Survivability,K):
         '''
         Constructor
         '''
@@ -50,9 +52,9 @@ class BFPBackup(object):
         self.__Capacity = Capacity
         self.__Survivability = Survivability
         self.__K = K
-        self.__loadModel(ImpSamp)
+        self.__loadModel(ImpSamp,A,MaxA)
                          
-    def __loadModel(self,ImpSamp):
+    def __loadModel(self,ImpSamp,A,MaxA):
         """ Load model.
     
         Parameters
@@ -84,6 +86,15 @@ class BFPBackup(object):
             self.__z0[i,j] = self.__model.addVar(lb=-GRB.INFINITY,name='z0[%s][%s]' %(i,j))
         self.__model.update()
          
+        for i,j in self.__Links:
+            for k in range(self.__K):
+                self.__zBar[k,i,j] = self.__model.addVar(lb=0,name='zbar[%s][%s][%s]' % (k,i,j))
+        self.__model.update()
+        
+        for i,j in self.__Links: 
+            self.__zBar0[i,j] = self.__model.addVar(lb=-GRB.INFINITY,name='zbar0[%s][%s]' %(i,j))
+        self.__model.update() 
+         
         self.__model.modelSense = GRB.MINIMIZE
         
         self.__model.setObjective(quicksum(self.__BackupCapacity[i,j] for i,j in self.__Links))
@@ -98,13 +109,13 @@ class BFPBackup(object):
           
         # Buffer probability I
         for i,j in self.__Links:
-            self.__model.addConstr(self.__z0[i,j] + 1/(self.__K*self.__Survivability)*quicksum(self.__z[k,i,j] for (k) in range(self.__K)) <= 0,'[CONST]Buffer_Prob_I[%s][%s]'%(i,j))
+            self.__model.addConstr(self.__zBar0[i,j] + quicksum((A[k]/MaxA)*self.__zBar[k,i,j] for (k) in range(self.__K)) <= 0,'[CONST]Buffer_Prob_I[%s][%s]'%(i,j))
         self.__model.update()
          
         # Link capacity constraints
         for i,j in self.__Links:
             for k in range(self.__K):
-                self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j])*ImpSamp[k,i,j] <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
+                self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__zBar[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
         # Link capacity constraints
@@ -112,6 +123,14 @@ class BFPBackup(object):
             for k in range(self.__K):
                 self.__model.addConstr(self.__z[k,i,j] >= 0,'[CONST]Buffer_Prob_III[%s][%s][%s]' % (k,i,j))
         self.__model.update()
+        
+        for i,j in self.__Links:
+            for k in range(self.__K):
+                self.__model.addConstr(self.__zBar[k,i,j] == self.__z[k,i,j]/ImpSamp[k],'[CONST]Buffer_Prob_IV[%s][%s][%s]' % (k,i,j))
+        self.__model.update()
+        
+        for i,j in self.__Links:
+            self.__model.addConstr(self.__zBar0[i,j]==self.__z0[i,j]/MaxA,'[CONST]Buffer_Prob_V[%s][%s]' % (i,j))
          
         for i in self.__Nodes:
             for s,d in self.__Links:

@@ -82,7 +82,7 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         print('Failure probability for importance sample: %g' %p2)
         scenarios = GetRandScenarios(None, p2, num_scenarios[0], nobs, links, CapPerLink)
         #Generates the importance sampling factor for each sample
-        ImpSamp=GetImportanceSamplingVector(links, scenarios, num_scenarios[0], p, p2)
+        ImpSamp,A,MaxA=GetImportanceSamplingVector(links, scenarios, num_scenarios[0], p, p2,epsilon)
     stop = time.clock()
     print('[%g seconds]Done!\n'%(stop-start))
   
@@ -93,7 +93,7 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
     ################################
     print('Creating model...')
     links = tuplelist(links)
-    BackupNet = BFPBackup(ImpSamp,nodes,links,scenarios,epsilon,num_scenarios[0])
+    BackupNet = BFPBackup(ImpSamp,A,MaxA,nodes,links,scenarios,epsilon,num_scenarios[0])
     print('Done!\n')
     print('Solving...\n')
     OptCapacity,BackupLinks = BackupNet.optimize(mip_gap,time_limit,None)
@@ -157,7 +157,7 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         scenarios = GetRandScenarios(None, p2, num_scenarios[1], nobs, links, CapPerLink)
              
         #importance sampling
-        ImpSamp=GetImportanceSamplingVector(links, scenarios, num_scenarios[1], p, p2)
+        ImpSamp,A,MaxA=GetImportanceSamplingVector(links, scenarios, num_scenarios[1], p, p2,epsilon)
         stop = time.clock()        
         print('[%g seconds]Done!\n'%(stop-start))
             
@@ -181,7 +181,7 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         
         start = time.clock()
         scenarios = GetRandScenarios(None, p2, num_scenarios[2], nobs, links, CapPerLink)
-        ImpSamp=GetImportanceSamplingVector(links, scenarios, num_scenarios[2], p, p2)
+        ImpSamp,A,MaxA=GetImportanceSamplingVector(links, scenarios, num_scenarios[2], p, p2,epsilon)
         stop = time.clock()        
         print('[%g seconds]Done!\n'%(stop-start))
         
@@ -194,7 +194,7 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
                 Psd=0
                 for s,d in links:
                     Psd=Psd+BackupLinks[i,j,s,d]*scenarios[k,s,d]
-                u[k,i,j]=OptimalZ[i,j]+(1/epsilon)*max((Psd-OptCapacity[i,j]-OptimalZ[i,j]),0)*ImpSamp[k,i,j]
+                u[k,i,j]=OptimalZ[i,j]+(1/epsilon)*max((Psd-OptCapacity[i,j]-OptimalZ[i,j]),0)*ImpSamp[k]
                 U[i,j]=U[i,j]+u[k,i,j]
             U[i,j]=U[i,j]/num_scenarios[2]
             print('U[%g,%g]=%g'%(i,j,U[i,j]))
