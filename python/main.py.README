@@ -14,10 +14,10 @@ from SurvivabilityTest import SurvivabilityTest
 if __name__ == '__main__':
    
     #chose this option for running tests on multiprocessing methods
-    PARALLEL_TEST = 1
+    PARALLEL_TEST = 0
     
     #chose this option for running tests where it is possible to check different suvivability (epsilon) values to the same scenarios
-    SURVIVABILITY_TEST = 0
+    SURVIVABILITY_TEST = 1
     
     #choose this option to use a normal-based backup network optimization model    
     NORMAL_BACKUP_MODEL = 0
@@ -62,6 +62,9 @@ if __name__ == '__main__':
     
     if PATH_BACKUP_MODEL == 1:
         
+        #constant for choosing to plot (1) or not to plot (0) the graphs
+        PlotOptions = 0
+        
         #definition of the number of nodes in the network
         NumNodes = 14
         
@@ -91,6 +94,9 @@ if __name__ == '__main__':
             PathBackupModelTest(PlotOptions,NumNodes,p,invstd,MipGap,TimeLimit,cutoff)
     
     if BFP_BACKUP_MODEL == 1:
+        
+        #constant for choosing to plot (1) or not to plot (0) the graphs
+        PlotOptions = 0
         
         #definition of the number of nodes in the network
         NumNodes = 14
@@ -157,14 +163,14 @@ if __name__ == '__main__':
         
     if SURVIVABILITY_TEST:
         
+        #constant for choosing to plot (1) or not to plot (0) the graphs
+        PlotOptions = 0
+        
         #definition of the number of nodes in the network
-        NumNodes = 14
+        NumNodes = 5
         
         #definition of the link failure probability
-        p=0.001
-        
-        #definition of the desired survivability (epsilon)
-        epsilon = 0.01
+        p=0.025
         
         #Optimization definitions
         #definition of the desired MipGap, or None for optimal
@@ -173,7 +179,7 @@ if __name__ == '__main__':
         TimeLimit = None
         
         #define here the failure probability ratio for importance sampling
-        p2=5*p
+        p2=2.5*p
         
         #definition of the number of scenarios on each step:
         # 1- Number of scenarios for the optimization model
@@ -183,11 +189,11 @@ if __name__ == '__main__':
         NumScenarios = [100,10000,10000,501050]
         
         #define here the list of survivability to be tested
-        EpsilonList = [0.5, 0.1, 0.01]
+        EpsilonList = [0.5,	0.1,	0.05,	0.01,	0.005,	0.001]
         
         #Choose scenario 0 for a full directed graph with the number of nodes equal to the value of the variable NumNodes
         #or choose 1 to the NSFNET network with 14 nodes
-        Scenario=1
+        Scenario=0
         #Choose 1 to indicate the use of importance sampling and 0 otherwise
         ImportanceSampling=1
         #Choose 1 to indicate the use of multiprocessing methods and 0 otherwise
