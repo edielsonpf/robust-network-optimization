@@ -204,7 +204,7 @@ def GetRandScenariosPar(FailureProb,NumScenarios, NumLinks, Links, CapPerLink):
             start=0
         else:
             start=start+NewDivision[k-1]
-        RandSeed = int(np.random.exponential(time.clock()))
+        RandSeed = k
         args[k]=(RandSeed, FailureProb, NewDivision[k], start, NumLinks, Links, CapPerLink)
 
     # launching multiple evaluations asynchronously *may* use more processes
@@ -234,7 +234,7 @@ def GetNumFailures(Scenario, Links):
         NumFailures = NumFailures + Scenario[s,d]
     return NumFailures
 
-def GetBufferedFailureProbPar(FailureProb, Scenarios, NumScenarios, Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+def GetBufferedFailureProbPar(FailureProb, NumScenarios, Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks):    
     """Calculate the buffered failure probability using multiprocessing.
 
     Parameters
