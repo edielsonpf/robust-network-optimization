@@ -368,7 +368,31 @@ def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, Cap
         P[i,j]=1.0*P[i,j]/NumScenarios
     return P
 
-def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS, Epsilon):
+def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS):
+    """Calculate the importance sampling vector.
+    
+    Parameters
+    ----------
+    Links: Graph edges (links)
+    Scenarios: Set of scenarios with random failure following Binomial distribution.
+    NumScenarios : Number of scenarios to be generated.
+    FailureProb: Failure probability for each edge (link) in the graph.
+    FailureProbIS: Importance sampling failure probability for each edge (link) in the graph.
+    
+    Returns
+    -------
+    ImpSamp: Importance sampling vector.
+
+    """
+    ImpSamp={}
+    for k in range(NumScenarios):
+        sum_failure=0
+        for s,d in Links:
+            sum_failure=sum_failure+Scenarios[k,s,d]
+        ImpSamp[k]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
+    return ImpSamp
+
+def GetImportanceSamplingVectorR(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS, Epsilon):
     """Calculate the importance sampling vector.
     
     Parameters
