@@ -41,7 +41,7 @@ class BFPBackup(object):
     __impSample = {}
     __K = 1
         
-    def __init__(self,Nodes,Links,Capacity,Survivability,K):
+    def __init__(self,ImpSamp, Nodes,Links,Capacity,Survivability,K):
         '''
         Constructor
         '''
@@ -50,9 +50,9 @@ class BFPBackup(object):
         self.__Capacity = Capacity
         self.__Survivability = Survivability
         self.__K = K
-        self.__loadModel()
+        self.__loadModel(ImpSamp)
                          
-    def __loadModel(self):
+    def __loadModel(self,ImpSamp):
         """ Load model.
     
         Parameters
@@ -104,7 +104,10 @@ class BFPBackup(object):
         # Link capacity constraints
         for i,j in self.__Links:
             for k in range(self.__K):
-                self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
+                if ImpSamp == None:
+                    self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
+                else:    
+                    self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))*ImpSamp[k]
         self.__model.update()
         
         # Link capacity constraints
