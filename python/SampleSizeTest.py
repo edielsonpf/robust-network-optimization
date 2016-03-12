@@ -285,5 +285,5 @@ def SampleSizeTest(use_parallel,importance_sampling,plot_options,num_nodes,scena
         print('Squared error:%g'%Difference)
         Increment = TotalCapacity/LastOptimal
         LastOptimal = TotalCapacity
-        k1=k1+1000*Increment
+        k1=k1+int(1000*Increment)
             
