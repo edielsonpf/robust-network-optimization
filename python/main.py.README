@@ -1,8 +1,9 @@
 #############################################
-#											#
-#	   Remove extension .README to use  	#
-#											#
+#                                            #
+#       Remove extension .README to use      #
+#                                            #
 #############################################
+from SampleSizeTest import SampleSizeTest
 __author__ = "edielsonpf"
 
 from BFPBackupModelTest import BFPBackupModelTest
@@ -15,9 +16,10 @@ if __name__ == '__main__':
    
     #chose this option for running tests on multiprocessing methods
     PARALLEL_TEST = 0
-    
     #chose this option for running tests where it is possible to check different suvivability (epsilon) values to the same scenarios
-    SURVIVABILITY_TEST = 1
+    SURVIVABILITY_TEST = 0
+    #chose this option for running tests where it is possible to check different sample sizes (n)
+    SAMPLE_SIZE_TEST = 1
     
     #choose this option to use a normal-based backup network optimization model    
     NORMAL_BACKUP_MODEL = 0
@@ -99,10 +101,10 @@ if __name__ == '__main__':
         PlotOptions = 0
         
         #definition of the number of nodes in the network
-        NumNodes = 14
+        NumNodes = 5
         
         #definition of the link failure probability
-        p=0.001
+        p=0.025
         
         #definition of the desired survivability (epsilon)
         epsilon = 0.01
@@ -125,11 +127,11 @@ if __name__ == '__main__':
         Scenario=0
         
         #Choose 1 to indicate the use of importance sampling and 0 otherwise
-        ImportanceSampling=1
+        ImportanceSampling=0
         #Choose 1 to indicate the use of multiprocessing methods and 0 otherwise
         UseParallel = 1
         #If using importance sampling, define here the failure probability ratio
-        p2=5*p
+        p2=2*p
         
         print('Buffered failure probability-based backup model')
         BFPBackupModelTest(UseParallel, ImportanceSampling,PlotOptions, NumNodes, Scenario, NumScenarios, p,p2, epsilon, MipGap, TimeLimit)
@@ -189,7 +191,7 @@ if __name__ == '__main__':
         NumScenarios = [100,10000,10000,501050]
         
         #define here the list of survivability to be tested
-        EpsilonList = [0.5,	0.1,	0.05,	0.01,	0.005,	0.001]
+        EpsilonList = [0.5,    0.1,    0.05,    0.01,    0.005,    0.001]
         
         #Choose scenario 0 for a full directed graph with the number of nodes equal to the value of the variable NumNodes
         #or choose 1 to the NSFNET network with 14 nodes
@@ -200,4 +202,45 @@ if __name__ == '__main__':
         UseParallel = 1
         
         print('Buffered failure probability-based backup model: survivability test')
-        SurvivabilityTest(UseParallel, ImportanceSampling,PlotOptions,NumNodes,Scenario,NumScenarios,p,p2,EpsilonList,MipGap,TimeLimit)            
+        SurvivabilityTest(UseParallel, ImportanceSampling,PlotOptions,NumNodes,Scenario,NumScenarios,p,p2,EpsilonList,MipGap,TimeLimit)
+        
+    if SAMPLE_SIZE_TEST:
+        
+        #constant for choosing to plot (1) or not to plot (0) the graphs
+        PlotOptions = 0
+        
+        #definition of the number of nodes in the network
+        NumNodes = 5
+        
+        #definition of the link failure probability
+        p=0.025
+        
+        #Optimization definitions
+        #definition of the desired MipGap, or None for optimal
+        MipGap = None
+        #definition of the time limit, or None for no time limit
+        TimeLimit = None
+        
+        #define here the failure probability ratio for importance sampling
+        p2=2.5*p
+        
+        #definition of the number of scenarios on each step:
+        # 1- Number of scenarios for the optimization model
+        # 2- Number of scenarios for superquantile model (calculus of CVaR)
+        # 3- Number of scenarios for design assessment (confidence interval)
+        # 4- Number of scenarios for buffered failure probability 
+        NumScenarios = [100,10000,10000,501050]
+        
+        #define here the survivability to be tested
+        epsilon = 0.01
+        
+        #Choose scenario 0 for a full directed graph with the number of nodes equal to the value of the variable NumNodes
+        #or choose 1 to the NSFNET network with 14 nodes
+        Scenario=0
+        #Choose 1 to indicate the use of importance sampling and 0 otherwise
+        ImportanceSampling=0
+        #Choose 1 to indicate the use of multiprocessing methods and 0 otherwise
+        UseParallel = 1
+        
+        print('Buffered failure probability-based backup model: survivability test')
+        SampleSizeTest(UseParallel, ImportanceSampling,PlotOptions,NumNodes,Scenario,NumScenarios,p,p2,epsilon,MipGap,TimeLimit)            
