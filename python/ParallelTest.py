@@ -2,7 +2,7 @@ import networkx as nx
 from NetworkOptimization.BFPBackupModel import BFPBackup
 from gurobipy import tuplelist
 import time
-from NetworkOptimization.Tools import GetRandScenarios, GetBufferedFailureProbPar, GetBufferedFailureProb
+from NetworkOptimization.Tools import GetRandScenarios, GetBufferedFailureProbPar, GetBufferedFailureProb, GetImportanceSamplingVector
 
 def ParallelValidation(NumNodes, NumScenarios, p, p2, epsilon, MipGap, TimeLimit):
 
@@ -27,14 +27,7 @@ def ParallelValidation(NumNodes, NumScenarios, p, p2, epsilon, MipGap, TimeLimit
     scenarios = GetRandScenarios(None, p2, NumScenarios[0], nobs, links, CapPerLink)
     
     #Generates the importance sampling factor for each sample
-    ImpSamp={}
-    for i,j in links:
-        for k in range(NumScenarios[0]):
-            sum_failure=0
-            for s,d in links:
-                sum_failure=sum_failure+scenarios[k,s,d]
-            ImpSamp[k,i,j]=(p**(sum_failure)*(1-p)**(len(links)-sum_failure))/(p2**(sum_failure)*(1-p2)**(len(links)-sum_failure))
-    
+    ImpSamp=GetImportanceSamplingVector(links, scenarios, NumScenarios[0], p, p2)
     
     print('Creating model...')
     links = tuplelist(links)

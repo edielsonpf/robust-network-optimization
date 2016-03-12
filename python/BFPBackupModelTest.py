@@ -1,9 +1,11 @@
 import time
 from math import sqrt
 import networkx as nx
+from NetworkOptimization.BFPBackupModel_ISR import BFPBackupISR
 from NetworkOptimization.BFPBackupModel import BFPBackup
+# from NetworkOptimization.BFPBackupModel_IS import BFPBackupIS
 from NetworkOptimization.SuperquantileModel import SQModel
-from NetworkOptimization.Tools import GetBufferedFailureProbPar, GetBufferedFailureProb, GetRandScenarios, plotGraph, GetImportanceSamplingVector
+from NetworkOptimization.Tools import GetBufferedFailureProbPar, GetBufferedFailureProb, GetRandScenarios, plotGraph, GetImportanceSamplingVectorR
 
 from gurobipy import tuplelist
 
@@ -77,12 +79,13 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         
     start = time.clock()
     if importance_sampling == 0:
-        scenarios = GetRandScenarios(None, p, num_scenarios[0], nobs, links, CapPerLink)  
+        scenarios = GetRandScenarios(None, p, num_scenarios[0], nobs, links, CapPerLink)
+        ImpSamp=None  
     else:
         print('Failure probability for importance sample: %g' %p2)
         scenarios = GetRandScenarios(None, p2, num_scenarios[0], nobs, links, CapPerLink)
         #Generates the importance sampling factor for each sample
-        ImpSamp,A,MaxA=GetImportanceSamplingVector(links, scenarios, num_scenarios[0], p, p2,epsilon)
+        ImpSamp,A,MaxA=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[0], p, p2,epsilon)
     stop = time.clock()
     print('[%g seconds]Done!\n'%(stop-start))
   
@@ -93,7 +96,10 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
     ################################
     print('Creating model...')
     links = tuplelist(links)
-    BackupNet = BFPBackup(ImpSamp,A,MaxA,nodes,links,scenarios,epsilon,num_scenarios[0])
+    if importance_sampling == 0:
+        BackupNet = BFPBackup(ImpSamp,nodes,links,scenarios,epsilon,num_scenarios[0])
+    else:
+        BackupNet = BFPBackupISR(ImpSamp,A,MaxA,nodes,links,scenarios,epsilon,num_scenarios[0])
     print('Done!\n')
     print('Solving...\n')
     OptCapacity,BackupLinks = BackupNet.optimize(mip_gap,time_limit,None)
@@ -157,7 +163,7 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         scenarios = GetRandScenarios(None, p2, num_scenarios[1], nobs, links, CapPerLink)
              
         #importance sampling
-        ImpSamp,A,MaxA=GetImportanceSamplingVector(links, scenarios, num_scenarios[1], p, p2,epsilon)
+        ImpSamp,A,MaxA=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[1], p, p2,epsilon)
         stop = time.clock()        
         print('[%g seconds]Done!\n'%(stop-start))
             
@@ -181,7 +187,7 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         
         start = time.clock()
         scenarios = GetRandScenarios(None, p2, num_scenarios[2], nobs, links, CapPerLink)
-        ImpSamp,A,MaxA=GetImportanceSamplingVector(links, scenarios, num_scenarios[2], p, p2,epsilon)
+        ImpSamp,A,MaxA=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[2], p, p2,epsilon)
         stop = time.clock()        
         print('[%g seconds]Done!\n'%(stop-start))
         

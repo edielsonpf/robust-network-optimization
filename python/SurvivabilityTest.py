@@ -3,6 +3,7 @@ __author__ = "edielsonpf"
 from math import sqrt 
 import networkx as nx
 from NetworkOptimization.BFPBackupModel import BFPBackup
+from NetworkOptimization.BFPBackupModel_ISR import BFPBackupISR 
 from NetworkOptimization.SuperquantileModel import SQModel
 from NetworkOptimization.Tools import GetBufferedFailureProb, GetRandScenarios, plotGraph, GetImportanceSamplingVector, GetRandScenariosPar
 
@@ -130,7 +131,13 @@ def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,sc
             ImpSamp_1,A1,MaxA1=GetImportanceSamplingVector(links, scenarios_1, k1, p, p2,epsilon)
             ImpSamp_2,A2,MaxA2=GetImportanceSamplingVector(links, scenarios_2, k2, p, p2,epsilon)
             ImpSamp_3,A3,MaxA3=GetImportanceSamplingVector(links, scenarios_3, k3, p, p2,epsilon)
-        
+        else:
+            print('Failure probability for importance sampling: %g' %p2)
+            #importance sampling
+            ImpSamp_1=GetImportanceSamplingVector(links, scenarios_1, k1, p, p2,epsilon)
+            ImpSamp_2=GetImportanceSamplingVector(links, scenarios_2, k2, p, p2,epsilon)
+            ImpSamp_3=GetImportanceSamplingVector(links, scenarios_3, k3, p, p2,epsilon)
+            
         print('\n=======Simulation parameters=========\n')
         print('Failure prob. (p): %g' %p)
         print('Failure prob. for IS (p2): %g' %p2)
@@ -146,7 +153,10 @@ def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,sc
         ################################
         print('Creating model...')
         links = tuplelist(links)
-        BackupNet = BFPBackup(ImpSamp_1,A1,MaxA1,nodes,links,scenarios_1,epsilon,k1)
+        if importance_sampling == 1:
+            BackupNet = BFPBackupISR(ImpSamp_1,A1,MaxA1,nodes,links,scenarios_1,epsilon,k1)
+        else:
+            BackupNet = BFPBackup(ImpSamp_1,nodes,links,scenarios_1,epsilon,k1)
         print('Done!\n')
         print('Solving...\n')
         OptCapacity,BackupLinks = BackupNet.optimize(mip_gap,time_limit,None)
