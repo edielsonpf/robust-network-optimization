@@ -278,10 +278,12 @@ def SampleSizeTest(use_parallel,importance_sampling,plot_options,num_nodes,scena
         print('Average p(x)=%g'%(1.0*AverageP/len(BkpLinks)))
         print('p(x) <= %g'%MaxP)
         
-        k1=k1*10
         TotalCapacity=0
         for i,j in BkpLinks:
             TotalCapacity = TotalCapacity+OptCapacity[i,j]
         Difference = (LastOptimal-TotalCapacity)**2
         print('Squared error:%g'%Difference)
-        LastOptimal = TotalCapacity    
+        Increment = TotalCapacity/LastOptimal
+        LastOptimal = TotalCapacity
+        k1=k1+1000*Increment
+            
