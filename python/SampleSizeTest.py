@@ -105,7 +105,7 @@ def SampleSizeTest(use_parallel,importance_sampling,plot_options,num_nodes,scena
         #Plot Initial Graph
         plotGraph(G,option=None,position=None)
                         
-    LastOptimal = 0
+    LastOptimal = 0.1
     Difference = 1000
     while Difference > 0.01:
         
