@@ -69,7 +69,7 @@ def ParallelValidation(NumNodes, NumScenarios, p, p2, epsilon, MipGap, TimeLimit
     
     print('\nTesting with parallel processing...')
     start = time.clock()
-    BufferedP = GetBufferedFailureProbPar(p, scenarios, NumScenarios[1], links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
+    BufferedP = GetBufferedFailureProbPar(p, NumScenarios[1], links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
     stop = time.clock()        
     print('[%g seconds]Done!\n'%(stop-start))
      

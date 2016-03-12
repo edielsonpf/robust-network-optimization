@@ -237,7 +237,7 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
     else:
         print('Using parallel processing!!\n')
         start = time.clock()
-        BufferedP = GetBufferedFailureProbPar(p, scenarios, num_scenarios[3], links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
+        BufferedP = GetBufferedFailureProbPar(p, num_scenarios[3], links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
         
     stop = time.clock()        
     print('[%g seconds]Done!\n'%(stop-start))
