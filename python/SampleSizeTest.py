@@ -9,7 +9,7 @@ from NetworkOptimization.Tools import GetBufferedFailureProb, GetRandScenarios, 
 
 from gurobipy import tuplelist
 
-def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,EpsilonList,mip_gap,time_limit):
+def SampleSizeTest(use_parallel,importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,epsilon,mip_gap,time_limit):
         
     ############################################
     #
@@ -57,23 +57,6 @@ def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,sc
     
     CapPerLink=[1 for k in range(nobs)]
       
-    print('Generating %s random scenarios...' %(k1))
-      
-    if importance_sampling == 0:
-        scenarios_1 = GetRandScenarios(None, p, k1, nobs, links, CapPerLink)
-    else:
-        print('Failure probability for importance sample: %g' %p2)
-        scenarios_1 = GetRandScenarios(None, p2, k1, nobs, links, CapPerLink)
-      
-    for i in range(k1):
-        for s,d in links:
-            if scenarios_1[i,s,d] > 0:
-                G.add_weighted_edges_from([(s,d,scenarios_1[i,s,d])])
-            else:
-                G.add_weighted_edges_from([(s,d,scenarios_1[i,s,d])])
-    
-    print('Done!\n')
-
     ###############################################
     #
     #    Buffered failure probability
@@ -122,9 +105,26 @@ def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,sc
         #Plot Initial Graph
         plotGraph(G,option=None,position=None)
                         
-    for index in range(len(EpsilonList)):
-        epsilon = EpsilonList[index]
+    LastOptimal = 0
+    Difference = 1000
+    while Difference > 0.01:
         
+        print('Generating %s random scenarios...' %(k1))
+      
+        if importance_sampling == 0:
+            scenarios_1 = GetRandScenarios(None, p, k1, nobs, links, CapPerLink)
+        else:
+            print('Failure probability for importance sample: %g' %p2)
+            scenarios_1 = GetRandScenarios(None, p2, k1, nobs, links, CapPerLink)
+          
+#         for i in range(k1):
+#             for s,d in links:
+#                 if scenarios_1[i,s,d] > 0:
+#                     G.add_weighted_edges_from([(s,d,scenarios_1[i,s,d])])
+#                 else:
+#                     G.add_weighted_edges_from([(s,d,scenarios_1[i,s,d])])
+#         print('Done!\n')
+#         
         if importance_sampling == 1:
             print('Failure probability for importance sampling: %g' %p2)
             #importance sampling
@@ -134,9 +134,9 @@ def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,sc
         else:
             print('Failure probability for importance sampling: %g' %p2)
             #importance sampling
-            ImpSamp_1=GetImportanceSamplingVector(links, scenarios_1, k1, p, p2,epsilon)
-            ImpSamp_2=GetImportanceSamplingVector(links, scenarios_2, k2, p, p2,epsilon)
-            ImpSamp_3=GetImportanceSamplingVector(links, scenarios_3, k3, p, p2,epsilon)
+            ImpSamp_1=None
+            ImpSamp_2=None
+            ImpSamp_3=None
             
         print('\n=======Simulation parameters=========\n')
         print('Failure prob. (p): %g' %p)
@@ -189,6 +189,7 @@ def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,sc
         print('\nAverage nij: %g\n' % (aux/cont))
         
         BackupNet.reset()
+        
         ##############################
         #    Survivability
         ##############################
@@ -275,4 +276,12 @@ def SurvivabilityTest(use_parallel,importance_sampling,plot_options,num_nodes,sc
                 MaxP=1.0*BufferedP[i,j]
             AverageP=AverageP+BufferedP[i,j]  
         print('Average p(x)=%g'%(1.0*AverageP/len(BkpLinks)))
-        print('p(x) <= %g'%MaxP)    
+        print('p(x) <= %g'%MaxP)
+        
+        k1=k1*10
+        TotalCapacity=0
+        for i,j in BkpLinks:
+            TotalCapacity = TotalCapacity+OptCapacity[i,j]
+        Difference = (LastOptimal-TotalCapacity)**2
+        print('Squared error:%g'%Difference)
+        LastOptimal = TotalCapacity    
