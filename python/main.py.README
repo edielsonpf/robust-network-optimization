@@ -3,7 +3,6 @@
 #       Remove extension .README to use      #
 #                                            #
 #############################################
-from SampleSizeTest import SampleSizeTest
 __author__ = "edielsonpf"
 
 from BFPBackupModelTest import BFPBackupModelTest
@@ -11,6 +10,7 @@ from PathBackupModelTest import PathBackupModelTest
 from NormalBackupModelTest import NormalBackupModelTest
 from ParallelTest import ParallelValidation
 from SurvivabilityTest import SurvivabilityTest
+from SampleSizeTest import SampleSizeTest
 
 if __name__ == '__main__':
    

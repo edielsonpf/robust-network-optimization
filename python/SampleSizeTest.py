@@ -104,10 +104,12 @@ def SampleSizeTest(use_parallel,importance_sampling,plot_options,num_nodes,scena
     if plot_options == 1:    
         #Plot Initial Graph
         plotGraph(G,option=None,position=None)
-                        
+    
+    LastAvgNij=0                    
     LastOptimal = 0.1
     Difference = 1000
-    while Difference > 0.01:
+    DifferenceNij = 1000
+    while (Difference > 0.01) or (DifferenceNij > 0.01):
         
         print('Generating %s random scenarios...' %(k1))
       
@@ -178,6 +180,7 @@ def SampleSizeTest(use_parallel,importance_sampling,plot_options,num_nodes,scena
         n={}
         aux=0
         cont=0
+        AvgNij=0
         for i,j in links:
             n[i,j]=0
             for s,d in links:
@@ -186,8 +189,8 @@ def SampleSizeTest(use_parallel,importance_sampling,plot_options,num_nodes,scena
             if((n[i,j] > 0) & ChoosenLinks[i,j] == 1):
                 aux=aux+n[i,j]
                 cont=cont+1
+        AvgNij=(aux/cont)
         print('\nAverage nij: %g\n' % (aux/cont))
-        
         BackupNet.reset()
         
         ##############################
@@ -283,7 +286,8 @@ def SampleSizeTest(use_parallel,importance_sampling,plot_options,num_nodes,scena
             TotalCapacity = TotalCapacity+OptCapacity[i,j]
         Difference = (LastOptimal-TotalCapacity)**2
         print('Squared error:%g'%Difference)
+        DifferenceNij = (LastAvgNij-AvgNij)**2
         Increment = TotalCapacity/LastOptimal
+        LastAvgNij = AvgNij
         LastOptimal = TotalCapacity
-        k1=k1+int(10*Increment)
-            
+        k1=k1+1000
