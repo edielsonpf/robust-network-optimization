@@ -30,8 +30,8 @@ class BFPBackupISR(object):
     # Private model variables
     __BackupCapacity = {}
     __bBackupLink = {}
-    __z0 = {}
-    __z = {}
+#     __z0 = {}
+#     __z = {}
     __zBar0={}
     __zBar={}
          
@@ -77,14 +77,14 @@ class BFPBackupISR(object):
                 self.__bBackupLink[i,j,s,d] = self.__model.addVar(vtype=GRB.BINARY,name='Backup_Link[%s,%s,%s,%s]' % (i, j, s, d))
         self.__model.update()
          
-        for i,j in self.__Links:
-            for k in range(self.__K):
-                self.__z[k,i,j] = self.__model.addVar(lb=0,name='z[%s][%s][%s]' % (k,i,j))
-        self.__model.update()
-        
-        for i,j in self.__Links: 
-            self.__z0[i,j] = self.__model.addVar(lb=-GRB.INFINITY,name='z0[%s][%s]' %(i,j))
-        self.__model.update()
+#         for i,j in self.__Links:
+#             for k in range(self.__K):
+#                 self.__z[k,i,j] = self.__model.addVar(lb=0,name='z[%s][%s][%s]' % (k,i,j))
+#         self.__model.update()
+#         
+#         for i,j in self.__Links: 
+#             self.__z0[i,j] = self.__model.addVar(lb=-GRB.INFINITY,name='z0[%s][%s]' %(i,j))
+#         self.__model.update()
          
         for i,j in self.__Links:
             for k in range(self.__K):
@@ -115,7 +115,7 @@ class BFPBackupISR(object):
         # Link capacity constraints
         for i,j in self.__Links:
             for k in range(self.__K):
-                self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__zBar[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
+                self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - MaxA*self.__zBar0[i,j]) <= self.__zBar[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
         # Link capacity constraints
@@ -124,13 +124,13 @@ class BFPBackupISR(object):
                 self.__model.addConstr(self.__z[k,i,j] >= 0,'[CONST]Buffer_Prob_III[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
-        for i,j in self.__Links:
-            for k in range(self.__K):
-                self.__model.addConstr(self.__zBar[k,i,j] == self.__z[k,i,j]/ImpSamp[k],'[CONST]Buffer_Prob_IV[%s][%s][%s]' % (k,i,j))
-        self.__model.update()
+#         for i,j in self.__Links:
+#             for k in range(self.__K):
+#                 self.__model.addConstr(self.__zBar[k,i,j] == self.__z[k,i,j]/ImpSamp[k],'[CONST]Buffer_Prob_IV[%s][%s][%s]' % (k,i,j))
+#         self.__model.update()
         
-        for i,j in self.__Links:
-            self.__model.addConstr(self.__zBar0[i,j]==self.__z0[i,j]/MaxA,'[CONST]Buffer_Prob_V[%s][%s]' % (i,j))
+#         for i,j in self.__Links:
+#             self.__model.addConstr(self.__zBar0[i,j]==self.__z0[i,j]/MaxA,'[CONST]Buffer_Prob_V[%s][%s]' % (i,j))
          
         for i in self.__Nodes:
             for s,d in self.__Links:
