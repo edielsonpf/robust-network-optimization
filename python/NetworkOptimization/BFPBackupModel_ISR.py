@@ -118,11 +118,11 @@ class BFPBackupISR(object):
                 self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - MaxA*self.__zBar0[i,j]) <= self.__zBar[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
-        # Link capacity constraints
-        for i,j in self.__Links:
-            for k in range(self.__K):
-                self.__model.addConstr(self.__z[k,i,j] >= 0,'[CONST]Buffer_Prob_III[%s][%s][%s]' % (k,i,j))
-        self.__model.update()
+#         # Link capacity constraints
+#         for i,j in self.__Links:
+#             for k in range(self.__K):
+#                 self.__model.addConstr(self.__z[k,i,j] >= 0,'[CONST]Buffer_Prob_III[%s][%s][%s]' % (k,i,j))
+#         self.__model.update()
         
 #         for i,j in self.__Links:
 #             for k in range(self.__K):
