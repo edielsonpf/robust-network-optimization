@@ -1,7 +1,7 @@
 import time
 from math import sqrt
 import networkx as nx
-from NetworkOptimization.BFPBackupModel_ISR import BFPBackupISR
+# from NetworkOptimization.BFPBackupModel_ISR import BFPBackupISR
 from NetworkOptimization.BFPBackupModel import BFPBackup
 # from NetworkOptimization.BFPBackupModel_IS import BFPBackupIS
 from NetworkOptimization.SuperquantileModel import SQModel
@@ -88,7 +88,6 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         ImpSamp,A,MaxA=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[0], p, p2,epsilon)
     stop = time.clock()
     print('[%g seconds]Done!\n'%(stop-start))
-  
     ################################
     #
     #        Optimization
@@ -96,13 +95,10 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
     ################################
     print('Creating model...')
     links = tuplelist(links)
-    if importance_sampling == 0:
-        BackupNet = BFPBackup(ImpSamp,nodes,links,scenarios,epsilon,num_scenarios[0])
-    else:
-        BackupNet = BFPBackupISR(ImpSamp,A,MaxA,nodes,links,scenarios,epsilon,num_scenarios[0])
+    BackupNet = BFPBackup(ImpSamp,nodes,links,scenarios,epsilon,num_scenarios[0])
     print('Done!\n')
     print('Solving...\n')
-    OptCapacity,BackupLinks = BackupNet.optimize(mip_gap,time_limit,None)
+    OptCapacity,BackupLinks = BackupNet.optimize(mip_gap,time_limit,1)
     
     print('\nCapacity assigned per backup link:\n' )
     ChoosenLinks={}
