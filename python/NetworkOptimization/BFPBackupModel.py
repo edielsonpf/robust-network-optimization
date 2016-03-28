@@ -162,11 +162,32 @@ class BFPBackup(object):
         if self.__model.status == GRB.Status.OPTIMAL:
             BackupCapacitySolution = self.__model.getAttr('x', self.__BackupCapacity)
             BackupLinkSolution = self.__model.getAttr('x', self.__bBackupLink)
-
+            
+            #SuperQuantileSolution = self.__model.getAttr('x', self.__z0)
+            ZNotSolution = {}
+            ZSolution = {}
+            for i,j in self.__Links:
+                for k in range(self.__K):
+                    name='z[%s][%s][%s]'%(k,i,j)
+                    v = self.__model.getVarByName(name)
+                    ZSolution[k,i,j]=v.x
+                name='z0[%s][%s]'%(i,j)
+                v = self.__model.getVarByName(name)
+                ZNotSolution[i,j]=v.x
+            
             if LogLevel == 1:
                 for v in self.__model.getVars():
                     print('%s %g' % (v.varName, v.x))
-                                                
+                
+                LHS={}
+                for i,j in self.__Links:
+                    for k in range(self.__K):
+                        LHS[k,i,j]=0
+                        Psd=0
+                        for s,d in self.__Links:
+                            Psd=Psd+BackupLinkSolution[i,j,s,d]*self.__Capacity[k,s,d]
+                        LHS[k,i,j]=Psd-BackupCapacitySolution[i,j]-ZNotSolution[i,j]
+                        print('LHS[%s,%s,%s]=%g'%(k,i,j,LHS[k,i,j]))
         else:
             print('Optimal value not found!\n')
             BackupCapacitySolution = []
