@@ -107,7 +107,7 @@ class BFPBackup(object):
                 if ImpSamp == None:
                     self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
                 else:    
-                    self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))*ImpSamp[k]
+                    self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j])*ImpSamp[k] <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
         # Link capacity constraints
@@ -144,7 +144,8 @@ class BFPBackup(object):
         
         Returns
         -------
-        path_generator: Paths
+        BackupCapacitySolution: The total capacity assigned per backup linkk
+        BackupLinkSolution: The set of selected backup links 
            A tuple list with all paths for edge (s,d) that uses (i,j).
     
         """ 
