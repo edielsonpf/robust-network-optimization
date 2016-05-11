@@ -10,7 +10,7 @@ class BFPBackup(object):
 
     Parameters
     ----------
-    ImpSamp: importance sampling vector
+    Gamma: importance sampling vector
     Nodes: set of nodes
     Links: set of links
     Capacity: capacities per link based based on random failures 
@@ -38,28 +38,26 @@ class BFPBackup(object):
     __Nodes = []
     __Capacity = []
     __Survivability = 1
-    __impSample = {}
     __K = 1
         
-    def __init__(self,ImpSamp, Nodes,Links,Capacity,Survivability,K):
+    def __init__(self):
         '''
         Constructor
         '''
+                         
+    def loadModel(self,Gamma,Nodes,Links,Capacity,Survivability,K):
+        """ Load model.
+    
+        Parameters
+        ----------
+        Gamma : importance sampling vector
+        
+        """         
         self.__Links = Links
         self.__Nodes = Nodes
         self.__Capacity = Capacity
         self.__Survivability = Survivability
         self.__K = K
-        self.__loadModel(ImpSamp)
-                         
-    def __loadModel(self,ImpSamp):
-        """ Load model.
-    
-        Parameters
-        ----------
-        ImpSamp : importance sampling vector
-        
-        """         
         
         # Create optimization model
         self.__model = Model('Backup')
@@ -104,10 +102,10 @@ class BFPBackup(object):
         # Link capacity constraints
         for i,j in self.__Links:
             for k in range(self.__K):
-                if ImpSamp == None:
+                if Gamma == None:
                     self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j]) <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
                 else:    
-                    self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j])*ImpSamp[k] <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
+                    self.__model.addConstr((quicksum(self.__bBackupLink[i,j,s,d]*self.__Capacity[k,s,d] for s,d in self.__Links) - self.__BackupCapacity[i,j] - self.__z0[i,j])*Gamma[k] <= self.__z[k,i,j],'[CONST]Buffer_Prob_II[%s][%s][%s]' % (k,i,j))
         self.__model.update()
         
         # Link capacity constraints
@@ -160,8 +158,21 @@ class BFPBackup(object):
          
         # Print solution
         if self.__model.status == GRB.Status.OPTIMAL:
+            
+            if LogLevel == 1:
+                for v in self.__model.getVars():
+                    print('%s %g' % (v.varName, v.x))
+                    
             BackupCapacitySolution = self.__model.getAttr('x', self.__BackupCapacity)
             BackupLinkSolution = self.__model.getAttr('x', self.__bBackupLink)
+            
+            OptimalBkpLinks={}
+            for i,j in self.__Links:
+                if BackupCapacitySolution[i,j] > 0.0001:
+                    if (len(OptimalBkpLinks) == 0):
+                        OptimalBkpLinks=[(i,j)]
+                    else:
+                        OptimalBkpLinks=OptimalBkpLinks+[(i,j)]
             
             #SuperQuantileSolution = self.__model.getAttr('x', self.__z0)
             ZNotSolution = {}
@@ -174,26 +185,26 @@ class BFPBackup(object):
                 name='z0[%s][%s]'%(i,j)
                 v = self.__model.getVarByName(name)
                 ZNotSolution[i,j]=v.x
-            
-            if LogLevel == 1:
-                for v in self.__model.getVars():
-                    print('%s %g' % (v.varName, v.x))
                 
-                LHS={}
-                for i,j in self.__Links:
-                    for k in range(self.__K):
-                        LHS[k,i,j]=0
-                        Psd=0
-                        for s,d in self.__Links:
-                            Psd=Psd+BackupLinkSolution[i,j,s,d]*self.__Capacity[k,s,d]
-                        LHS[k,i,j]=Psd-BackupCapacitySolution[i,j]-ZNotSolution[i,j]
+            LHS={}
+            for i,j in self.__Links:
+                for k in range(self.__K):
+                    LHS[k,i,j]=0
+                    Psd=0
+                    for s,d in self.__Links:
+                        Psd=Psd+BackupLinkSolution[i,j,s,d]*self.__Capacity[k,s,d]
+                    LHS[k,i,j]=Psd-BackupCapacitySolution[i,j]-ZNotSolution[i,j]
+                    if LogLevel == 1:
                         print('LHS[%s,%s,%s]=%g'%(k,i,j,LHS[k,i,j]))
+                            
         else:
             print('Optimal value not found!\n')
             BackupCapacitySolution = []
             BackupLinkSolution = {}
+            OptimalBkpLinks = {}
+            LHS = {}
              
-        return BackupCapacitySolution,BackupLinkSolution    
+        return BackupCapacitySolution,BackupLinkSolution,OptimalBkpLinks,LHS    
     
     def reset(self):
         '''
