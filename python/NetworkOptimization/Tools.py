@@ -381,16 +381,21 @@ def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, Fai
     
     Returns
     -------
-    ImpSamp: Importance sampling vector.
+    Gamma: Importance sampling vector.
 
     """
-    ImpSamp={}
+    Gamma={}
+    ScaledGamma=np.zeros(NumScenarios)
     for k in range(NumScenarios):
         sum_failure=0
         for s,d in Links:
             sum_failure=sum_failure+Scenarios[k,s,d]
-        ImpSamp[k]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
-    return ImpSamp
+        Gamma[k]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
+        ScaledGamma[k]=Gamma[k]
+    
+    ScaledGamma = GeometricMean(ScaledGamma, 4)
+    
+    return Gamma,ScaledGamma
 
 def GetImportanceSamplingVectorR(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS, Epsilon):
     """Calculate the importance sampling vector.
@@ -409,6 +414,7 @@ def GetImportanceSamplingVectorR(Links, Scenarios, NumScenarios, FailureProb, Fa
 
     """
     print('1/n x epsilon = %g'%(1/(NumScenarios*Epsilon)))
+    ScaledGamma=np.zeros(NumScenarios)
     ImpSamp={}
     A={}
     MaxA={}
@@ -418,12 +424,131 @@ def GetImportanceSamplingVectorR(Links, Scenarios, NumScenarios, FailureProb, Fa
             sum_failure=sum_failure+Scenarios[k,s,d]
         ImpSamp[k]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
         A[k]=1.0*(ImpSamp[k]/(NumScenarios*Epsilon))
+        ScaledGamma[k]=ImpSamp[k]
         if k == 0:
             MaxA=A[k]
         else:    
             if A[k] > MaxA:
                 MaxA=A[k]
-#    print A
-#    print MaxA        
-#    print ImpSamp
-    return ImpSamp, A, MaxA
+    
+    ScaledGamma = GeometricMean(ScaledGamma, 4)
+        
+    return ImpSamp, A, MaxA, ScaledGamma
+
+
+def GetRandScenariosFromUnif(Unif,FailureProb,NumScenarios,NumLinks, Links, CapPerLink):    
+    """Generate random failure scenarios based on Binomial distribution.
+
+    Parameters
+    ----------
+    RandSeed : Random seed (necessary for multiprocessing calls).
+    FailureProb: Failure probability for each edge (link) in the graph.
+    NumScenarios : Number of scenarios to be generated.
+    NumLinks: Number of edges (links) on each scenario.
+    Links: Graph edges (links)
+    CapPerLink: Edge (link) capacity (weight) 
+    
+    Returns
+    -------
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+
+    """ 
+    Scenarios={}
+    Y={}
+    for k in range(NumScenarios):
+        Index=0
+        for s,d in Links:
+            if Unif[k,Index] < FailureProb:
+                Y[k,Index] = 1
+            else:
+                Y[k,Index] = 0
+            Scenarios[k,s,d]=CapPerLink[Index]*Y[k,Index]
+            Index=Index+1
+    return Scenarios
+
+def ThreadGetRandScenariosFromUnif(Unif, FailureProb, NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
+    """Generate random failure scenarios based on Binomial distribution.
+
+    Parameters
+    ----------
+    RandSeed : Random seed (necessary for multiprocessing calls).
+    FailureProb: Failure probability for each edge (link) in the graph.
+    NumScenarios : Number of scenarios to be generated.
+    StartIndex: Start index for each thread
+    NumLinks: Number of edges (links) on each scenario.
+    Links: Graph edges (links)
+    CapPerLink: Edge (link) capacity (weight) 
+    
+    Returns
+    -------
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+
+    """     
+    Y = {}
+    Scenarios={}
+    for k in range(NumScenarios):
+        Index=0
+        for s,d in Links:
+            if Unif[k,Index] < FailureProb:
+                Y[k,Index] = 1
+            else:
+                Y[k,Index] = 0
+            Scenarios[StartIndex+k,s,d]=CapPerLink[Index]*Y[k,Index]
+            Index=Index+1
+    return Scenarios
+
+def GetUniformRandScenarios(RandSeed, NumScenarios, NumLinks):    
+    """Generate random failure scenarios based on Binomial distribution.
+
+    Parameters
+    ----------
+    RandSeed : Random seed (necessary for multiprocessing calls).
+    FailureProb: Failure probability for each edge (link) in the graph.
+    NumScenarios : Number of scenarios to be generated.
+    NumLinks: Number of edges (links) on each scenario.
+    Links: Graph edges (links)
+    CapPerLink: Edge (link) capacity (weight) 
+    
+    Returns
+    -------
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+
+    """ 
+    if RandSeed != None:
+        np.random.seed(RandSeed)
+    
+    Y = np.random.uniform(0, 1, (NumScenarios,NumLinks))
+     
+    
+    return Y
+
+def GeometricMean(A, max_it):
+    
+    #number of rows in the matrix X
+    m = 1
+    n = len(A)
+    
+    print('[Geometric Mean] Number of lines: %s'%m)
+    print('[Geometric Mean] Number of columns: %s' %n)
+    
+    r = np.zeros(m)
+    
+    t=0
+        
+    while t < max_it:
+        max_x = np.asscalar(np.max(A))
+        #get the minimum value at row i
+        min_x = np.asscalar(np.min(A))
+        #calculate the geometric mean
+        r=np.nan_to_num(1.0*np.sqrt(1.0/(max_x*min_x)))
+        
+        #scale matrix X based on R
+        A=r*A 
+                    
+        t=t+1
+    
+    X={}
+    for i in range(len(A)):
+        X[i]=A[i]
+    
+    return X
