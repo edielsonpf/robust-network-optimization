@@ -85,7 +85,8 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         print('Failure probability for importance sample: %g' %p2)
         scenarios = GetRandScenarios(None, p2, num_scenarios[0], nobs, links, CapPerLink)
         #Generates the importance sampling factor for each sample
-        ImpSamp,A,MaxA=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[0], p, p2,epsilon)
+        Gamma,A,MaxA,ScaledGamma=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[0], p, p2,epsilon)
+        ImpSamp = ScaledGamma
     stop = time.clock()
     print('[%g seconds]Done!\n'%(stop-start))
     ################################
@@ -95,38 +96,32 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
     ################################
     print('Creating model...')
     links = tuplelist(links)
-    BackupNet = BFPBackup(ImpSamp,nodes,links,scenarios,epsilon,num_scenarios[0])
+    BackupNet = BFPBackup()
+    BackupNet.loadModel(ImpSamp,nodes,links,scenarios,epsilon,num_scenarios[0])
     print('Done!\n')
     print('Solving...\n')
-    OptCapacity,BackupLinks = BackupNet.optimize(mip_gap,time_limit,1)
+    OptCapacity,BackupLinks,BkpLinks,LHS = BackupNet.optimize(mip_gap,time_limit,None)
     
     print('\nCapacity assigned per backup link:\n' )
-    ChoosenLinks={}
-    BkpLinks={}
-    for i,j in links:
+    for i,j in BkpLinks:
         if OptCapacity[i,j] > 0.0001:
             print('C[%s,%s]: %g' % (i,j, OptCapacity[i,j]))
-            ChoosenLinks[i,j]=1
-            if (len(BkpLinks) == 0):
-                BkpLinks=[(i,j)]
-            else:
-                BkpLinks=BkpLinks+[(i,j)]
-        else:
-            ChoosenLinks[i,j]=0    
-    
+                 
     n={}
     aux=0
     cont=0
     for i,j in BkpLinks:
         n[i,j]=0
         for s,d in links:
-            if (BackupLinks[i,j,s,d] > 0.0001) & (ChoosenLinks[i,j] == 1):
-                n[i,j] =(n[i,j]+BackupLinks[i,j,s,d])
-        if((n[i,j] > 0) & ChoosenLinks[i,j] == 1):
-#        if n[i,j] > 0:
+            n[i,j] =(n[i,j]+BackupLinks[i,j,s,d])
+        if(n[i,j] > 0):
             aux=aux+n[i,j]
             cont=cont+1
-    print('\nAverage nij: %g\n' % (aux/cont))
+    AvgNij=(aux/cont)
+    print('\nAverage nij: %g\n' % (AvgNij))
+     
+    #Reseting model
+    BackupNet.reset()
     
     ##############################
     #    Failure probability
@@ -159,7 +154,8 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         scenarios = GetRandScenarios(None, p2, num_scenarios[1], nobs, links, CapPerLink)
              
         #importance sampling
-        ImpSamp,A,MaxA=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[1], p, p2,epsilon)
+        Gamma,A,MaxA,ScaledGamma=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[1], p, p2,epsilon)
+        ImpSamp = ScaledGamma
         stop = time.clock()        
         print('[%g seconds]Done!\n'%(stop-start))
             
@@ -183,7 +179,8 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         
         start = time.clock()
         scenarios = GetRandScenarios(None, p2, num_scenarios[2], nobs, links, CapPerLink)
-        ImpSamp,A,MaxA=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[2], p, p2,epsilon)
+        Gamma,A,MaxA,ScaledGamma=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[2], p, p2,epsilon)
+        ImpSamp=ScaledGamma
         stop = time.clock()        
         print('[%g seconds]Done!\n'%(stop-start))
         
