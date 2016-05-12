@@ -466,36 +466,36 @@ def GetRandScenariosFromUnif(Unif,FailureProb,NumScenarios,NumLinks, Links, CapP
             Index=Index+1
     return Scenarios
 
-def ThreadGetRandScenariosFromUnif(Unif, FailureProb, NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
-    """Generate random failure scenarios based on Binomial distribution.
-
-    Parameters
-    ----------
-    RandSeed : Random seed (necessary for multiprocessing calls).
-    FailureProb: Failure probability for each edge (link) in the graph.
-    NumScenarios : Number of scenarios to be generated.
-    StartIndex: Start index for each thread
-    NumLinks: Number of edges (links) on each scenario.
-    Links: Graph edges (links)
-    CapPerLink: Edge (link) capacity (weight) 
-    
-    Returns
-    -------
-    Scenarios: Group of scenarios with random failure following Binomial distribution.
-
-    """     
-    Y = {}
-    Scenarios={}
-    for k in range(NumScenarios):
-        Index=0
-        for s,d in Links:
-            if Unif[k,Index] < FailureProb:
-                Y[k,Index] = 1
-            else:
-                Y[k,Index] = 0
-            Scenarios[StartIndex+k,s,d]=CapPerLink[Index]*Y[k,Index]
-            Index=Index+1
-    return Scenarios
+# def ThreadGetRandScenariosFromUnif(Unif, FailureProb, NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
+#     """Generate random failure scenarios based on Binomial distribution.
+# 
+#     Parameters
+#     ----------
+#     RandSeed : Random seed (necessary for multiprocessing calls).
+#     FailureProb: Failure probability for each edge (link) in the graph.
+#     NumScenarios : Number of scenarios to be generated.
+#     StartIndex: Start index for each thread
+#     NumLinks: Number of edges (links) on each scenario.
+#     Links: Graph edges (links)
+#     CapPerLink: Edge (link) capacity (weight) 
+#     
+#     Returns
+#     -------
+#     Scenarios: Group of scenarios with random failure following Binomial distribution.
+# 
+#     """     
+#     Y = {}
+#     Scenarios={}
+#     for k in range(NumScenarios):
+#         Index=0
+#         for s,d in Links:
+#             if Unif[k,Index] < FailureProb:
+#                 Y[k,Index] = 1
+#             else:
+#                 Y[k,Index] = 0
+#             Scenarios[StartIndex+k,s,d]=CapPerLink[Index]*Y[k,Index]
+#             Index=Index+1
+#     return Scenarios
 
 def GetUniformRandScenarios(RandSeed, NumScenarios, NumLinks):    
     """Generate random failure scenarios based on Binomial distribution.
@@ -552,3 +552,52 @@ def GeometricMean(A, max_it):
         X[i]=A[i]
     
     return X
+
+# def GetRandScenariosFromUnifPar(Unif, FailureProb, NumScenarios, NumLinks, Links, CapPerLink):
+#     """Generate random failure scenarios based on Binomial distribution using multiprocessing.
+# 
+#     Parameters
+#     ----------
+#     Unif: Vector with uniform random variables 
+#     NumScenarios : Number of scenarios to be generated.
+#     NumLinks: Number of edges (links) on each scenario.
+#     Links: Graph edges (links)
+#     CapPerLink: Edge (link) capacity (weight) 
+#     
+#     Returns
+#     -------
+#     Scenarios: Group of scenarios with random failure following Binomial distribution.
+# 
+#     """
+#     
+#     #check the number of available processors
+#     nb_processes = multiprocessing.cpu_count ()
+#     print('Number of available processors: %g' %nb_processes)
+#     
+#     p = Pool(nb_processes)
+#      
+#     Dividend = NumScenarios/nb_processes
+#     Rest=NumScenarios-(nb_processes*Dividend)
+#     print('Dividend %f' %Dividend)
+#     print('Rest %f' %Rest)
+#     
+#     NewDivision=[0 for k in range(nb_processes)]
+#     args = [0 for k in range(nb_processes)]
+#     start=0
+#     for k in range(nb_processes):
+#         NewDivision[k]=Dividend
+#         if k == 0:
+#             NewDivision[k]=NewDivision[k]+Rest
+#             start=0
+#         else:
+#             start=start+NewDivision[k-1]
+#         args[k]=(Unif, FailureProb, NumScenarios, start, NumLinks, Links, CapPerLink)
+# 
+#     # launching multiple evaluations asynchronously *may* use more processes
+#     multiple_results = [p.apply_async(ThreadGetRandScenariosFromUnif, (args[k])) for k in range(nb_processes)]
+#     
+#     Scenarios={}
+#     for res in multiple_results:
+#         Scenarios.update(res.get(timeout=120))
+#     
+#     return Scenarios    
