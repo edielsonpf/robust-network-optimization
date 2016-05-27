@@ -5,8 +5,9 @@ import networkx as nx
 from NetworkOptimization.BFPBackupModel import BFPBackup
 # from NetworkOptimization.BFPBackupModel_IS import BFPBackupIS
 from NetworkOptimization.SuperquantileModel import SQModel
-from NetworkOptimization.Tools import GetBufferedFailureProbPar, GetBufferedFailureProb, GetRandScenarios, plotGraph, GetImportanceSamplingVectorR
-
+from NetworkOptimization.Tools import GetBufferedFailureProbPar, GetBufferedFailureProb, GetRandScenarios, plotGraph, GetImportanceSamplingVectorR,\
+    GetImportanceSamplingVector
+from NetworkOptimization.Tools import GetRandScenariosFromUnif, GetUniformRandScenarios
 from gurobipy import tuplelist
 
 def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,epsilon,mip_gap,time_limit):
@@ -83,9 +84,13 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
         ImpSamp=None  
     else:
         print('Failure probability for importance sample: %g' %p2)
-        scenarios = GetRandScenarios(None, p2, num_scenarios[0], nobs, links, CapPerLink)
+#         scenarios = GetRandScenarios(None, p2, num_scenarios[0], nobs, links, CapPerLink)
+        unif_scenarios = GetUniformRandScenarios(None, num_scenarios[0], nobs)
+        scenarios = GetRandScenariosFromUnif(unif_scenarios, p2, num_scenarios[0], nobs, links, CapPerLink)
+            
         #Generates the importance sampling factor for each sample
-        Gamma,A,MaxA,ScaledGamma=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[0], p, p2,epsilon)
+#         Gamma,A,MaxA,ScaledGamma=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[0], p, p2,epsilon)
+        Gamma,ScaledGamma=GetImportanceSamplingVector(links, scenarios, num_scenarios[0], p, p2)
         ImpSamp = ScaledGamma
     stop = time.clock()
     print('[%g seconds]Done!\n'%(stop-start))

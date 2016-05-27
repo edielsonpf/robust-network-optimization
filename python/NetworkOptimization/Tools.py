@@ -385,17 +385,13 @@ def GetImportanceSamplingVector(Links, Scenarios, NumScenarios, FailureProb, Fai
 
     """
     Gamma={}
-    ScaledGamma=np.zeros(NumScenarios)
     for k in range(NumScenarios):
         sum_failure=0
         for s,d in Links:
             sum_failure=sum_failure+Scenarios[k,s,d]
         Gamma[k]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
-        ScaledGamma[k]=Gamma[k]
-    
-    ScaledGamma = GeometricMean(ScaledGamma, 4)
-    
-    return Gamma,ScaledGamma
+        
+    return Gamma
 
 def GetImportanceSamplingVectorR(Links, Scenarios, NumScenarios, FailureProb, FailureProbIS, Epsilon):
     """Calculate the importance sampling vector.
@@ -424,7 +420,7 @@ def GetImportanceSamplingVectorR(Links, Scenarios, NumScenarios, FailureProb, Fa
             sum_failure=sum_failure+Scenarios[k,s,d]
         ImpSamp[k]=(FailureProb**(sum_failure)*(1-FailureProb)**(len(Links)-sum_failure))/(FailureProbIS**(sum_failure)*(1-FailureProbIS)**(len(Links)-sum_failure))
         A[k]=1.0*(ImpSamp[k]/(NumScenarios*Epsilon))
-        ScaledGamma[k]=ImpSamp[k]
+        ScaledGamma[k]=A[k]
         if k == 0:
             MaxA=A[k]
         else:    
