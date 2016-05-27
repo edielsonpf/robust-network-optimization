@@ -23,14 +23,14 @@ if __name__ == '__main__':
     #You must change here if there is a different capacity for each link 
     CapPerLink=[1 for i in range(nobs)]
         
-    n4 = 20
-    p=0.05
-    
-    
+    n4 = 5
+        
     print('Generating %s random scenarios for new failure probability test...' %(n4))
     unif_scenarios = GetUniformRandScenarios(None,n4, nobs)
 #     print(unif_scenarios)
     print('Done!\n')
+    
+    p=0.05
     
     print('Generating binomial random scenarios for p=%s...'%p)
     scenarios = GetRandScenariosFromUnif(unif_scenarios, p, n4, nobs, links, CapPerLink)
@@ -38,5 +38,15 @@ if __name__ == '__main__':
     
     NumFailures = GetNumFailures(scenarios,n4,links)
     for i in range(n4):
-        print('Failures scenario %s=%s'%(i,NumFailures[i]))
+        print('Number of failures in scenario #%s=%s'%(i,NumFailures[i]))
+        
+    p=0.25
+    
+    print('Generating binomial random scenarios for p=%s...'%p)
+    scenarios = GetRandScenariosFromUnif(unif_scenarios, p, n4, nobs, links, CapPerLink)
+    print('Done!\n')
+    
+    NumFailures = GetNumFailures(scenarios,n4,links)
+    for i in range(n4):
+        print('Number of failures in scenario #%s=%s'%(i,NumFailures[i]))    
     
