@@ -551,7 +551,7 @@ def GeometricMean(A, max_it):
     return X
 
 #### Loading a Network 
-def load(filename): 
+def LoadBackupNetwork(filename): 
     """Load a backup network from the file ``filename``.  
     Returns an instance of BFPBackup. 
   
@@ -574,7 +574,6 @@ def load(filename):
         BackupCapacitySolution[i,j]=capacities[IndexAux]
         IndexAux=IndexAux+1
     
-    BackupLinksSolution={}
     for link in BackupCapacitySolution:
         if BackupCapacitySolution[link] > 0.0001:
             if (len(BackupLinksSolution) == 0):

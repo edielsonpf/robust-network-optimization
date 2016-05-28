@@ -34,7 +34,7 @@ class TestBackupModel(unittest.TestCase):
         #Reseting model
         BackupNet.reset()
     
-        OptCapacityLoad,BackupLinksLoad,BkpLinksLoad = load('TestBackupNet.dat')
+        OptCapacityLoad,BackupLinksLoad,BkpLinksLoad = LoadBackupNetwork('TestBackupNet.dat')
     
          
         self.assertEqual(OptCapacity, OptCapacityLoad)

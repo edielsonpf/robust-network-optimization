@@ -16,7 +16,7 @@ class TestTools(unittest.TestCase):
         for s,d in links:
             G.add_weighted_edges_from([(s,d,cap_per_link[links.index((s,d))])])
             
-        OptCapacityLoad,BackupLinksLoad,BkpLinksLoad = load('TestBackupNetDefault.dat')
+        OptCapacityLoad,BackupLinksLoad,BkpLinksLoad = LoadBackupNetwork('TestBackupNetDefault.dat')
         
         print('Generating %s random scenarios for failure probability test...' %(num_scenarios))
         unif_scenarios = GetUniformRandScenarios(None,num_scenarios, num_links)
@@ -38,7 +38,7 @@ class TestTools(unittest.TestCase):
         
         self.assertGreater(final_time_normal,final_time_parallel)
         for link in BufferedP_Normal:
-            self.assertAlmostEquals(BufferedP_Normal[link], BufferedP_Parallel[link],delta=0.001)
+            self.assertAlmostEquals(BufferedP_Normal[link], BufferedP_Parallel[link],delta=0.01)
 
     def test_get_rand_unif(self):
          
