@@ -257,7 +257,7 @@ def GetBufferedFailureProbPar(FailureProb, NumScenarios, Links, CapPerLink, Back
     """
     #check the number of available processors 
     nb_processes = multiprocessing.cpu_count ()
-    print('Number of available processors: %g' %nb_processes)
+    print('Using %g available processors' %nb_processes)
     
     p = Pool(nb_processes)
     
@@ -651,10 +651,6 @@ def GetFullConnectedNetwork(num_nodes):
     #Check the number of links
     num_links = len(links)
     
-    #Adding the respective capacity for each link in the graph
-#     for s,d in links:
-#         G.add_weighted_edges_from([(s,d,capacity_per_link[links.index((s,d))])])
-        
     return G,links,nodes,num_links
 
 
@@ -677,8 +673,4 @@ def GetFSNETNetwork():
     #Check the number of links
     num_links = len(links)
     
-    #Adding the respective capacity for each link in the graph
-#     for s,d in links:
-#         G.add_weighted_edges_from([(s,d,capacity_per_link[links.index((s,d))])])
-        
     return G,links,nodes,num_links      
