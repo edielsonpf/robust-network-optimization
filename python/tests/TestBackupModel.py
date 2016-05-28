@@ -2,7 +2,7 @@ import unittest
 from NetworkOptimization.BFPBackupModel import *
 from NetworkOptimization.Tools import *
 
-class TestSaveAndLoad(unittest.TestCase):
+class TestBackupModel(unittest.TestCase):
 
     def test_save(self):
         
@@ -48,19 +48,10 @@ class TestSaveAndLoad(unittest.TestCase):
                 Answer=False
                 break
                   
-        self.assertEqual(Answer, True)
+        self.assertTrue(Answer, None)
 
         
     
-#     def test_isupper(self):
-#         self.assertTrue('FOO'.isupper())
-#         self.assertFalse('Foo'.isupper())
-# 
-#     def test_split(self):
-#         s = 'hello world'
-#         self.assertEqual(s.split(), ['hello', 'world'])
-#         # check that s.split fails when the separator is not a string
-#         with self.assertRaises(TypeError):
-#             s.split(2)
+
 if __name__ == '__main__':
     unittest.main()
