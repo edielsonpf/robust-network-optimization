@@ -8,14 +8,11 @@ __author__ = "edielsonpf"
 from BFPBackupModelTest import BFPBackupModelTest
 from PathBackupModelTest import PathBackupModelTest
 from NormalBackupModelTest import NormalBackupModelTest
-from ParallelTest import ParallelValidation
 from SurvivabilityTest import SurvivabilityTest
 from SampleSizeTest import SampleSizeTest
 
 if __name__ == '__main__':
    
-    #chose this option for running tests on multiprocessing methods
-    PARALLEL_TEST = 0
     #chose this option for running tests where it is possible to check different suvivability (epsilon) values to the same scenarios
     SURVIVABILITY_TEST = 0
     #chose this option for running tests where it is possible to check different sample sizes (n)
@@ -135,33 +132,6 @@ if __name__ == '__main__':
         
         print('Buffered failure probability-based backup model')
         BFPBackupModelTest(UseParallel, ImportanceSampling,PlotOptions, NumNodes, Scenario, NumScenarios, p,p2, epsilon, MipGap, TimeLimit)
-        
-    if PARALLEL_TEST:
-        
-        #definition of the number of nodes in the network
-        NumNodes = 14
-        
-        #definition of the link failure probability
-        p=0.001
-        
-        #definition of the desired survivability (epsilon)
-        epsilon = 0.01
-        
-        #Optimization definitions
-        #definition of the desired MipGap, or None for optimal
-        MipGap = None
-        #definition of the time limit, or None for no time limit
-        TimeLimit = None
-        
-        #definition of the number of scenarios on each step:
-        # 1- Number of scenarios for the optimization model
-        # 2- Number of scenarios for buffered failure probability 
-        NumScenarios = [50,500000]
-        
-        #define here the failure probability ratio for importance sampling
-        p2=2*p
-        
-        ParallelValidation(NumNodes, NumScenarios, p, p2, epsilon, MipGap, TimeLimit)
         
     if SURVIVABILITY_TEST:
         
