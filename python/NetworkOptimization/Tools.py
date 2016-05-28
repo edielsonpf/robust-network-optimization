@@ -8,7 +8,7 @@ except:
 
 import multiprocessing
 from multiprocessing import Pool
-
+import json
 ###################################################
 #
 #            Auxiliary functions
@@ -216,22 +216,23 @@ def GetRandScenariosPar(FailureProb,NumScenarios, NumLinks, Links, CapPerLink):
     
     return Scenarios 
 
-def GetNumFailures(Scenario, Links):    
+def GetNumFailures(Scenarios, NumScenarios, Links):    
     """Calculate the sum of failures in the scenarios.
 
     Parameters
     ----------
-    Scenario: Scenario for calculating the number of failures.
+    Scenarios: Scenarios for calculating the number of failures.
     Links: Graph edges (links)
     
     Returns
     -------
-    NumFailures: Number of failures in the scenario.
+    NumFailures: Number of failures on each scenario.
 
     """
-    NumFailures=0
-    for s,d in Links:
-        NumFailures = NumFailures + Scenario[s,d]
+    NumFailures=[0 for i in range(NumScenarios)]
+    for i in range(NumScenarios):
+        for s,d in Links:
+            NumFailures[i] = NumFailures[i] + Scenarios[i,s,d]
     return NumFailures
 
 def GetBufferedFailureProbPar(FailureProb, NumScenarios, Links, CapPerLink, BackupLinks, CapPerBackupLink, OptBackupLinks):    
@@ -549,6 +550,44 @@ def GeometricMean(A, max_it):
     
     return X
 
+#### Loading a Network 
+def load(filename): 
+    """Load a backup network from the file ``filename``.  
+    Returns an instance of BFPBackup. 
+  
+    """ 
+    f = open(filename, "r") 
+    data = json.load(f) 
+    f.close() 
+    
+    BackupCapacitySolution = {}
+    BackupRoutesSolution = {}
+    BackupLinksSolution = {}
+    
+    links = [i for i in data["links"]]
+    capacities = [i for i in data["capacities"]] 
+    routes = [i for i in data["routes"]] 
+    status = [i for i in data["status"]]
+    
+    IndexAux=0
+    for i,j in links:
+        BackupCapacitySolution[i,j]=capacities[IndexAux]
+        IndexAux=IndexAux+1
+    
+    BackupLinksSolution={}
+    for link in BackupCapacitySolution:
+        if BackupCapacitySolution[link] > 0.0001:
+            if (len(BackupLinksSolution) == 0):
+                BackupLinksSolution=[link]
+            else:
+                BackupLinksSolution=BackupLinksSolution+[link]
+    IndexAux=0
+    for i,j,s,d in routes:
+        BackupRoutesSolution[i,j,s,d]=status[IndexAux]
+        IndexAux=IndexAux+1
+        
+    return BackupCapacitySolution,BackupRoutesSolution,BackupLinksSolution
+ 
 # def GetRandScenariosFromUnifPar(Unif, FailureProb, NumScenarios, NumLinks, Links, CapPerLink):
 #     """Generate random failure scenarios based on Binomial distribution using multiprocessing.
 # 
@@ -596,4 +635,50 @@ def GeometricMean(A, max_it):
 #     for res in multiple_results:
 #         Scenarios.update(res.get(timeout=120))
 #     
-#     return Scenarios    
+#     return Scenarios
+
+def GetFullConnectedNetwork(num_nodes):
+    #Generates a complete indirect graph 
+    H = nx.complete_graph(num_nodes)
+    # transforms the indirect graph in directed one
+    G = H.to_directed()
+    
+    #Generates a list with all links (edges) in the graph
+    links = G.edges()
+    #Generates a list with all nodes (vertex) in the graph
+    nodes = G.nodes()
+    
+    #Check the number of links
+    num_links = len(links)
+    
+    #Adding the respective capacity for each link in the graph
+#     for s,d in links:
+#         G.add_weighted_edges_from([(s,d,capacity_per_link[links.index((s,d))])])
+        
+    return G,links,nodes,num_links
+
+
+def GetFSNETNetwork():
+    
+    num_nodes=14
+        
+    nodes = [i+1 for i in range(num_nodes)]
+
+    links=[(1,2),(1,3),(1,4),(2,1),(2,3),(2,8),(3,1),(3,2),(3,7),(4,1),(4,5),(4,9),(5,4),(5,6),(5,7),
+           (6,5),(6,8),(7,3),(7,5),(7,10),(7,13),(8,2),(8,6),(8,11),(9,4),(9,12),(9,14),(10,7),
+           (10,11),(11,8),(11,10),(11,12),(11,14),(12,9),(12,11),(12,13),(13,7),(13,12),(13,14),(14,9),(14,11),(14,13)]
+    
+  
+    G=nx.DiGraph()
+    
+    G.add_nodes_from(nodes)
+    G.add_edges_from(links)
+    
+    #Check the number of links
+    num_links = len(links)
+    
+    #Adding the respective capacity for each link in the graph
+#     for s,d in links:
+#         G.add_weighted_edges_from([(s,d,capacity_per_link[links.index((s,d))])])
+        
+    return G,links,nodes,num_links      

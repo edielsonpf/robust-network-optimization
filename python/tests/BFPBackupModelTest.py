@@ -7,7 +7,7 @@ from NetworkOptimization.BFPBackupModel import BFPBackup
 from NetworkOptimization.SuperquantileModel import SQModel
 from NetworkOptimization.Tools import GetBufferedFailureProbPar, GetBufferedFailureProb, GetRandScenarios, plotGraph, GetImportanceSamplingVectorR,\
     GetImportanceSamplingVector
-from NetworkOptimization.Tools import GetRandScenariosFromUnif, GetUniformRandScenarios
+from NetworkOptimization.Tools import GetRandScenariosFromUnif, GetUniformRandScenarios, load
 from gurobipy import tuplelist
 
 def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,scenario,num_scenarios,p,p2,epsilon,mip_gap,time_limit):
@@ -90,8 +90,8 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
             
         #Generates the importance sampling factor for each sample
 #         Gamma,A,MaxA,ScaledGamma=GetImportanceSamplingVectorR(links, scenarios, num_scenarios[0], p, p2,epsilon)
-        Gamma,ScaledGamma=GetImportanceSamplingVector(links, scenarios, num_scenarios[0], p, p2)
-        ImpSamp = ScaledGamma
+        Gamma=GetImportanceSamplingVector(links, scenarios, num_scenarios[0], p, p2)
+        ImpSamp = Gamma
     stop = time.clock()
     print('[%g seconds]Done!\n'%(stop-start))
     ################################
@@ -105,12 +105,12 @@ def BFPBackupModelTest(use_parallel, importance_sampling,plot_options,num_nodes,
     BackupNet.loadModel(ImpSamp,nodes,links,scenarios,epsilon,num_scenarios[0])
     print('Done!\n')
     print('Solving...\n')
-    OptCapacity,BackupLinks,BkpLinks,LHS = BackupNet.optimize(mip_gap,time_limit,None)
-    
+#     OptCapacity,BackupLinks,BkpLinks,LHS = BackupNet.optimize(mip_gap,time_limit,None)
+    OptCapacity,BackupLinks,BkpLinks = BackupNet.optimize(mip_gap,time_limit,None)
+        
     print('\nCapacity assigned per backup link:\n' )
     for i,j in BkpLinks:
-        if OptCapacity[i,j] > 0.0001:
-            print('C[%s,%s]: %g' % (i,j, OptCapacity[i,j]))
+        print('C[%s,%s]: %g' % (i,j, OptCapacity[i,j]))
                  
     n={}
     aux=0
