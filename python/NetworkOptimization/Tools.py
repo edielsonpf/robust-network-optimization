@@ -299,13 +299,80 @@ def GetBufferedFailureProbPar(FailureProb, NumScenarios, Links, CapPerLink, Back
     
     return P
 
+def GetBufferedFailureProbPar2(ImportanceSampling, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+    """Calculate the buffered failure probability using multiprocessing.
+
+    Parameters
+    ----------
+    ImportanceSampling
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+    NumScenarios : Number of scenarios to be generated.
+    Links: Graph edges (links)
+    NumLinks: Number of edges (links) on each scenario.
+    CapPerLink: Set of edge (link) capacity (weight).
+    BackupLinks: Set of backup edges (links).
+    CapPerBackupLink: Set of backup edge (link) capacity (weight)
+    OptBackupLinks: Set of backup edges (links).
+    
+    Returns
+    -------
+    P: Buffered failure probability.
+
+    """
+    #check the number of available processors 
+    nb_processes = multiprocessing.cpu_count ()
+    print('Using %g available processors' %nb_processes)
+    
+    p = Pool(nb_processes)
+    
+    #divide the total number of scenarios to be generated among the available processes 
+    Dividend = NumScenarios/nb_processes
+    Rest=NumScenarios-(nb_processes*Dividend)
+    NewDivision=[0 for k in range(nb_processes)]
+    args = [0 for k in range(nb_processes)]
+    start=0
+    for k in range(nb_processes):
+        NewDivision[k]=Dividend
+        if k == 0:
+            NewDivision[k]=NewDivision[k]+Rest
+            start=0
+        else:
+            start=start+NewDivision[k-1]
+        
+        args[k]=(ImportanceSampling,Scenarios,start,NewDivision[k], Links, BackupLinks, CapPerBackupLink, OptBackupLinks) 
+                    
+    # launching multiple evaluations asynchronously *may* use more processes
+    multiple_results = [p.apply_async(ThreadGetBufferedFailureProb2, (args[k])) for k in range(nb_processes)]
+    
+    P={}
+    for i,j in BackupLinks:
+        P[i,j]=0
+    Counter=0
+    for res in multiple_results:
+        AvgP = res.get(timeout=240)
+        for i,j in BackupLinks:
+            P[i,j]=P[i,j] + 1.0*AvgP[i,j]
+        Counter=Counter+1
+    
+    for i,j in BackupLinks:
+        P[i,j]=1.0*P[i,j]/Counter
+        
+    p.close()
+    p.join()
+    
+    return P
+
+def IndicatorFunction(a,b):
+    Array=[0,a-b]
+    Indicator=np.max(Array)/np.abs(a-b)
+    return Indicator
+
 def GetBufferedFailureProb(ImportanceSampling, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
     """Calculate the buffered failure probability.
 
     Parameters
     ----------
     ImportanceSampling: Importance sampling vector (obtained by GetImportanceSamplingVector method). None if scenarios were not generated using importance sampling.
-    FailureProb: Failure probability for each edge (link) in the graph.
     Scenarios: Set of scenarios with random failure following Binomial distribution.
     NumScenarios : Number of scenarios to be generated.
     Links: Graph edges (links)
@@ -320,6 +387,19 @@ def GetBufferedFailureProb(ImportanceSampling, Scenarios, NumScenarios, Links, B
     P: Buffered failure probability.
 
     """
+#     P={}
+#     for i,j in BackupLinks:
+#         P[i,j] = 0
+#         for k in Scenarios:
+#             C = sum([OptBackupLinks[i,j,s,d]*Scenarios[k,s,d] for s,d in Links])
+# #             C = [OptBackupLinks[i,j,s,d]*Scenarios[k,s,d] for (s,d) in Links]
+#             Indicator = IndicatorFunction(C, CapPerBackupLink[i,j])
+#             if ImportanceSampling == None:
+#                 P[i,j]=P[i,j]+Indicator
+#             else:
+#                 P[i,j]=P[i,j]+Indicator*ImportanceSampling[k]
+#         P[i,j]=1.0*P[i,j]/NumScenarios 
+        
     P={}
     for i,j in BackupLinks:
         P[i,j] = 0
@@ -366,6 +446,41 @@ def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, Cap
                 Psd=Psd+OptBackupLinks[i,j,s,d]*Scenarios[k,s,d]
             if Psd > CapPerBackupLink[i,j]:
                 P[i,j]=P[i,j]+1
+        P[i,j]=1.0*P[i,j]/NumScenarios
+    return P
+
+def ThreadGetBufferedFailureProb2(ImportanceSampling,Scenarios,Start,NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+    """Thread to calculate the buffered failure probability.
+
+    Parameters
+    ----------
+    ImportanceSampling: Importance sampling vector (obtained by GetImportanceSamplingVector method). None if scenarios were not generated using importance sampling.
+    Scenarios: Set of scenarios with random failure following Binomial distribution.
+    NumScenarios : Number of scenarios to be generated.
+    Links: Graph edges (links)
+    CapPerLink: Set of edge (link) capacity (weight).
+    BackupLinks: Set of backup edges (links).
+    CapPerBackupLink: Set of backup edge (link) capacity (weight)
+    OptBackupLinks: Set of backup edges (links).
+    
+    Returns
+    -------
+    P: Buffered failure probability.
+
+    """
+    
+    P={}
+    for i,j in BackupLinks:
+        P[i,j] = 0
+        for k in range(NumScenarios):
+            Psd=0
+            for s,d in Links:
+                Psd=Psd+OptBackupLinks[i,j,s,d]*Scenarios[k+Start,s,d]
+            if Psd > CapPerBackupLink[i,j]:
+                if ImportanceSampling == None:
+                    P[i,j]=P[i,j]+1
+                else:
+                    P[i,j]=P[i,j]+1*ImportanceSampling[k+Start]
         P[i,j]=1.0*P[i,j]/NumScenarios
     return P
 
