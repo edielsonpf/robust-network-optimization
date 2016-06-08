@@ -2,8 +2,8 @@ import numpy as np
 import math
 import networkx as nx
 from NetworkOptimization.BFPBackupModel import BFPBackup
-from NetworkOptimization.Tools import GetBufferedFailureProb, GetImportanceSamplingVector, GetRandScenariosFromUnif, GetUniformRandScenarios, GetBufferedFailureProbPar
-from NetworkOptimization.Tools import GetBufferedFailureProbPar2
+from NetworkOptimization.Tools import GetBufferedFailureProb, GetImportanceSamplingVector, GetRandScenariosFromUnif, GetUniformRandScenarios
+from NetworkOptimization.Tools import GetConfidenceInterval, GetVariance, GetConfidenceInterval2
 from gurobipy import tuplelist
 
 def GetScenarios(Scenarios,NumScenarios, NumLinks, Links, CapPerLink):    
@@ -74,93 +74,12 @@ def per(n):
                                         
 if __name__=="__main__":
    
-#     for p in fast_permutation([1,0,0,0,0,0],5): print(p)
-#     for p in permutations([0,0,0],3): print(p)
-#     for p in xuniqueCombinations([0,0,1],2): print(p)
-#     per(20)
-    print('Generating combinations...')
-    L=20
-    Num_S=np.zeros(L+1)
-    for n in xrange(L+1):
-        Num_S[n]=math.factorial(L)/(math.factorial(n)*math.factorial(L-n))
-        
-    S0=[]
-    S1=[]
-    S2=[]
-    S3=[]
-    S4=[]
-    S5=[]
-    S6=[]
-    S7=[]
-    S8=[]
-    S9=[]
-    S10=[]
-    S11=[]
-    S12=[]
-    S13=[]
-    S14=[]
-    S15=[]
-    S16=[]
-    S17=[]
-    S18=[]
-    S19=[]
-    S20=[]
-    
-    for i in range(1<<n):
-        s=bin(i)[2:]
-        s='0'*(n-len(s))+s
-        aux = map(int,list(s))
-        aux_sum=np.sum(aux)
-        
-        if aux_sum == 0:
-            S0.append(aux)
-        elif aux_sum == 1:
-            S1.append(aux)
-        elif aux_sum == 2:
-            S2.append(aux)
-        elif aux_sum == 3:
-            S3.append(aux)
-        elif aux_sum == 4:
-            S4.append(aux)
-        elif aux_sum == 5:
-            S5.append(aux)
-        elif aux_sum == 6:
-            S6.append(aux)
-        elif aux_sum == 7:
-            S7.append(aux)
-        elif aux_sum == 8:
-            S8.append(aux)
-        elif aux_sum == 9:
-            S9.append(aux)
-        elif aux_sum == 10:
-            S10.append(aux)
-        elif aux_sum == 11:
-            S11.append(aux)
-        elif aux_sum == 12:
-            S12.append(aux)
-        elif aux_sum == 13:
-            S13.append(aux)
-        elif aux_sum == 14:
-            S14.append(aux)
-        elif aux_sum == 15:
-            S15.append(aux)
-        elif aux_sum == 16:
-            S16.append(aux)
-        elif aux_sum == 17:
-            S17.append(aux)
-        elif aux_sum == 18:
-            S18.append(aux)
-        elif aux_sum == 19:
-            S19.append(aux)
-        elif aux_sum == 20:
-            S20.append(aux)
-    print('Done!\n')        
     ########################################################################
     p=0.025
-    p2=1.5*p
-    epsilon=0.01
+    p2=5*p
+    epsilon=0.1
     num_scenarios = 100
-    n2=1000
+    n2=1000000
     num_nodes=5
     
     print('\n=======Simulation parameters=========\n')
@@ -252,59 +171,157 @@ if __name__=="__main__":
     ##############################
     print('Failure probability for importance sample: %g' %p2)
     
-    print('\nGenerating %s random scenarios for new failure probability test...' %(n2))
+    print('\nGenerating %s uniform random scenarios for new failure probability test...' %(n2))
     test_unif_scenarios = GetUniformRandScenarios(None, n2, nobs)
     print('Done!\n')        
     
-    print('\nBuffered failure probability using IS:\n')
+    print('\nGenerating binomial scenarios from uniform with failure probability of %g...'%p2)
     test_scenarios = GetRandScenariosFromUnif(test_unif_scenarios, p2, n2, nobs, links, CapPerLink)
     test_gamma=GetImportanceSamplingVector(links, test_scenarios, n2, p, p2)
+    print('Done!\n')        
     
-    BufferedP = GetBufferedFailureProb(test_gamma, test_scenarios, n2, links, BkpLinks, OptCapacity, BackupLinks)
-         
-    ConfidenceInterval={}
+    print('\nBuffered failure probability using IS:\n')     
+    BufferedP,Indicator = GetBufferedFailureProb(test_gamma, test_scenarios, n2, links, BkpLinks, OptCapacity, BackupLinks)
+          
+#     ConfidenceInterval={}
     for i,j in BkpLinks:
         print('p[1][%s,%s](x) = %g' %(i,j,1.0*BufferedP[i,j]))
-        ConfidenceInterval[i,j]=1.96*np.sqrt((BufferedP[i,j])*(1-BufferedP[i,j]))/(np.sqrt(n2)) 
+#         ConfidenceInterval[i,j]=1.96*np.sqrt((BufferedP[i,j])*(1-BufferedP[i,j]))/(np.sqrt(n2)) 
     
+#     print('\nConfidence interval')
+#     ConfidenceInterval=GetConfidenceInterval(BkpLinks, BufferedP, None, n2)
+#     for i,j in BkpLinks:
+#         print('[1][%s,%s] = [%g,%g]'%(i,j,BufferedP[i,j]-ConfidenceInterval[i,j],BufferedP[i,j]+ConfidenceInterval[i,j]))
+        
+    print('\nVariance:\n')
+    Variance_IS = GetVariance(test_gamma, test_scenarios, n2, links, BkpLinks, OptCapacity, BackupLinks,BufferedP,Indicator)
+    for i,j in BkpLinks:
+        print('Var[1][%s,%s] = %g'%(i,j,Variance_IS[i,j]))  
+        
     print('\nConfidence interval')
+    ConfidenceInterval=GetConfidenceInterval2(BkpLinks, Variance_IS, None, n2)
     for i,j in BkpLinks:
-        print('[1][%s,%s] = [%g,%g]'%(i,j,BufferedP[i,j]-ConfidenceInterval[i,j],BufferedP[i,j]+ConfidenceInterval[i,j]))
+        print('[1][%s,%s] = %g,%g'%(i,j,BufferedP[i,j]-ConfidenceInterval[i,j],BufferedP[i,j]+ConfidenceInterval[i,j]))
     
-    print('\nBuffered failure probability using IS (parallel):\n')
-    BufferedP = GetBufferedFailureProbPar2(test_gamma, test_scenarios, n2, links, BkpLinks, OptCapacity, BackupLinks)
-    for i,j in BkpLinks:
-        print('p[1][%s,%s](x) = %g' %(i,j,1.0*BufferedP[i,j]))
-        ConfidenceInterval[i,j]=1.96*np.sqrt((BufferedP[i,j])*(1-BufferedP[i,j]))/(np.sqrt(n2)) 
     
-    print('\nConfidence interval')
-    for i,j in BkpLinks:
-        print('[1][%s,%s] = [%g,%g]'%(i,j,BufferedP[i,j]-ConfidenceInterval[i,j],BufferedP[i,j]+ConfidenceInterval[i,j]))
     ###############################################
     #
     #    Actual buffered failure probability
     #
     ###############################################
-#     n2=1000000
-            
-         
-    print('\nBuffered failure probability with no IS:\n')
+    print('\nGenerating binomial scenarios from uniform with failure probability of %g...'%p)
     test_scenarios = GetRandScenariosFromUnif(test_unif_scenarios, p, n2, nobs, links, CapPerLink)
-#     BufferedP = GetBufferedFailureProbPar(p, n2, links, CapPerLink, BkpLinks, OptCapacity, BackupLinks)
-    BufferedP = GetBufferedFailureProb(None, test_scenarios, n2, links, BkpLinks, OptCapacity, BackupLinks)
-
-    ConfidenceInterval={}
+    print('Done!')
+    
+    print('\nBuffered failure probability with no IS:\n')
+    BufferedP,Indicator = GetBufferedFailureProb(None, test_scenarios, n2, links, BkpLinks, OptCapacity, BackupLinks)
+ 
+#     ConfidenceInterval={}
     for i,j in BkpLinks:
         print('p[2][%s,%s](x) = %g' %(i,j,1.0*BufferedP[i,j]))
-        ConfidenceInterval[i,j]=1.96*np.sqrt((BufferedP[i,j])*(1-BufferedP[i,j]))/(np.sqrt(n2)) 
+#         ConfidenceInterval[i,j]=1.96*np.sqrt((BufferedP[i,j])*(1-BufferedP[i,j]))/(np.sqrt(n2)) 
     
-    print('\nConfidence interval')
+#     print('\nConfidence interval')
+#     ConfidenceInterval=GetConfidenceInterval(BkpLinks, BufferedP, None, n2)
+#     for i,j in BkpLinks:
+#         print('[2,1][%s,%s] = [%g,%g]'%(i,j,BufferedP[i,j]-ConfidenceInterval[i,j],BufferedP[i,j]+ConfidenceInterval[i,j]))     
+
+    print('\nVariance:\n')
+    Variance = GetVariance(test_gamma, test_scenarios, n2, links, BkpLinks, OptCapacity, BackupLinks,BufferedP,Indicator)
     for i,j in BkpLinks:
-        print('[2][%s,%s] = [%g,%g]'%(i,j,BufferedP[i,j]-ConfidenceInterval[i,j],BufferedP[i,j]+ConfidenceInterval[i,j]))     
+        print('Var[2][%s,%s] = %g'%(i,j,Variance[i,j]))  
+        
+    print('\nConfidence Interval:\n')
+    ConfidenceInterval=GetConfidenceInterval2(BkpLinks, Variance, None, n2)
+    for i,j in BkpLinks:
+        print('[2][%s,%s] = %g,%g'%(i,j,BufferedP[i,j]-ConfidenceInterval[i,j],BufferedP[i,j]+ConfidenceInterval[i,j]))
+    
+    
+    print('\nVariance Ratio:\n')
+    for i,j in BkpLinks:
+        print('Var_Ratio[%s,%s] = %g'%(i,j,1.0*(Variance/Variance_IS)))
     
     
     print('\n######################################################\n')
     
+    print('Generating combinations...')
+    L=20
+    Num_S=np.zeros(L+1)
+    for n in xrange(L+1):
+        Num_S[n]=math.factorial(L)/(math.factorial(n)*math.factorial(L-n))
+        
+    S0=[]
+    S1=[]
+    S2=[]
+    S3=[]
+    S4=[]
+    S5=[]
+    S6=[]
+    S7=[]
+    S8=[]
+    S9=[]
+    S10=[]
+    S11=[]
+    S12=[]
+    S13=[]
+    S14=[]
+    S15=[]
+    S16=[]
+    S17=[]
+    S18=[]
+    S19=[]
+    S20=[]
+    
+    for i in range(1<<n):
+        s=bin(i)[2:]
+        s='0'*(n-len(s))+s
+        aux = map(int,list(s))
+        aux_sum=np.sum(aux)
+        
+        if aux_sum == 0:
+            S0.append(aux)
+        elif aux_sum == 1:
+            S1.append(aux)
+        elif aux_sum == 2:
+            S2.append(aux)
+        elif aux_sum == 3:
+            S3.append(aux)
+        elif aux_sum == 4:
+            S4.append(aux)
+        elif aux_sum == 5:
+            S5.append(aux)
+        elif aux_sum == 6:
+            S6.append(aux)
+        elif aux_sum == 7:
+            S7.append(aux)
+        elif aux_sum == 8:
+            S8.append(aux)
+        elif aux_sum == 9:
+            S9.append(aux)
+        elif aux_sum == 10:
+            S10.append(aux)
+        elif aux_sum == 11:
+            S11.append(aux)
+        elif aux_sum == 12:
+            S12.append(aux)
+        elif aux_sum == 13:
+            S13.append(aux)
+        elif aux_sum == 14:
+            S14.append(aux)
+        elif aux_sum == 15:
+            S15.append(aux)
+        elif aux_sum == 16:
+            S16.append(aux)
+        elif aux_sum == 17:
+            S17.append(aux)
+        elif aux_sum == 18:
+            S18.append(aux)
+        elif aux_sum == 19:
+            S19.append(aux)
+        elif aux_sum == 20:
+            S20.append(aux)
+    print('Done!\n')        
+
     Sum={}
     for i,j in BkpLinks:
         Sum[i,j]=0
@@ -365,7 +382,3 @@ if __name__=="__main__":
     print('\nReal failure probability')
     for i,j in BkpLinks:
         print('[%s,%s] = %g'%(i,j,Sum[i,j]))  
-        
-        
-    
-        
