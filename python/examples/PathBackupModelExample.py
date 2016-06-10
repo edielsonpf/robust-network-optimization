@@ -6,7 +6,7 @@ from NetworkOptimization.Tools import plotGraph, getAllPaths, getLinkPaths
 import math
 from gurobipy import tuplelist
 
-def PathBackupModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutoff):
+def PathBackupModelExample(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutoff):
     ""
     #######################################
     #        Generating graphs
@@ -66,15 +66,12 @@ def PathBackupModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutof
     for s,d in links:
         #generating capacity for each s,d link
         capacity[s,d] = Aux
-        #Generate mean for each s,d link based on Bernouilli distribution 
+        #Generate mean for each s,d link based on Binomial distribution 
         mean[s,d] = Aux*p
-        #Generate std for each s,d link based on Bernouilli distribution 
+        #Generate std for each s,d link based on Binomial distribution 
         std[s,d]=math.sqrt(Aux*p*(1-(Aux*p)))
         AuxCount = AuxCount+1
         
-    print(mean)
-    print(std)
-    
     #optimization
     links = tuplelist(links)
     # Creating a backup network model
@@ -93,3 +90,35 @@ def PathBackupModelTest(plot_options,num_nodes,p,invstd,mip_gap,time_limit,cutof
     if plot_options == 1:
         option=1
         plotGraph(G, option, pos)
+        
+        
+if __name__ == '__main__':
+    #constant for choosing to plot (1) or not to plot (0) the graphs
+    PlotOptions = 0
+    
+    #definition of the number of nodes in the network
+    NumNodes = 5
+    
+    #definition of the link failure probability
+    p=0.001
+    
+    #definition of the desired survivability (epsilon)
+    epsilon = 0.01
+    
+    #Optimization definitions
+    #definition of the desired MipGap, or None for optimal
+    MipGap = None
+    #definition of the time limit, or None for no time limit
+    TimeLimit = None
+    
+    #constant for backup model and backup model with paths
+    #definition of the Phi-standard inverse of (1-epsilon) 
+    invstd = 2.326347874
+
+    #definition of the graph depth (cutoff) when looking for paths, i.e. path extension
+    # Example: CutoffList = [None, 2, 1], will test for no limit, max path extension of  2 and 1
+    CutoffList = [1,2,None]
+ 
+    for cutoff in CutoffList:
+        print('Normal-based backup model with paths: cutoff = %g' % cutoff)  
+        PathBackupModelExample(PlotOptions,NumNodes,p,invstd,MipGap,TimeLimit,cutoff)
