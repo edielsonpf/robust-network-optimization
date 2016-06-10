@@ -27,8 +27,6 @@ def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, Cap
     P: Buffered failure probability.
 
     """
-    
-#         Scenarios = self.GetRandScenarios(RandSeed, FailureProb, NumScenarios, len(Links), Links, CapPerLink)
     if RandSeed != None:
         np.random.seed(RandSeed)
     
