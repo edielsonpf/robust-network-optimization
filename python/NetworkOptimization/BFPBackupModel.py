@@ -6,7 +6,7 @@ Created on Nov 23, 2015
 from gurobipy import Model, GRB, quicksum, tuplelist
 import json
  
-class BFPBackup(object):
+class BFPBackupNetwork(object):
     """ Class object for buffered failure probability-based model.
 
     Parameters
@@ -39,7 +39,7 @@ class BFPBackup(object):
         Constructor
         '''
                          
-    def loadModel(self,Gamma,Nodes,Links,Capacity,Survivability,NumSamples):
+    def LoadModel(self,Gamma,Nodes,Links,Capacity,Survivability,NumSamples):
         """ Load model.
     
         Parameters
@@ -122,7 +122,7 @@ class BFPBackup(object):
         self.model.update()
                  
          
-    def optimize(self, MipGap=None, TimeLimit = None, LogLevel = None):
+    def Optimize(self, MipGap=None, TimeLimit = None, LogLevel = None):
         """ Optimize the defined  model.
     
         Parameters
@@ -199,7 +199,7 @@ class BFPBackup(object):
         return self.BackupCapacitySolution,self.BackupRoutesSolution,self.BackupLinksSolution    
     
     
-    def save(self, filename): 
+    def SaveBakupNetwork(self, filename): 
         """Save the optimal backup network to the file ``filename``.""" 
         
         data = {"links": [i for i in self.BackupCapacitySolution],
@@ -210,8 +210,43 @@ class BFPBackup(object):
         json.dump(data, f) 
         f.close() 
  
- 
-    def reset(self):
+    def LoadBackupNetwork(self,filename): 
+        """Load a backup network from the file ``filename``.  
+        Returns the backup network solution saved in the file. 
+      
+        """ 
+        f = open(filename, "r") 
+        data = json.load(f) 
+        f.close() 
+        
+        self.BackupCapacitySolution = {}
+        self.BackupRoutesSolution = {}
+        self.BackupLinksSolution = {}
+        
+        links = [i for i in data["links"]]
+        capacities = [i for i in data["capacities"]] 
+        routes = [i for i in data["routes"]] 
+        status = [i for i in data["status"]]
+        
+        IndexAux=0
+        for i,j in links:
+            self.BackupCapacitySolution[i,j]=capacities[IndexAux]
+            IndexAux=IndexAux+1
+        
+        for link in self.BackupCapacitySolution:
+            if self.BackupCapacitySolution[link] > 0.0001:
+                if (len(self.BackupLinksSolution) == 0):
+                    self.BackupLinksSolution=[link]
+                else:
+                    self.BackupLinksSolution=self.BackupLinksSolution+[link]
+        IndexAux=0
+        for i,j,s,d in routes:
+            self.BackupRoutesSolution[i,j,s,d]=status[IndexAux]
+            IndexAux=IndexAux+1
+            
+        return self.BackupCapacitySolution,self.BackupRoutesSolution,self.BackupLinksSolution
+    
+    def ResetModel(self):
         '''
         Reset model solution.
         '''
