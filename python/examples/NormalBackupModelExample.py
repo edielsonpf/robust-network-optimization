@@ -1,13 +1,10 @@
 import networkx as nx
-
 from NetworkOptimization.NormalBackupModel import Backup
-
 import math
 from gurobipy import tuplelist
-
 from NetworkOptimization.Tools import plotGraph
 
-def NormalBackupModelTest(plot_options, num_nodes,p,invstd,mip_gap, time_limit):
+def NormalBackupModelExample(plot_options, num_nodes,p,invstd,mip_gap, time_limit):
     
     #######################################
     #        Generating graphs
@@ -61,3 +58,30 @@ def NormalBackupModelTest(plot_options, num_nodes,p,invstd,mip_gap, time_limit):
     if plot_options == 1:
         option=1
         plotGraph(G, option, pos)
+        
+if __name__ == '__main__':
+   
+    #definition of the number of nodes in the network
+    NumNodes = 5
+    
+    #definition of the link failure probability
+    p=0.001
+    
+    #definition of the desired survivability (epsilon)
+    epsilon = 0.01
+    
+    #Optimization definitions
+    #definition of the desired MipGap, or None for optimal
+    MipGap = None
+    #definition of the time limit, or None for no time limit
+    TimeLimit = None
+    
+    #constant for choosing to plot (1) or not to plot (0) the graphs
+    PlotOptions = 0
+    
+    #constant for backup model and backup model with paths
+    #definition of the Phi-standard inverse of (1-epsilon) 
+    invstd = 2.326347874
+
+    print('Normal-based backup model')  
+    NormalBackupModelExample(PlotOptions, NumNodes,p,invstd,MipGap,TimeLimit)
