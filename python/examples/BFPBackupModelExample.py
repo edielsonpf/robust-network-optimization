@@ -95,7 +95,7 @@ def BFPBackupModelExample(use_parallel,importance_sampling,plot_options,num_node
         print('Normal operation!\n')
         scenarios_test = ScenariosGen.GetBinomialRand(None, p2, num_scenarios[3], num_links, links, CapPerLink)
         gamma_test = ScenariosGen.GetImportanceSamplingVector(links, scenarios, num_scenarios[3], p, p2)
-        BufferedP = SolutionQos.GetBufferedFailureProb(gamma_test, scenarios_test, num_scenarios[3], links, BkpLinks, OptCapacity, BkpRoutes)
+        BufferedP,Variance = SolutionQos.GetBufferedFailureProb(gamma_test, scenarios_test, num_scenarios[3], links, BkpLinks, OptCapacity, BkpRoutes)
          
     else:
         print('Using parallel processing!!\n')
