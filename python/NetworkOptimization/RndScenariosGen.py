@@ -9,6 +9,37 @@ import json
 import multiprocessing
 from multiprocessing import Pool
 
+def ThreadGetRand(RandSeed, FailureProb,NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
+    """Generate random failure scenarios based on Binomial distribution.
+
+    Parameters
+    ----------
+    RandSeed : Random seed (necessary for multiprocessing calls).
+    FailureProb: Failure probability for each edge (link) in the graph.
+    NumScenarios : Number of scenarios to be generated.
+    StartIndex: Start index for each thread
+    NumLinks: Number of edges (links) on each scenario.
+    Links: Graph edges (links)
+    CapPerLink: Edge (link) capacity (weight) 
+    
+    Returns
+    -------
+    Scenarios: Group of scenarios with random failure following Binomial distribution.
+
+    """     
+    if RandSeed != None:
+        np.random.seed(RandSeed)
+    
+    Y = np.random.binomial(1, FailureProb, (NumScenarios,NumLinks))
+     
+    Scenarios={}
+    for k in range(NumScenarios):
+        Index=0
+        for s,d in Links:
+            Scenarios[StartIndex+k,s,d]=CapPerLink[Index]*Y[k,Index]
+            Index=Index+1
+    return Scenarios
+
 class ScenariosGenerator(object):
     '''
     classdocs
@@ -49,38 +80,6 @@ class ScenariosGenerator(object):
                 Index=Index+1
         return Scenarios
     
-    def __ThreadGetRand(self,RandSeed, FailureProb,NumScenarios, StartIndex, NumLinks, Links, CapPerLink):    
-        """Generate random failure scenarios based on Binomial distribution.
-    
-        Parameters
-        ----------
-        RandSeed : Random seed (necessary for multiprocessing calls).
-        FailureProb: Failure probability for each edge (link) in the graph.
-        NumScenarios : Number of scenarios to be generated.
-        StartIndex: Start index for each thread
-        NumLinks: Number of edges (links) on each scenario.
-        Links: Graph edges (links)
-        CapPerLink: Edge (link) capacity (weight) 
-        
-        Returns
-        -------
-        Scenarios: Group of scenarios with random failure following Binomial distribution.
-    
-        """     
-        if RandSeed != None:
-    #         print('My seed: %g' %RandSeed)
-            np.random.seed(RandSeed)
-        
-        Y = np.random.binomial(1, FailureProb, (NumScenarios,NumLinks))
-         
-        Scenarios={}
-        for k in range(NumScenarios):
-            Index=0
-            for s,d in Links:
-                Scenarios[StartIndex+k,s,d]=CapPerLink[Index]*Y[k,Index]
-                Index=Index+1
-        return Scenarios
-
     def GetBinomialRandPar(self,FailureProb,NumScenarios, NumLinks, Links, CapPerLink):    
         """Generate random failure scenarios based on Binomial distribution using multiprocessing.
     
@@ -120,11 +119,11 @@ class ScenariosGenerator(object):
             args[k]=(RandSeed, FailureProb, NewDivision[k], start, NumLinks, Links, CapPerLink)
     
         # launching multiple evaluations asynchronously *may* use more processes
-        multiple_results = [p.apply_async(self.__ThreadGetRand, (args[k])) for k in range(nb_processes)]
+        multiple_results = [p.apply_async(ThreadGetRand, (args[k])) for k in range(nb_processes)]
         
         Scenarios={}
         for res in multiple_results:
-            Scenarios.update(res.get(timeout=120))
+            Scenarios.update(res.get(timeout=500))
         
         return Scenarios    
     
