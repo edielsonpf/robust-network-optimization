@@ -5,6 +5,7 @@ Created on Jun 9, 2016
 '''
 
 import numpy as np
+import json
 import multiprocessing
 from multiprocessing import Pool
 
@@ -221,3 +222,32 @@ class ScenariosGenerator(object):
             for s,d in Links:
                 NumFailures[i] = NumFailures[i] + Scenarios[i,s,d]
         return NumFailures
+    
+    def SaveRandScenario(self, file_name,scenarios): 
+        """Save the optimal backup network to the file ``filename``.""" 
+        
+        data = {"scenarios": [scenario for scenario in scenarios],
+                "scenario_status": [scenarios[scenario] for scenario in scenarios]}
+        f = open(file_name, "w") 
+        json.dump(data, f) 
+        f.close()
+        
+    def LoadRandScenarios(self,file_name): 
+        """Load a backup network from the file ``filename``.  
+        Returns the backup network solution saved in the file. 
+      
+        """ 
+        f = open(file_name, "r") 
+        data = json.load(f) 
+        f.close() 
+        
+        scenarios = [scenario for scenario in data["scenarios"]]
+        scenarios_status = [status for status in data["scenario_status"]] 
+                
+        RndScenarios={}
+        IndexAux=0
+        for k,s,d in scenarios:
+            RndScenarios[k,s,d]=scenarios_status[IndexAux]
+            IndexAux=IndexAux+1
+        
+        return RndScenarios    
