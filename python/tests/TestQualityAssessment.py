@@ -289,18 +289,18 @@ class Test(unittest.TestCase):
         
         print('\nVariance:')
         for i,j in BackupLinks:
-            print('var[p(x)][%g,%g]=%g'%(i,j,Variance[i,j]))    
-        
-        print('\nGetting real failure probability...(you should take a coffee)')
-        RealBufferedP = GetRealFailureProbability(p, BackupLinks, BackupRoutes, BackupCapacity, links, num_links, cap_per_link)
-        for i,j in BackupLinks:
-            print('p(x)[%g,%g]=%g'%(i,j,RealBufferedP[i,j]))
+            print('Var[p(x)][%g,%g]=%g'%(i,j,Variance[i,j]))    
         
         print('\nConfidence interval')
         ConfidenceInterval=SolutionQos.GetConfidenceInterval(BackupLinks,Variance,num_scenarios,None)
         for i,j in BackupLinks:
-            print('[%g,%g]=%g'%(i,j,ConfidenceInterval[i,j]))
+            print('[%g,%g]=[%g,%g]'%(i,j,BufferedP[i,j]-ConfidenceInterval[i,j],BufferedP[i,j]+ConfidenceInterval[i,j]))
         
+        print('\nGetting real failure probability...(you should take a coffee)')
+        RealBufferedP = GetRealFailureProbability(p, BackupLinks, BackupRoutes, BackupCapacity, links, num_links, cap_per_link)
+        print('Done!\n')
+        for i,j in BackupLinks:
+            print('p(x)[%g,%g]=%g'%(i,j,RealBufferedP[i,j]))
         
         for i,j in BackupLinks:
             self.assertGreaterEqual(RealBufferedP[i,j],BufferedP[i,j]-ConfidenceInterval[i,j])
