@@ -58,19 +58,21 @@ class BFPBackupNetwork_WithBackupCapacity(object):
         # Create optimization model
         self.model = Model('Backup')
      
-        self.SumBackupCapacity=0
+        SumBackupCapacity=0
+        SumFloorBackupCapacity=0
         self.HatBackupCapacity={}
         for i,j in self.BackupLinks:
-            self.HatBackupCapacity[i,j]=math.floor(BackupCapacity[i,j])
-            self.BarDelta = math.ceil(self.BackupCapacity[i,j]-self.HatBackupCapacity[i,j])
-            self.SumBackupCapacity=self.SumBackupCapacity+BackupCapacity[i,j]
+            self.BackupCapacity[i,j]=round(BackupCapacity[i,j],1)
+            self.HatBackupCapacity[i,j]=math.floor(self.BackupCapacity[i,j])
+            SumBackupCapacity=SumBackupCapacity+BackupCapacity[i,j]
+            SumFloorBackupCapacity=SumFloorBackupCapacity+self.HatBackupCapacity[i,j]
+        self.BarDelta = math.ceil(SumBackupCapacity-SumFloorBackupCapacity)
+        print('barDelta=%g'%self.BarDelta)
         
         # Create variables
         for i,j in self.BackupLinks:
             self.Delta[i,j] = self.model.addVar(vtype=GRB.INTEGER,lb=0, name='Delta[%s,%s]' % (i, j))
         self.model.update()
-        
-        # Create variables
         
         self.Theta = self.model.addVar(name='Theta')
         self.model.update()
@@ -157,7 +159,7 @@ class BFPBackupNetwork_WithBackupCapacity(object):
            A tuple list with all paths for edge (s,d) that uses (i,j).
     
         """ 
-        self.model.write('bpbackup.lp')
+        self.model.write('bpbackup_withcap.lp')
          
         if MipGap != None:
             self.model.params.MIPGap = MipGap
@@ -244,4 +246,10 @@ class BFPBackupNetwork_WithBackupCapacity(object):
         '''
         Reset model solution.
         '''
+        self.Delta={}
+        self.BackupCapacity = {}
+        self.bBackupLink = {}
+        self.z0 = {}
+        self.z = {}
+        self.Theta=0
         self.model.reset()
