@@ -199,23 +199,23 @@ class BFPBackupNetwork(object):
         return self.BackupCapacitySolution,self.BackupRoutesSolution,self.BackupLinksSolution    
     
     
-    def SaveBakupNetwork(self, filename): 
-        """Save the optimal backup network to the file ``filename``.""" 
+    def SaveBakupNetwork(self, file_name): 
+        """Save the optimal backup network to the file ``file_name``.""" 
         
         data = {"links": [i for i in self.BackupCapacitySolution],
                 "capacities": [self.BackupCapacitySolution[i] for i in self.BackupCapacitySolution],
                 "routes": [i for i in self.BackupRoutesSolution],
                 "status": [self.BackupRoutesSolution[i] for i in self.BackupRoutesSolution]}
-        f = open(filename, "w") 
+        f = open(file_name, "w") 
         json.dump(data, f) 
         f.close() 
  
-    def LoadBackupNetwork(self,filename): 
-        """Load a backup network from the file ``filename``.  
+    def LoadBackupNetwork(self,file_name): 
+        """Load a backup network from the file ``file_name``.  
         Returns the backup network solution saved in the file. 
       
         """ 
-        f = open(filename, "r") 
+        f = open(file_name, "r") 
         data = json.load(f) 
         f.close() 
         

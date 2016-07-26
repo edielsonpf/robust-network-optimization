@@ -5,6 +5,7 @@ Created on Nov 23, 2015
 '''
 from gurobipy import Model, GRB, quicksum, tuplelist
 import json
+import math
  
 class BFPBackupNetwork_Continuous(object):
     """ Class object for buffered failure probability-based model.
@@ -158,8 +159,13 @@ class BFPBackupNetwork_Continuous(object):
             self.BackupRoutesSolution = self.model.getAttr('x', self.bBackupLink)
             
             self.BackupLinksSolution={}
+            self.HatBackupCapacity={}
             for link in self.BackupCapacitySolution:
-                if self.BackupCapacitySolution[link] > 0.0001:
+                if self.BackupCapacitySolution[link] < 1 and self.BackupCapacitySolution[link] > 0.001:
+                    self.HatBackupCapacity[link]=math.ceil(self.BackupCapacitySolution[link])
+                else:
+                    self.HatBackupCapacity[link]=math.floor(self.BackupCapacitySolution[link])
+                if self.HatBackupCapacity[link] > 0:
                     if (len(self.BackupLinksSolution) == 0):
                         self.BackupLinksSolution=[link]
                     else:
@@ -170,7 +176,7 @@ class BFPBackupNetwork_Continuous(object):
             self.BackupRoutesSolution = {}
             self.BackupLinksSolution = {}
             
-        return self.BackupCapacitySolution,self.BackupRoutesSolution,self.BackupLinksSolution 
+        return self.BackupCapacitySolution,self.BackupRoutesSolution,self.BackupLinksSolution,self.HatBackupCapacity 
     
     
     def SaveBakupNetwork(self, file_name): 
@@ -207,21 +213,32 @@ class BFPBackupNetwork_Continuous(object):
             self.BackupCapacitySolution[i,j]=capacities[IndexAux]
             IndexAux=IndexAux+1
         
+        self.HatBackupCapacity={}
         for link in self.BackupCapacitySolution:
-            if self.BackupCapacitySolution[link] > 0.0001:
+            if self.BackupCapacitySolution[link] < 1 and self.BackupCapacitySolution[link] > 0.001:
+                self.HatBackupCapacity[link]=math.ceil(self.BackupCapacitySolution[link])
+            else:
+                self.HatBackupCapacity[link]=math.floor(self.BackupCapacitySolution[link])
+            if self.HatBackupCapacity[link] > 0:
                 if (len(self.BackupLinksSolution) == 0):
                     self.BackupLinksSolution=[link]
                 else:
                     self.BackupLinksSolution=self.BackupLinksSolution+[link]
+        
         IndexAux=0
         for i,j,s,d in routes:
             self.BackupRoutesSolution[i,j,s,d]=status[IndexAux]
             IndexAux=IndexAux+1
             
-        return self.BackupCapacitySolution,self.BackupRoutesSolution,self.BackupLinksSolution
+        return self.BackupCapacitySolution,self.BackupRoutesSolution,self.BackupLinksSolution, self.HatBackupCapacity
     
     def ResetModel(self):
         '''
         Reset model solution.
         '''
-        self.model.reset()
+        self.BackupCapacity = {}
+        self.bBackupLink = {}
+        self.z0 = {}
+        self.z = {}
+        if self.model:
+            self.model.reset()

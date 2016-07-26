@@ -102,8 +102,10 @@ class QoS(object):
             ConfidenceInterval[i,j]=1.96*np.sqrt((FailureProb[i,j])*(1-FailureProb[i,j]))/(np.sqrt(NumSamples))
         
         return ConfidenceInterval
-
-    def GetBufferedFailureProb(self,ImportanceSampling, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, OptBackupLinks):    
+    
+    
+    
+    def GetBufferedFailureProb(self,ImportanceSampling, Scenarios, NumScenarios, Links, BackupLinks, CapPerBackupLink, BackupRoutes):    
         """Calculate the buffered failure probability.
     
         Parameters
@@ -116,51 +118,57 @@ class QoS(object):
         CapPerLink: Set of edge (link) capacity (weight).
         BackupLinks: Set of backup edges (links).
         CapPerBackupLink: Set of backup edge (link) capacity (weight)
-        OptBackupLinks: Set of backup edges (links).
+        BackupRoutes: Set of backup edges (links).
         
         Returns
         -------
         P: Buffered failure probability.
+        I: Indicator (1 if overloaded the backup capacity and 0 otherwise)
     
         """
         P={}
         I={}
+        t1=time.time()
         for i,j in BackupLinks:
             P[i,j] = 0
-            for k in range(NumScenarios):
+            t2=time.time()
+            for k in xrange(NumScenarios):
                 Psd=0
                 for s,d in Links:
-                    Psd=Psd+OptBackupLinks[i,j,s,d]*Scenarios[k,s,d]
+                    Psd=Psd+BackupRoutes[i,j,s,d]*Scenarios[k,s,d]
+#                 Psd=[BackupRoutes[i,j,s,d]*Scenarios[k,s,d] for s,d in Links]
                 I[k,i,j]=0
                 if Psd > CapPerBackupLink[i,j]:
-                    if ImportanceSampling == None:
-                        I[k,i,j]=1
-                        P[i,j]=P[i,j]+1
-                    else:
+                    I[k,i,j]=1
+                    if ImportanceSampling:
                         I[k,i,j]=ImportanceSampling[k]
-                        P[i,j]=P[i,j]+1*ImportanceSampling[k]
+                    P[i,j]=P[i,j]+I[k,i,j]
             P[i,j]=1.0*P[i,j]/NumScenarios
-        return P,I
+            print('t2=%g'%(time.time()-t2))
+        print('t1=%g'%(time.time()-t1))    
+        Var = self.__GetVariance(NumScenarios, BackupLinks, P, I)
+            
+        return P,Var
 
-    def GetVariance(self,NumScenarios, BkpLinks,Mean,Indicator):    
+    def __GetVariance(self,NumScenarios,BkpLinks,Mean,Indicator):    
         """Calculate the buffered failure probability.
     
         Parameters
         ----------
         NumScenarios : Number of scenarios used in the mean estimation.
         BackupLinks: Set of backup edges (links).
-        CapPerBackupLink: Set of backup edge (link) capacity (weight)
-        OptBackupLinks: Set of backup edges (links).
+        Mean: Result from GetBufferedFailureProb function
+        Indicator: Result from GetBufferedFailureProb function
         
         Returns
         -------
-        P: Buffered failure probability.
+        P: Variance of buffered failure probability.
     
         """
         Var={}
         for i,j in BkpLinks:
             Var[i,j] = 0
-            for k in range(NumScenarios):
+            for k in xrange(NumScenarios):
                 Var[i,j]=Var[i,j]+(Indicator[k,i,j]-Mean[i,j])**2
             Var[i,j]=1.0*Var[i,j]/(NumScenarios-1)
         return Var
