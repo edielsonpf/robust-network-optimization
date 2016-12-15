@@ -144,7 +144,7 @@ class QoS(object):
                         I[k,i,j]=ImportanceSampling[k]
                     P[i,j]=P[i,j]+I[k,i,j]
             P[i,j]=1.0*P[i,j]/NumScenarios
-            print('t2=%g'%(time.time()-t2))
+#             print('t2=%g'%(time.time()-t2))
         print('t1=%g'%(time.time()-t1))    
         Var = self.__GetVariance(NumScenarios, BackupLinks, P, I)
             
