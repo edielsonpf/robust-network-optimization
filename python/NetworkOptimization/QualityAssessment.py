@@ -73,6 +73,7 @@ class QoS(object):
             n[i,j]=0
             for s,d in Links:
                 n[i,j] =(n[i,j]+BkpRoutes[i,j,s,d])
+            print('Average number of links for backup link (%d,%d):%d'%(i,j,n[i,j]))
             if(n[i,j] > 0):
                 aux=aux+n[i,j]
                 cont=cont+1
@@ -128,10 +129,10 @@ class QoS(object):
         """
         P={}
         I={}
-        t1=time.time()
+#         t1=time.time()
         for i,j in BackupLinks:
             P[i,j] = 0
-            t2=time.time()
+#             t2=time.time()
             for k in xrange(NumScenarios):
                 Psd=0
                 for s,d in Links:
@@ -145,7 +146,52 @@ class QoS(object):
                     P[i,j]=P[i,j]+I[k,i,j]
             P[i,j]=1.0*P[i,j]/NumScenarios
 #             print('t2=%g'%(time.time()-t2))
-        print('t1=%g'%(time.time()-t1))    
+#         print('t1=%g'%(time.time()-t1))    
+        Var = self.__GetVariance(NumScenarios, BackupLinks, P, I)
+            
+        return P,Var
+
+    def GetBufferedFailureProb2(self,ImportanceSampling, Scenarios, NumScenarios, Connections, Links, BackupLinks, CapPerBackupLink, BackupRoutes):    
+        """Calculate the buffered failure probability.
+    
+        Parameters
+        ----------
+        ImportanceSampling: Importance sampling vector (obtained by GetImportanceSamplingVector method). None if scenarios were not generated using importance sampling.
+        Scenarios: Set of scenarios with random failure following Binomial distribution.
+        NumScenarios : Number of scenarios to be generated.
+        Links: Graph edges (links)
+        NumLinks: Number of edges (links) on each scenario.
+        CapPerLink: Set of edge (link) capacity (weight).
+        BackupLinks: Set of backup edges (links).
+        CapPerBackupLink: Set of backup edge (link) capacity (weight)
+        BackupRoutes: Set of backup edges (links).
+        
+        Returns
+        -------
+        P: Buffered failure probability.
+        I: Indicator (1 if overloaded the backup capacity and 0 otherwise)
+    
+        """
+        P={}
+        I={}
+#         t1=time.time()
+        for i,j in BackupLinks:
+            P[i,j] = 0
+#             t2=time.time()
+            for k in xrange(NumScenarios):
+                Psd=0
+                for s,d in Connections:
+                    Psd=Psd+BackupRoutes[i,j,s,d]*Scenarios[k,s,d]
+#                 Psd=[BackupRoutes[i,j,s,d]*Scenarios[k,s,d] for s,d in Links]
+                I[k,i,j]=0
+                if Psd > CapPerBackupLink[i,j]:
+                    I[k,i,j]=1
+                    if ImportanceSampling:
+                        I[k,i,j]=ImportanceSampling[k]
+                    P[i,j]=P[i,j]+I[k,i,j]
+            P[i,j]=1.0*P[i,j]/NumScenarios
+#             print('t2=%g'%(time.time()-t2))
+#         print('t1=%g'%(time.time()-t1))    
         Var = self.__GetVariance(NumScenarios, BackupLinks, P, I)
             
         return P,Var

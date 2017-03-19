@@ -163,8 +163,8 @@ def GetFSNETNetwork():
     nodes = [i+1 for i in range(num_nodes)]
 
     links=[(1,2),(1,3),(1,4),(2,1),(2,3),(2,8),(3,1),(3,2),(3,7),(4,1),(4,5),(4,9),(5,4),(5,6),(5,7),
-           (6,5),(6,8),(7,3),(7,5),(7,10),(7,13),(8,2),(8,6),(8,11),(9,4),(9,12),(9,14),(10,7),
-           (10,11),(11,8),(11,10),(11,12),(11,14),(12,9),(12,11),(12,13),(13,7),(13,12),(13,14),(14,9),(14,11),(14,13)]
+           (6,5),(6,8),(7,3),(7,5),(7,10),(7,13),(8,2),(8,6),(8,11),(9,4),(9,12),(9,14),(10,7),(10,11),
+           (11,8),(11,10),(11,12),(11,14),(12,9),(12,11),(12,13),(13,7),(13,12),(13,14),(14,9),(14,11),(14,13)]
     
   
     G=nx.DiGraph()
@@ -190,7 +190,7 @@ def GetSprintNetwork():
            (5,4),(5,6),(5,7),
            (6,5),(6,8),(6,9),
            (7,5),(7,8),(7,13),
-           (8,2),(8,6),(8,7),(8,9),
+           (8,6),(8,7),(8,9),
            (9,6),(9,8),
            (10,2),(10,11),(10,19),
            (11,4),(11,10),(11,12),(11,17),
@@ -230,3 +230,27 @@ def GetSprintNetwork():
     num_links = len(links)
     
     return G,links,nodes,num_links      
+
+
+def GetRingNetwork(num_nodes):
+    
+    nodes = [i for i in range(num_nodes)]
+
+    links=[]
+    for node in nodes:
+        if node == num_nodes-1:
+            links.append((node,0))
+            links.append((0,node))
+        else:    
+            links.append((node,node+1))
+            links.append((node+1,node))
+            
+    G=nx.DiGraph()
+    
+    G.add_nodes_from(nodes)
+    G.add_edges_from(links)
+    
+    #Check the number of links
+    num_links = len(links)
+    
+    return G,links,nodes,num_links
