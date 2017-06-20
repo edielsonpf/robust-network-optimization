@@ -45,7 +45,7 @@ def ThreadGetBufferedFailureProb(RandSeed, FailureProb, NumScenarios, Links, Cap
         for k in range(NumScenarios):
             Psd=0
             for s,d in Links:
-                Psd=Psd+OptBackupLinks[i,j,s,d]*Scenarios[k,s,d]
+                Psd=Psd+OptBackupLinks[s,d,i,j]*Scenarios[k,s,d]
             if Psd > CapPerBackupLink[i,j]:
                 P[i,j]=P[i,j]+1
         P[i,j]=1.0*P[i,j]/NumScenarios
@@ -72,7 +72,7 @@ class QoS(object):
         for i,j in BkpLinks:
             n[i,j]=0
             for s,d in Links:
-                n[i,j] =(n[i,j]+BkpRoutes[i,j,s,d])
+                n[i,j] =(n[i,j]+BkpRoutes[s,d,i,j])
             print('Average number of links for backup link (%d,%d):%d'%(i,j,n[i,j]))
             if(n[i,j] > 0):
                 aux=aux+n[i,j]
@@ -136,7 +136,7 @@ class QoS(object):
             for k in xrange(NumScenarios):
                 Psd=0
                 for s,d in Links:
-                    Psd=Psd+BackupRoutes[i,j,s,d]*Scenarios[k,s,d]
+                    Psd=Psd+BackupRoutes[s,d,i,j]*Scenarios[k,s,d]
 #                 Psd=[BackupRoutes[i,j,s,d]*Scenarios[k,s,d] for s,d in Links]
                 I[k,i,j]=0
                 if Psd > CapPerBackupLink[i,j]:
@@ -181,7 +181,7 @@ class QoS(object):
             for k in xrange(NumScenarios):
                 Psd=0
                 for s,d in Connections:
-                    Psd=Psd+BackupRoutes[i,j,s,d]*Scenarios[k,s,d]
+                    Psd=Psd+BackupRoutes[s,d,i,j]*Scenarios[k,s,d]
 #                 Psd=[BackupRoutes[i,j,s,d]*Scenarios[k,s,d] for s,d in Links]
                 I[k,i,j]=0
                 if Psd > CapPerBackupLink[i,j]:
