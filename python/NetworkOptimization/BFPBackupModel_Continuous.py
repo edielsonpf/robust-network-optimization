@@ -34,7 +34,12 @@ class BFPBackupNetwork_Continuous(object):
     bBackupLink = {}
     z0 = {}
     z = {}
-         
+    n={}
+    alpha=1
+    beta=15e-1
+    num_samples=0
+    test={}
+    
     def __init__(self):
         '''
         Constructor
@@ -51,16 +56,21 @@ class BFPBackupNetwork_Continuous(object):
         self.Links = tuplelist(Links)
         self.Capacity = Capacity
         self.Nodes=Nodes
+        self.num_samples = NumSamples
         
         # Create optimization model
         self.model = Model('Backup')
-     
+        
         # Create variables
         for i,j in self.Links:
             self.BackupCapacity[i,j] = self.model.addVar(vtype=GRB.CONTINUOUS,lb=0, name='Backup_Capacity[%s,%s]' % (i, j))
             #self.BackupCapacity[i,j] = self.model.addVar(lb=0, name='Backup_Capacity[%s,%s]' % (i, j))
         self.model.update()
-          
+        
+        for i,j in self.Links:
+            self.n[i,j] = self.model.addVar(lb=0, name='n[%s,%s]' % (i, j))
+        self.model.update()
+        
         for s,d in self.Links:
             for i,j in self.Links:
                 self.bBackupLink[s,d,i,j] = self.model.addVar(vtype=GRB.BINARY,name='BackupLink[%s,%s,%s,%s]' % (s, d, i, j))
@@ -74,10 +84,16 @@ class BFPBackupNetwork_Continuous(object):
         for i,j in self.Links: 
             self.z0[i,j] = self.model.addVar(lb=-GRB.INFINITY,name='z0[%s,%s]' %(i,j))
         self.model.update()
-         
+        
+        self.test = self.model.addVar(lb=0,name='test')
+        self.model.update()
+        
+        
         self.model.modelSense = GRB.MINIMIZE
         
-        self.model.setObjective(quicksum(self.BackupCapacity[i,j] for i,j in self.Links))
+        #self.model.setObjective(quicksum(self.BackupCapacity[i,j] for i,j in self.Links)+quicksum(quicksum(1e-4*self.bBackupLink[s,d,i,j] for s,d in self.Links) for i,j in self.Links))
+        #self.model.setObjective(quicksum(self.BackupCapacity[i,j] + self.n[i,j] for i,j in self.Links))
+        self.model.setObjective(quicksum(self.BackupCapacity[i,j]  for i,j in self.Links) + self.beta*self.test)
         self.model.update()
          
             
@@ -92,6 +108,14 @@ class BFPBackupNetwork_Continuous(object):
             self.model.addConstr(self.z0[i,j] + 1/(NumSamples*Survivability)*quicksum(self.z[k,i,j] for (k) in range(NumSamples)) <= 0,'[CONST]Buffer_Prob_I[%s,%s]'%(i,j))
         self.model.update()
          
+        for i,j in self.Links:
+            self.model.addConstr(self.n[i,j] >= quicksum(self.alpha*self.bBackupLink[s,d,i,j] for s,d in self.Links),'[CONST]n[%s,%s]'%(i,j))
+        self.model.update()
+        
+        for i,j in self.Links:
+            self.model.addConstr(self.test >= self.n[i,j],'[CONST]test[%s,%s]'%(i,j))
+        self.model.update()
+        
         # Link capacity constraints
         for i,j in self.Links:
             for k in range(NumSamples):
@@ -107,13 +131,8 @@ class BFPBackupNetwork_Continuous(object):
                 self.model.addConstr(self.bBackupLink[s,d,i,j] <= self.BackupCapacity[i,j],'[CONST]Buffer_Prob_III[%s,%s,%s,%s]' % (s,d,i,j))
         self.model.update()
 
-        
-        # Link capacity constraints
-#        for i,j in self.Links:
-#            for k in range(NumSamples):
-#                self.model.addConstr(self.z[k,i,j] >= 0,'[CONST]Buffer_Prob_III[%s][%s,%s]' % (k,i,j))
-#        self.model.update()
-         
+
+        # Flow conservation constraints
         for i in Nodes:
             for s,d in self.Links:
                 # Flow conservation constraints
@@ -128,16 +147,6 @@ class BFPBackupNetwork_Continuous(object):
                 else:    
                     self.model.addConstr(quicksum(self.bBackupLink[s,d,i,j] for i,j in self.Links.select(i,'*')) - 
                                            quicksum(self.bBackupLink[s,d,l,i] for l,i in self.Links.select('*',i)) == 0,'Flow(%s,%s,%s)'%(i,s,d))
-                # Flow conservation constraints
-#        self.model.addConstr(
-#                (self.bBackupLink.sum('*',j,s,d) == self.bBackupLink.sum(j,'*',s,d)
-#                for s,d in self.Links for i in Nodes),'Flow[%s,%s,%s]' % (i,s,d))
-#        self.model.addConstrs(
-#       (quicksum(self.bBackupLink[i,j,s,d] for i,j in self.Links.select('*',j)) ==
-#         quicksum(self.bBackupLink[j,k,s,d] for j,k in self.Links.select(j,'*'))
-#         for s,d in self.Links for j in Nodes), 'Flow')
-
-                
                 
         self.model.update()
                  
@@ -177,10 +186,23 @@ class BFPBackupNetwork_Continuous(object):
             self.BackupCapacitySolution = self.model.getAttr('x', self.BackupCapacity)
             self.BackupRoutesSolution = self.model.getAttr('x', self.bBackupLink)
             
-            #print(self.BackupCapacitySolution)
+#            my_test = self.model.getAttr('x', self.test)
+#            print(my_test)
+            
+            z_not = self.model.getAttr('x', self.z0)
+            print(z_not)
+            my_z= self.model.getAttr('x', self.z)
+            soma_z={}
+            for i,j in self.Links:
+                soma_z[i,j]=0
+                for k in range(self.num_samples):
+                    soma_z[i,j]=soma_z[i,j]+my_z[k,i,j]
+                print(soma_z[i,j])    
+#             print(self.BackupCapacitySolution)
 #            for route in self.BackupRoutesSolution:
 #                if(self.BackupRoutesSolution[route] > 0 ):  
 #                    print('[2]%s: %d'%(route,self.BackupRoutesSolution[route]))
+            
             
             
             BackupRoute = dict()
@@ -197,47 +219,53 @@ class BFPBackupNetwork_Continuous(object):
                 BackupRoute[sd][ij]=self.BackupRoutesSolution[s,d,i,j]
 #                if(self.BackupRoutesSolution[s,d,i,j] > 0 ):
 #                    print('[1]%s,%s,%s,%s: %d'%(s,d,i,j,self.BackupRoutesSolution[s,d,i,j]))
-            
 #            print(BackupRoute)
-            
-            self.BackupLinksSolution={}
+
             self.HatBackupCapacity={}
-            for link in self.BackupCapacitySolution:
+            for link in self.Links:
                 if self.BackupCapacitySolution[link] < 1 and self.BackupCapacitySolution[link] > 0.001:
                     self.HatBackupCapacity[link]=math.ceil(self.BackupCapacitySolution[link])
                 else:
-                    self.HatBackupCapacity[link]=math.floor(self.BackupCapacitySolution[link])
-                if self.HatBackupCapacity[link] > 0:
-                    if (len(self.BackupLinksSolution) == 0):
-                        self.BackupLinksSolution=[link]
-                    else:
-                        self.BackupLinksSolution=self.BackupLinksSolution+[link]
+                    self.HatBackupCapacity[link]=round(self.BackupCapacitySolution[link])
+#                    self.HatBackupCapacity[link]=math.floor(self.BackupCapacitySolution[link])
         
+            FinalBackupRoute = dict()
+            for s,d in self.Links:
+                temp = dict()
+                for i,j in self.Links:
+                    temp[i,j] = 0
+                FinalBackupRoute[s,d] = temp
             
-#            for s,d in self.Links:
-#                print('(%s,%s): '%(s,d)),
-#                for i,j in self.BackupLinksSolution:
-#                    if(self.BackupRoutesSolution[s,d,i,j] > 0):
-#                        print('(%s,%s): %d,'%(i,j,self.BackupRoutesSolution[s,d,i,j])),
-#                print('\n')
-            for sd in self.Links:
-                for ij in self.Links:
-                    if(sd == ij):
-                        if(BackupRoute[sd][ij] > 0):
-                            for kl in self.Links:
-                                if(kl != ij):
-#                                    print('Changed! %s,%s'%(sd,kl))
-                                    BackupRoute[sd][kl]=0
-
-            for sd in self.Links:
-                print('%s:'%(str(sd)))
-                print('\t'),
-                for ij in self.Links:
-                    if(BackupRoute[sd][ij] > 0):
-                        print('%s: %d,'%(str(ij),BackupRoute[sd][ij])),
-                print('\n')
-
+            for s,d,i,j in self.BackupRoutesSolution:
+                FinalBackupRoute[s,d,i,j]=self.BackupRoutesSolution[s,d,i,j]    
                 
+            for s,d in self.Links:
+                print('(%s,%s): '%(s,d)),
+                for i,j in self.Links:
+                    if(FinalBackupRoute[s,d,i,j] > 0):
+                        print('(%s,%s): %d,'%(i,j,FinalBackupRoute[s,d,i,j])),
+                print('\n')
+                
+#             for sd in self.Links:
+#                 for ij in self.Links:
+#                     if(sd == ij):
+#                         if(BackupRoute[sd][ij] > 0):
+#                             for kl in self.Links:
+#                                 if(kl != ij):
+# #                                    print('Changed! %s,%s'%(sd,kl))
+#                                     BackupRoute[sd][kl]=0
+
+#            for sd in self.Links:
+#                print('%s:'%(str(sd)))
+#                print('\t'),
+#                for ij in self.Links:
+#                    if(BackupRoute[sd][ij] > 0):
+#                        print('%s: %d,'%(str(ij),BackupRoute[sd][ij])),
+#                print('\n')
+            
+
+#            del(self.BackupRoutesSolution)
+#            self.BackupRoutesSolution = BackupRoute
 #            for i in self.Nodes:
 #                for s,d in self.Links:
 #                    flow=0
@@ -257,7 +285,7 @@ class BFPBackupNetwork_Continuous(object):
             self.BackupRoutesSolution = {}
             self.BackupLinksSolution = {}
             
-        return self.BackupCapacitySolution,self.BackupRoutesSolution,self.BackupLinksSolution,self.HatBackupCapacity 
+        return self.BackupCapacitySolution,FinalBackupRoute,self.Links,self.HatBackupCapacity 
     
     
     def SaveBakupNetwork(self, file_name): 
