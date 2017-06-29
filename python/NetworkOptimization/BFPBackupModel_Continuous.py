@@ -77,7 +77,7 @@ class BFPBackupNetwork_Continuous(object):
          
         self.model.modelSense = GRB.MINIMIZE
         
-        self.model.setObjective(quicksum(self.BackupCapacity[i,j] for i,j in self.Links))
+        self.model.setObjective(quicksum(self.BackupCapacity[i,j] for i,j in self.Links)+quicksum(quicksum(1e-4*self.bBackupLink[s,d,i,j] for s,d in self.Links) for i,j in self.Links))
         self.model.update()
          
             
@@ -177,7 +177,7 @@ class BFPBackupNetwork_Continuous(object):
             self.BackupCapacitySolution = self.model.getAttr('x', self.BackupCapacity)
             self.BackupRoutesSolution = self.model.getAttr('x', self.bBackupLink)
             
-            #print(self.BackupCapacitySolution)
+#             print(self.BackupCapacitySolution)
 #            for route in self.BackupRoutesSolution:
 #                if(self.BackupRoutesSolution[route] > 0 ):  
 #                    print('[2]%s: %d'%(route,self.BackupRoutesSolution[route]))
@@ -220,14 +220,14 @@ class BFPBackupNetwork_Continuous(object):
 #                    if(self.BackupRoutesSolution[s,d,i,j] > 0):
 #                        print('(%s,%s): %d,'%(i,j,self.BackupRoutesSolution[s,d,i,j])),
 #                print('\n')
-            for sd in self.Links:
-                for ij in self.Links:
-                    if(sd == ij):
-                        if(BackupRoute[sd][ij] > 0):
-                            for kl in self.Links:
-                                if(kl != ij):
-#                                    print('Changed! %s,%s'%(sd,kl))
-                                    BackupRoute[sd][kl]=0
+#             for sd in self.Links:
+#                 for ij in self.Links:
+#                     if(sd == ij):
+#                         if(BackupRoute[sd][ij] > 0):
+#                             for kl in self.Links:
+#                                 if(kl != ij):
+# #                                    print('Changed! %s,%s'%(sd,kl))
+#                                     BackupRoute[sd][kl]=0
 
             for sd in self.Links:
                 print('%s:'%(str(sd)))
